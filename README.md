@@ -1,17 +1,17 @@
 <div align="center">
 
-### Replay Manager
+### Focus Passion
 
 ![ReplayManagerIcon](https://github.com/sxlphuric/replay-manager/blob/main/assets/icon_256.png?raw=true)
 
-**An opinionated video browser**
+**A great idea**
 
 *Built with Rust and egui for high performance*
 
-![Version](https://img.shields.io/badge/version-0.1.0-yellow)
-![Commit Activity](https://img.shields.io/github/commit-activity/m/sxlphuric/replay-manager?style=flat)
-![CI](https://img.shields.io/github/actions/workflow/status/sxlphuric/replay-manager/rust.yml?label=CI&style=flat)
-![Stars](https://img.shields.io/github/stars/sxlphuric/replay-manager?style=flat)
+![Version](https://img.shields.io/badge/version-0.0.0-yellow)
+![Commit Activity](https://img.shields.io/github/commit-activity/m/sxlphuric/focus-passion?style=flat)
+<!-- ![CI](https://img.shields.io/github/actions/workflow/status/sxlphuric/focus-passion/rust.yml?label=CI&style=flat) -->
+![Stars](https://img.shields.io/github/stars/sxlphuric/focus-passion?style=flat)
 
 [Installation](#Building) • [Roadmap](#Roadmap) • [Structure](#Structure)
 
@@ -21,19 +21,15 @@
 
 ## Overview
 
-The Replay Manager is an opinionated video browser built using **Rust** and **egui**. It's goal is to *somewhat* replicate **Medal**'s features (excluding the social media part)
+Focus passion
 
 ### Key Features
 
-- 🎞 **Automatic Thumbnail Generation** - Works cross-platform using FFmpeg
-- 💾 **Cloud Save** - Upload your files to Catbox or Litterbox for easy sharing
-- 📈 **Video Edit** - Open replays in an editor of choice (default losslesscut)
-- ⭐ **Favorites** - Favorite replays to find them easily
+- 🎞 **Focus** - Passion
 
 ## Screenshots
 
 <div align="center">
-  <img width="810" height="725" alt="image" src="https://github.com/user-attachments/assets/965d7eb0-e76f-4ca7-a75b-a3e948229db5" />
 </div>
 
 ---
