@@ -83,7 +83,9 @@ fn hello(lang: Option<Lang>, opt: Options<'_>) -> String {
 }
 
 #[get("/?<name>&<opt..>")]
-fn add_habit(name: String, opt: HabitOptions<'_>) {}
+fn add_habit(name: String, opt: HabitOptions<'_>) {
+    
+}
 // render main tracker
 #[get("/")]
 fn main_page() -> Template {
@@ -94,7 +96,12 @@ fn main_page() -> Template {
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build()
+    let port: u16 = env::var("PORT").unwrap_or_else(|_| "3000".into()).parse().unwrap();
+    let config = rocket::Config {
+        port,
+        ..rocket::Config::default()
+    };
+    rocket::custom(&config)
         .mount("/", routes![main_page])
         .mount("/add", routes![add_habit])
         .mount("/hello", routes![world, mir])
