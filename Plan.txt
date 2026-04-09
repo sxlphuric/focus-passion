@@ -5,3 +5,5 @@ Plan for the project:
     Backend:
         Slxphuric
         .
+
+presentation: https://canva.link/48b4osig9vibhl4
