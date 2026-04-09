@@ -1,0 +1,7 @@
+Plan for the project:
+    Frontend:
+        J33569
+        .
+    Backend:
+        Slxphuric
+        .
