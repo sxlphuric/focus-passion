@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Hi</title>
+    </head>
+    <body>
+        <div class="container">
+            <form action="/add_habit" method="post">
+                <input type="text" name="name" placeholder="Habit" required />
+                <br /><textarea
+                    name="description"
+                    placeholder="Description"
+                ></textarea>
+                <button type="submit">Add</button>
+            </form>
+        </div>
+    </body>
+</html>
