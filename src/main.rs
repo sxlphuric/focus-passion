@@ -92,7 +92,14 @@ fn hello(lang: Option<Lang>, opt: Options<'_>) -> String {
 
 #[get("/?<name>&<opt..>")]
 fn add_task(name: String, opt: HabitOptions<'_>) {
-    
+    let client_ref = client.clone();
+
+    tokio::task::spawn(async move {
+        let collection = client_ref.database("items").collection::<Document>(&format!("coll{}", i));
+
+        // Do something with the collection
+    });
+}
 }
 // render main tracker
 #[get("/")]
