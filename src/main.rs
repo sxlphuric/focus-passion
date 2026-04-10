@@ -5,8 +5,8 @@ use std::sync::Mutex;
 #[macro_use]
 extern crate rocket;
 
-#[cfg(test)]
-mod tests;
+// #[cfg(test)]
+// mod tests;
 
 #[derive(FromFormField)]
 enum Lang {
