@@ -1,5 +1,5 @@
 use rocket_dyn_templates::{Template, context};
-use mongodb::Client
+use mongodb::Client;
 use std::sync::Mutex;
 
 #[macro_use]
