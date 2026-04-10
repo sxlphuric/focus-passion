@@ -1,4 +1,5 @@
 use rocket_dyn_templates::{Template, context};
+use mongodb::Client
 use std::sync::Mutex;
 
 #[macro_use]
@@ -31,6 +32,8 @@ struct HabitOptions<'r> {
 struct Tasks<'r> {
     tasks: Mutex<Vec<HabitOptions<'r>>>,
 }
+
+let client = Client::with_uri_str("mongodb://127.0.0.1:27017").await?;
 
 // Try visiting:
 //   http://127.0.0.1:8000/hello/world
