@@ -83,7 +83,7 @@ fn hello(lang: Option<Lang>, opt: Options<'_>) -> String {
 }
 
 #[get("/?<name>&<opt..>")]
-fn add_habit(name: String, opt: HabitOptions<'_>) {
+fn add_task(name: String, opt: HabitOptions<'_>) {
     
 }
 // render main tracker
@@ -103,7 +103,7 @@ fn rocket() -> _ {
     };
     rocket::custom(&config)
         .mount("/", routes![main_page])
-        .mount("/add", routes![add_habit])
+        .mount("/add", routes![add_task])
         .mount("/hello", routes![world, mir])
         .mount("/wave", routes![wave])
         .attach(Template::fairing())
