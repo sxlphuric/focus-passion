@@ -1,4 +1,5 @@
 use rocket_dyn_templates::{Template, context};
+use std::sync::Mutex;
 
 #[macro_use]
 extern crate rocket;
@@ -25,6 +26,10 @@ struct Options<'r> {
 struct HabitOptions<'r> {
     description: Option<&'r str>,
     tag: Option<&'r str>,
+}
+
+struct Tasks<'r> {
+    tasks: Mutex<Vec<HabitOptions<'r>>>,
 }
 
 // Try visiting:
@@ -89,7 +94,7 @@ fn add_task(name: String, opt: HabitOptions<'_>) {
 // render main tracker
 #[get("/")]
 fn main_page() -> Template {
-    Template::render("index", context! {})
+    Template::render("index", context! { })
 }
 
 // fn new_habit(habit: Habit<'_>) ->
@@ -103,6 +108,7 @@ fn rocket() -> _ {
     };
     rocket::custom(&config)
         .mount("/", routes![main_page])
+        .mount("/public", FileServer::from(relative!(static)))
         .mount("/add", routes![add_task])
         .mount("/hello", routes![world, mir])
         .mount("/wave", routes![wave])
