@@ -100,7 +100,6 @@ fn add_task(name: String, opt: HabitOptions<'_>) {
         // Do something with the collection
     });
 }
-}
 // render main tracker
 #[get("/")]
 fn main_page() -> Template {
