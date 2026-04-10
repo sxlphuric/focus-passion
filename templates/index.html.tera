@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Hi</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Task manager</title>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <h1>Task manager</h1>
         <div class="container">
-            <form action="/add_habit" method="post">
-                <input type="text" name="name" placeholder="Habit" required />
-                <br /><textarea
-                    name="description"
-                    placeholder="Description"
-                ></textarea>
+            <form action="/add" method="post">
+                <input type="text" name="task" placeholder="Task" required />
+                <br>
+                <textareaname="description"placeholder="Description"></textarea>
                 <button type="submit">Add</button>
             </form>
         </div>
+        <script src="script.js"></script>
     </body>
 </html>
