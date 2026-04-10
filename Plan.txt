@@ -1,9 +1,12 @@
 Plan for the project:
+    Progect: task manager to manage homework and tasks
     Frontend:
         J33569
-        .
+            looks forr all parts
+            light/dark mode
     Backend:
         Slxphuric
-        .
+            cookie managment
+            world task manager
 
 presentation: https://canva.link/48b4osig9vibhl4
