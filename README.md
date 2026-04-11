@@ -83,7 +83,7 @@ On **Linux**:
 
 Use your package manager to install `mongodb` and `git`.
 
-- On **Arch Linux and derivatives**: Use `yay` or your preferred AUR helper to install LosslessCut (package `mongodb`)
+- On **Arch Linux and derivatives**: Use `yay` or your preferred AUR helper to install MongoDB (package `mongodb`)
 
 - On **other distros**: Go look at the official [**documentation**](https://www.mongodb.com/docs/v8.0/administration/install-on-linux/) to install MongoDB.
 
