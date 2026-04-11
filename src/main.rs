@@ -90,7 +90,7 @@ struct AddTaskResponse {
 
 #[post("/add", data = "<opt>")]
 #[allow(unused_mut)]
-async fn add_task(opt: Form<TaskOptions<'_>>, db: &State<mongodb::Database>) -> Redirect {
+async fn add_task(opt: Form<TaskOptions<'_>>, db: &State<mongodb::Database>) -> Template {
     let collection = db.collection::<bson::Document>(opt.user_id);
 
     let task_id: String = nanoid!();
@@ -117,7 +117,7 @@ async fn add_task(opt: Form<TaskOptions<'_>>, db: &State<mongodb::Database>) -> 
         task.insert("tags", Vec::<String>::new());
     }
 
-    let result = collection.insert_one(task).await;
+    let result = collection.insert_one(&task).await;
 
     let (success, message) = match result {
         Ok(_) => (true, String::from("Successfully added task")),
@@ -130,7 +130,7 @@ async fn add_task(opt: Form<TaskOptions<'_>>, db: &State<mongodb::Database>) -> 
         task_id,
     });
 
-    Redirect::to(uri!(main_page))
+    Template::render("task_item", context! { task })
 }
 
 async fn fetch_user_tasks(db: &State<mongodb::Database>, user_id: &str) -> Vec<bson::Document> {
