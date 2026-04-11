@@ -1,2 +1,4 @@
-[default.databases.mongodb]
-url = "db.sqlite"
+[default.databases.mongo]
+url = "mongodb://127.0.0.1:27017"
+[development.databases.mongo]
+url = "mongodb://127.0.0.1:27017"
