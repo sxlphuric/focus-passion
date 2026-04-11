@@ -154,7 +154,7 @@ Cargo.toml - Cargo dependencies
 - [ ] Finish the Rocket API
   - [x] Adding habits
   - [ ] Removing habits
-  - [ ] Querying habits
+  - [x] Querying habits
   - [ ] Querying habits with filter
   - [ ] Modifying habits that are queried via task ID
 - [x] Deploy online with Railway
