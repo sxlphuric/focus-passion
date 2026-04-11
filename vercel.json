@@ -1,6 +1,6 @@
 {
   "functions": {
-    "src/main.rs": { "runtime": "vercel-rust@0.11.4" }
+    "api/**/*.rs": { "runtime": "vercel-rust@0.11.4" }
   },
   "routes": [{ "src": "/(.*)", "dest": "/api/main.rs" }]
 }
