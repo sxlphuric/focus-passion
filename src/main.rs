@@ -30,7 +30,8 @@ struct Options<'r> {
 struct TaskOptions<'r> {
     name: &'r str,
     description: Option<&'r str>,
-    tag: Option<&'r str>,
+    due: Option<u32>,
+    project: Option<Vec<&'r str>>,
 }
 
 // Try visiting:
@@ -97,7 +98,9 @@ async fn add_task(
 
     task.insert("name", opt.name);
     task.insert("description", opt.description);
-    task.insert("tags", vec![opt.tag]);
+    task.insert("due", opt.due);
+    task.insert("project", opt.project);
+    task.insert("tags", vec![""]);
 
     let result = collection.insert_one(task).await;
 
