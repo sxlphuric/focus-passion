@@ -119,20 +119,16 @@ async fn add_task(
 
     let result = collection.insert_one(task).await;
 
-    let response = if let Err(e) = result {
-        AddTaskResponse {
-            success: false,
-            message: format!("Error while adding task: {}", e),
-            task_id,
-        }
-    } else {
-        AddTaskResponse {
-            success: true,
-            message: String::from("Successfully added task"),
-            task_id,
-        }
+    let (success, message) = match result {
+        Ok(_) => (true, String::from("Successfully added task")),
+        Err(e) => (false, format!("Error: {}", e)),
     };
-    Json(response)
+
+    Json(AddTaskResponse {
+        success,
+        message,
+        task_id,
+    })
 }
 // render main tracker
 #[get("/")]
