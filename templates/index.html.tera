@@ -10,14 +10,13 @@
     <body>
         <h1>Task manager</h1>
         <div class="new-task">
-            <!--
-                        <form action="/add" method="post">
-                <input type="text" name="task" placeholder="Task" required />
+            <form action="/add" method="post">
+                <input type="password" name="user_id" placeholder="User ID" required />
+                <input type="text" name="name" placeholder="Task" required />
                 <br>
-                <textareaname="description"placeholder="Description"></textarea>
+                <textarea name="description" placeholder="Description"></textarea>
                 <button type="submit">Add</button>
             </form>
-        -->
         </div>
         <script src="/script.js"></script>
     </body>
