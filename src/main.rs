@@ -1,6 +1,6 @@
-use mongodb::{Client, bson};
+use mongodb::{Client, Cursor, bson};
 use nanoid::nanoid;
-use rocket::{State, form::Form, fs::FileServer, serde::json::Json};
+use rocket::{State, form::Form, fs::FileServer, futures::TryStreamExt, serde::json::Json};
 use rocket_dyn_templates::{Template, context};
 use serde::Serialize;
 use std::vec;
@@ -130,6 +130,21 @@ async fn add_task(
         task_id,
     })
 }
+
+#[get("/get/<user_id>")]
+async fn get_tasks(user_id: &str, db: &State<mongodb::Database>) -> Json<Vec<bson::Document>> {
+    let collection = db.collection::<bson::Document>(user_id);
+
+    let mut cursor: Cursor<bson::Document> = collection.find(bson::Document::new()).await.unwrap();
+
+    let mut documents: Vec<bson::Document> = Vec::new();
+
+    while let Some(doc) = cursor.try_next().await.unwrap() {
+        documents.push(doc);
+    }
+    Json(documents)
+}
+
 // render main tracker
 #[get("/")]
 fn main_page() -> Template {
