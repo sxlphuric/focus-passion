@@ -105,7 +105,11 @@ async fn add_task(
 
     if let Some(tags) = opt.tags {
         let tags_string = String::from(tags);
-        let tags_vec: Vec<&'_ str> = tags_string.split(',').collect();
+        let tags_vec: Vec<String> = tags_string
+            .split(',')
+            .map(|s| s.trim().to_string())
+            .filter(|s| !s.is_empty())
+            .collect();
         task.insert("tags", tags_vec);
     } else {
         task.insert("tags", Vec::<String>::new());
