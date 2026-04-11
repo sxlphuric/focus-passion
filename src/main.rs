@@ -95,13 +95,14 @@ async fn add_task(
     let task_id: String = nanoid!();
 
     let mut task = bson::Document::new();
-    task.insert("id", &task_id);
 
+    task.insert("id", &task_id);
     task.insert("name", opt.name);
     task.insert("description", opt.description);
     task.insert("due", opt.due);
     task.insert("project", opt.project);
     task.insert("completed", false);
+
     if let Some(tags) = opt.tags {
         let tags_string = String::from(tags);
         let tags_vec: Vec<&'_ str> = tags_string.split(',').collect();
