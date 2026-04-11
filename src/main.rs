@@ -1,6 +1,8 @@
 use mongodb::{Client, Cursor, bson};
 use nanoid::nanoid;
-use rocket::{State, form::Form, fs::FileServer, futures::TryStreamExt, serde::json::Json};
+use rocket::{
+    State, form::Form, fs::FileServer, futures::TryStreamExt, http::CookieJar, serde::json::Json,
+};
 use rocket_dyn_templates::{Template, context};
 use serde::Serialize;
 use std::vec;
@@ -131,9 +133,17 @@ async fn add_task(
     })
 }
 
-#[get("/get/<user_id>")]
-async fn get_tasks(user_id: &str, db: &State<mongodb::Database>) -> Json<Vec<bson::Document>> {
-    let collection = db.collection::<bson::Document>(user_id);
+#[get("/get")]
+async fn get_tasks(
+    cookies: &CookieJar<'_>,
+    db: &State<mongodb::Database>,
+) -> Option<Json<Vec<bson::Document>>> {
+    let user_id = cookies
+        .get("uuid")
+        .map(|crumb| crumb.value().to_string())
+        .unwrap_or("error".to_string());
+
+    let collection = db.collection::<bson::Document>(&user_id);
 
     let mut cursor: Cursor<bson::Document> = collection.find(bson::Document::new()).await.unwrap();
 
@@ -142,7 +152,8 @@ async fn get_tasks(user_id: &str, db: &State<mongodb::Database>) -> Json<Vec<bso
     while let Some(doc) = cursor.try_next().await.unwrap() {
         documents.push(doc);
     }
-    Json(documents)
+
+    Some(Json(documents))
 }
 
 // render main tracker
