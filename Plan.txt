@@ -6,7 +6,6 @@ Plan for the project:
             light/dark mode
     Backend:
         Slxphuric
-            cookie managment
             world task manager
 
 presentation: https://canva.link/48b4osig9vibhl4

@@ -150,13 +150,14 @@ Cargo.toml - Cargo dependencies
 - [x] Set up a MongoDB database
 - [ ] Make a good looking frontend
 - [ ] Fully functional frontend
+- [x] UUID with cookies
 - [ ] Finish the Rocket API
   - [x] Adding habits
   - [ ] Removing habits
   - [ ] Querying habits
   - [ ] Querying habits with filter
   - [ ] Modifying habits that are queried via task ID
-- [x] Deploy online with Railway
+- [x] Deploy online with Railway
 ### TODO
 - Rocket API
 - HTML frontend
