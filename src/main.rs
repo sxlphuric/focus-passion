@@ -145,7 +145,14 @@ async fn rocket() -> _ {
     let mongo_pw =
         env::var("MONGO_INITDB_ROOT_PASSWORD").expect("Set MONGO_INITDB_ROOT_PASSWORD env");
 
-    let mongo_url = format!("mongodb://root:{}@127.0.0.1:27017", mongo_pw);
+    let mongo_user =
+        env::var("MONGO_INITDB_ROOT_USERNAME").expect("Set MONGO_INITDB_ROOT_USERNAME env");
+
+    let mongo_url = if env::var("MONGO_URL").is_ok() {
+        env::var("MONGO_URL").unwrap()
+    } else {
+        format!("mongodb://{}:{}@127.0.0.1:27017", mongo_user, mongo_pw)
+    };
 
     let db = Client::with_uri_str(mongo_url)
         .await
