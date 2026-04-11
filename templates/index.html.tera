@@ -25,7 +25,7 @@
             {% for task in tasks %}
                 {% include "task_item" %}
             {% else %}
-                <li>Whew! No tasks!</li>
+                <em>Whew! No tasks!</em>
             {% endfor %}
             </ul>
         </div>
