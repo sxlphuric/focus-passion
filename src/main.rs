@@ -1,6 +1,6 @@
 use mongodb::{Client, bson};
 use nanoid::nanoid;
-use rocket::{State, fs::FileServer, serde::json::Json};
+use rocket::{State, form::Form, fs::FileServer, serde::json::Json};
 use rocket_dyn_templates::{Template, context};
 use serde::Serialize;
 use std::vec;
@@ -26,8 +26,9 @@ struct Options<'r> {
     name: Option<&'r str>,
 }
 
-#[derive(FromForm)]
+#[derive(FromForm, rocket::serde::Deserialize)]
 struct TaskOptions<'r> {
+    user_id: &'r str,
     name: &'r str,
     description: Option<&'r str>,
     due: Option<u32>,
@@ -84,14 +85,13 @@ struct AddTaskResponse {
     task_id: String,
 }
 
-#[get("/?<id>&<opt..>")]
+#[post("/add", data = "<opt>")]
 #[allow(unused_mut)]
 async fn add_task(
-    id: String,
-    opt: TaskOptions<'_>,
+    opt: Form<TaskOptions<'_>>,
     db: &State<mongodb::Database>,
 ) -> Json<AddTaskResponse> {
-    let collection = db.collection::<bson::Document>(&id);
+    let collection = db.collection::<bson::Document>(opt.user_id);
 
     let task_id: String = nanoid!();
 
