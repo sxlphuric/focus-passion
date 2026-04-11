@@ -32,6 +32,7 @@ struct TaskOptions<'r> {
     description: Option<&'r str>,
     due: Option<u32>,
     project: Option<&'r str>,
+    section: Option<&'r str>,
     tags: Option<&'r str>,
 }
 
@@ -100,6 +101,7 @@ async fn add_task(
     task.insert("name", opt.name);
     task.insert("description", opt.description);
     task.insert("due", opt.due);
+    task.insert("section", opt.section);
     task.insert("project", opt.project);
     task.insert("completed", false);
 
