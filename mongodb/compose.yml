@@ -2,12 +2,14 @@ services:
   mongo:
     image: mongo:8.0 
     container_name: mongodb
+    env_file:
+      - ../.env
     restart: always
     ports:
       - "27017:27017" # Expose MongoDB on the default port
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root # Set the admin username
-      MONGO_INITDB_ROOT_PASSWORD: password # Set the admin password
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: "${MONGO_INITDB_ROOT_PASSWORD}"
     volumes:
       - mongo-data:/data/db # Persist MongoDB data
       - mongo-config:/data/configdb # Persist MongoDB configuration
