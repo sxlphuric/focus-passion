@@ -31,7 +31,6 @@ struct Options<'r> {
 
 #[derive(FromForm, rocket::serde::Deserialize)]
 struct TaskOptions<'r> {
-    user_id: &'r str,
     name: &'r str,
     description: Option<&'r str>,
     due: Option<u32>,
@@ -90,8 +89,16 @@ struct AddTaskResponse {
 
 #[post("/add", data = "<opt>")]
 #[allow(unused_mut)]
-async fn add_task(opt: Form<TaskOptions<'_>>, db: &State<mongodb::Database>) -> Template {
-    let collection = db.collection::<bson::Document>(opt.user_id);
+async fn add_task(
+    cookies: &CookieJar<'_>,
+    opt: Form<TaskOptions<'_>>,
+    db: &State<mongodb::Database>,
+) -> Template {
+    let user_id = cookies
+        .get("uuid")
+        .map(|crumb| crumb.value().to_string())
+        .unwrap_or("error".to_string());
+    let collection = db.collection::<bson::Document>(&user_id);
 
     let task_id: String = nanoid!();
 
