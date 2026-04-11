@@ -1,7 +1,8 @@
 use mongodb::{Client, Cursor, bson};
 use nanoid::nanoid;
 use rocket::{
-    State, form::Form, fs::FileServer, futures::TryStreamExt, http::CookieJar, serde::json::Json,
+    State, form::Form, fs::FileServer, futures::TryStreamExt, http::CookieJar, response::Redirect,
+    serde::json::Json,
 };
 use rocket_dyn_templates::{Template, context};
 use serde::Serialize;
@@ -89,10 +90,7 @@ struct AddTaskResponse {
 
 #[post("/add", data = "<opt>")]
 #[allow(unused_mut)]
-async fn add_task(
-    opt: Form<TaskOptions<'_>>,
-    db: &State<mongodb::Database>,
-) -> Json<AddTaskResponse> {
+async fn add_task(opt: Form<TaskOptions<'_>>, db: &State<mongodb::Database>) -> Redirect {
     let collection = db.collection::<bson::Document>(opt.user_id);
 
     let task_id: String = nanoid!();
@@ -126,11 +124,13 @@ async fn add_task(
         Err(e) => (false, format!("Error: {}", e)),
     };
 
-    Json(AddTaskResponse {
+    let _response = Json(AddTaskResponse {
         success,
         message,
         task_id,
-    })
+    });
+
+    Redirect::to(uri!(main_page))
 }
 
 async fn fetch_user_tasks(db: &State<mongodb::Database>, user_id: &str) -> Vec<bson::Document> {
