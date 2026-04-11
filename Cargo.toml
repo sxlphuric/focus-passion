@@ -3,6 +3,10 @@ name = "focus-passion"
 version = "0.1.0"
 edition = "2024"
 
+[[bin]]
+name = "api"
+path = "api/main.rs"
+
 [dependencies]
 anyhow = "1.0.102"
 dotenv = "0.15.0"
