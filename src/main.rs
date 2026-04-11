@@ -1,4 +1,4 @@
-use mongodb::{Client, Cursor, bson};
+use mongodb::{Client, bson};
 use nanoid::nanoid;
 use rocket::{
     State, form::Form, fs::FileServer, futures::TryStreamExt, http::CookieJar, response::Redirect,
@@ -157,7 +157,7 @@ async fn get_tasks(
         .map(|crumb| crumb.value().to_string())
         .unwrap_or("error".to_string());
 
-    let tasks = fetch_user_tasks(&db, &user_id).await;
+    let tasks = fetch_user_tasks(db, &user_id).await;
 
     Json(tasks)
 }
@@ -170,7 +170,7 @@ async fn main_page(cookies: &CookieJar<'_>, db: &State<mongodb::Database>) -> Te
         .map(|crumb| crumb.value().to_string())
         .unwrap_or("error".to_string());
 
-    let tasks = fetch_user_tasks(&db, &user_id).await;
+    let tasks = fetch_user_tasks(db, &user_id).await;
 
     Template::render("index", context! { tasks })
 }
