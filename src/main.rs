@@ -177,7 +177,7 @@ async fn rocket() -> _ {
     rocket::build()
         // .attach(Mongo::init())
         .manage(db)
-        .mount("/", routes![main_page, add_task])
+        .mount("/", routes![main_page, add_task, get_tasks])
         .mount("/", FileServer::from("static"))
         .mount("/wave", routes![wave, hello])
         .attach(Template::fairing())
