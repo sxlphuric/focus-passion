@@ -11,13 +11,16 @@
         <h1>Task manager</h1>
         <div class="new-task">
             <form action="/add" method="post">
-                <input type="hidden" name="user_id" value="TEST" required />
+                <input type="hidden" id="user_id" name="user_id" value="error" required />
                 <input type="text" name="name" placeholder="Task" required />
                 <br>
                 <textarea name="description" placeholder="Description"></textarea>
                 <button type="submit">Add</button>
             </form>
         </div>
-        <script src="/script.js"></script>
+        <div class="tasks-list">
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+        <script src="/cookies.js"></script>
     </body>
 </html>
