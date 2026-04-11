@@ -33,26 +33,6 @@ struct TaskOptions<'r> {
     tag: Option<&'r str>,
 }
 
-struct Tasks<'r> {
-    tasks: Mutex<Vec<HabitOptions<'r>>>,
-}
-
-let client = Client::with_uri_str("mongodb://127.0.0.1:27017").await?;
-
-// Try visiting:
-//   http://127.0.0.1:8000/hello/world
-#[get("/world")]
-fn world() -> &'static str {
-    "Hello, world!"
-}
-
-// Try visiting:
-//   http://127.0.0.1:8000/hello/мир
-#[get("/мир")]
-fn mir() -> &'static str {
-    "Привет, мир!"
-}
-
 // Try visiting:
 //   http://127.0.0.1:8000/wave/Rocketeer/100
 #[get("/<name>/<age>", rank = 2)]
