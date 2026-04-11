@@ -31,7 +31,8 @@ struct TaskOptions<'r> {
     name: &'r str,
     description: Option<&'r str>,
     due: Option<u32>,
-    project: Option<Vec<&'r str>>,
+    project: Option<&'r str>,
+    tags: Option<&'r str>,
 }
 
 // Try visiting:
@@ -100,7 +101,14 @@ async fn add_task(
     task.insert("description", opt.description);
     task.insert("due", opt.due);
     task.insert("project", opt.project);
-    task.insert("tags", vec![""]);
+    task.insert("completed", false);
+    if let Some(tags) = opt.tags {
+        let tags_string = String::from(tags);
+        let tags_vec: Vec<&'_ str> = tags_string.split(',').collect();
+        task.insert("tags", tags_vec);
+    } else {
+        task.insert("tags", vec![""]);
+    }
 
     let result = collection.insert_one(task).await;
 
