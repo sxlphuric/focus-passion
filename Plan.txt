@@ -8,6 +8,5 @@ Plan for the project:
         Slxphuric
             cookie managment
             world task manager
-            make deployment work
 
 presentation: https://canva.link/48b4osig9vibhl4
