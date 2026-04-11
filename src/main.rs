@@ -147,12 +147,6 @@ async fn rocket() -> _ {
 
     let mongo_url = format!("mongodb://root:{}@127.0.0.1:27017", mongo_pw);
 
-    if env::var("ROCKET_PORT").is_err()
-        && let Ok(port) = env::var("PORT")
-    {
-        let _ = env::set_var("ROCKET_PORT", port);
-    }
-
     let db = Client::with_uri_str(mongo_url)
         .await
         .expect("Error connecting to mongodb")
