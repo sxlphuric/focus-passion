@@ -1,1 +1,1 @@
-web: ./target/release/focus-passion
+web: focus-passion
