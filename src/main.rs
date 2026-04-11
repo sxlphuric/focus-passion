@@ -133,19 +133,10 @@ async fn add_task(
     })
 }
 
-#[get("/get")]
-async fn get_tasks(
-    cookies: &CookieJar<'_>,
-    db: &State<mongodb::Database>,
-) -> Option<Json<Vec<bson::Document>>> {
-    let user_id = cookies
-        .get("uuid")
-        .map(|crumb| crumb.value().to_string())
-        .unwrap_or("error".to_string());
+async fn fetch_user_tasks(db: &State<mongodb::Database>, user_id: &str) -> Vec<bson::Document> {
+    let collection = db.collection::<bson::Document>(user_id);
 
-    let collection = db.collection::<bson::Document>(&user_id);
-
-    let mut cursor: Cursor<bson::Document> = collection.find(bson::Document::new()).await.unwrap();
+    let mut cursor = collection.find(bson::Document::new()).await.unwrap();
 
     let mut documents: Vec<bson::Document> = Vec::new();
 
@@ -153,13 +144,35 @@ async fn get_tasks(
         documents.push(doc);
     }
 
-    Some(Json(documents))
+    documents
+}
+
+#[get("/get")]
+async fn get_tasks(
+    cookies: &CookieJar<'_>,
+    db: &State<mongodb::Database>,
+) -> Json<Vec<bson::Document>> {
+    let user_id = cookies
+        .get("uuid")
+        .map(|crumb| crumb.value().to_string())
+        .unwrap_or("error".to_string());
+
+    let tasks = fetch_user_tasks(&db, &user_id).await;
+
+    Json(tasks)
 }
 
 // render main tracker
 #[get("/")]
-fn main_page() -> Template {
-    Template::render("index", context! {})
+async fn main_page(cookies: &CookieJar<'_>, db: &State<mongodb::Database>) -> Template {
+    let user_id = cookies
+        .get("uuid")
+        .map(|crumb| crumb.value().to_string())
+        .unwrap_or("error".to_string());
+
+    let tasks = fetch_user_tasks(&db, &user_id).await;
+
+    Template::render("index", context! { tasks })
 }
 
 // fn new_habit(habit: Habit<'_>) ->
