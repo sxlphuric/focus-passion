@@ -1,6 +1,9 @@
+use mongodb::{Client, bson};
+use nanoid::nanoid;
+use rocket::{State, fs::FileServer, serde::json::Json};
 use rocket_dyn_templates::{Template, context};
-use mongodb::Client;
-use std::sync::Mutex;
+use serde::Serialize;
+use std::vec;
 
 #[macro_use]
 extern crate rocket;
@@ -24,7 +27,8 @@ struct Options<'r> {
 }
 
 #[derive(FromForm)]
-struct HabitOptions<'r> {
+struct TaskOptions<'r> {
+    name: &'r str,
     description: Option<&'r str>,
     tag: Option<&'r str>,
 }
@@ -90,20 +94,52 @@ fn hello(lang: Option<Lang>, opt: Options<'_>) -> String {
     greeting
 }
 
-#[get("/?<name>&<opt..>")]
-fn add_task(name: String, opt: HabitOptions<'_>) {
-    let client_ref = client.clone();
+#[derive(Serialize)]
+struct AddTaskResponse {
+    success: bool,
+    message: String,
+    task_id: String,
+}
 
-    tokio::task::spawn(async move {
-        let collection = client_ref.database("items").collection::<Document>(&format!("coll{}", i));
+#[get("/?<id>&<opt..>")]
+#[allow(unused_mut)]
+async fn add_task(
+    id: String,
+    opt: TaskOptions<'_>,
+    db: &State<mongodb::Database>,
+) -> Json<AddTaskResponse> {
+    let collection = db.collection::<bson::Document>(&id);
 
-        // Do something with the collection
-    });
+    let task_id: String = nanoid!();
+
+    let mut task = bson::Document::new();
+    task.insert("id", &task_id);
+
+    task.insert("name", opt.name);
+    task.insert("description", opt.description);
+    task.insert("tags", vec![opt.tag]);
+
+    let result = collection.insert_one(task).await;
+
+    let response = if let Err(e) = result {
+        AddTaskResponse {
+            success: false,
+            message: format!("Error while adding task: {}", e),
+            task_id,
+        }
+    } else {
+        AddTaskResponse {
+            success: true,
+            message: String::from("Successfully added task"),
+            task_id,
+        }
+    };
+    Json(response)
 }
 // render main tracker
 #[get("/")]
 fn main_page() -> Template {
-    Template::render("index", context! { })
+    Template::render("index", context! {})
 }
 
 // fn new_habit(habit: Habit<'_>) ->
@@ -116,18 +152,12 @@ async fn rocket() -> _ {
         env::var("MONGO_INITDB_ROOT_PASSWORD").expect("Set MONGO_INITDB_ROOT_PASSWORD env");
 
     let mongo_url = format!("mongodb://root:{}@127.0.0.1:27017", mongo_pw);
+
+    if env::var("ROCKET_PORT").is_err()
         && let Ok(port) = env::var("PORT")
     {
         let _ = env::set_var("ROCKET_PORT", port);
     }
-
-    println!(
-        "Mongo PW env:{:?}",
-        env::var("MONGODB_INITDB_ROOT_PASSWORD")
-    );
-    println!("Mongo URL formatted:{:?}", mongo_url);
-    println!("Rocket Databases env:{:?}", env::var("ROCKET_DATABASES"));
-    println!("Rocket Port env:{:?}", env::var("ROCKET_PORT"));
 
     let db = Client::with_uri_str(mongo_url)
         .await
@@ -138,9 +168,8 @@ async fn rocket() -> _ {
         // .attach(Mongo::init())
         .manage(db)
         .mount("/", routes![main_page])
-        .mount("/public", FileServer::from(relative!(static)))
+        .mount("/", FileServer::from("static"))
         .mount("/add", routes![add_task])
-        .mount("/hello", routes![world, mir])
-        .mount("/wave", routes![wave])
+        .mount("/wave", routes![wave, hello])
         .attach(Template::fairing())
 }
