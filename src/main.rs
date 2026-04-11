@@ -108,7 +108,7 @@ async fn add_task(
         let tags_vec: Vec<&'_ str> = tags_string.split(',').collect();
         task.insert("tags", tags_vec);
     } else {
-        task.insert("tags", vec![""]);
+        task.insert("tags", Vec::<String>::new());
     }
 
     let result = collection.insert_one(task).await;
