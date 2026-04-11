@@ -109,13 +109,34 @@ fn main_page() -> Template {
 // fn new_habit(habit: Habit<'_>) ->
 
 #[launch]
-fn rocket() -> _ {
-    let port: u16 = env::var("PORT").unwrap_or_else(|_| "3000".into()).parse().unwrap();
-    let config = rocket::Config {
-        port,
-        ..rocket::Config::default()
-    };
-    rocket::custom(&config)
+async fn rocket() -> _ {
+    dotenv::dotenv().ok();
+
+    let mongo_pw =
+        env::var("MONGO_INITDB_ROOT_PASSWORD").expect("Set MONGO_INITDB_ROOT_PASSWORD env");
+
+    let mongo_url = format!("mongodb://root:{}@127.0.0.1:27017", mongo_pw);
+        && let Ok(port) = env::var("PORT")
+    {
+        let _ = env::set_var("ROCKET_PORT", port);
+    }
+
+    println!(
+        "Mongo PW env:{:?}",
+        env::var("MONGODB_INITDB_ROOT_PASSWORD")
+    );
+    println!("Mongo URL formatted:{:?}", mongo_url);
+    println!("Rocket Databases env:{:?}", env::var("ROCKET_DATABASES"));
+    println!("Rocket Port env:{:?}", env::var("ROCKET_PORT"));
+
+    let db = Client::with_uri_str(mongo_url)
+        .await
+        .expect("Error connecting to mongodb")
+        .database("tasks");
+
+    rocket::build()
+        // .attach(Mongo::init())
+        .manage(db)
         .mount("/", routes![main_page])
         .mount("/public", FileServer::from(relative!(static)))
         .mount("/add", routes![add_task])

@@ -2,12 +2,16 @@
 name = "focus-passion"
 version = "0.1.0"
 edition = "2024"
-root="./"
 
 [dependencies]
+anyhow = "1.0.102"
+dotenv = "0.15.0"
 env = "1.0.1"
 mongodb = "3.5.2"
-rocket = "0.5.1"
+nanoid = "0.4.0"
+rocket = { version = "0.5.1", features = ["json", "uuid"] }
 rocket_db_pools = { version = "0.2.0", features = ["mongodb"] }
 rocket_dyn_templates = { version = "0.2.0", features = ["tera"] }
 serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"
+tokio = "1.51.1"

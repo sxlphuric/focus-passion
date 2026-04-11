@@ -582,6 +582,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "dotenv"
+version = "0.15.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "77c90badedccf4105eca100756a0b1289e191f6fcbdadd3cee1d2f614f97da8f"
+
+[[package]]
 name = "either"
 version = "1.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -692,12 +698,17 @@ checksum = "3f9eec918d3f24069decb9af1554cad7c880e2da24a9afd88aca000531ab82c1"
 name = "focus-passion"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
+ "dotenv",
  "env",
  "mongodb 3.5.2",
+ "nanoid",
  "rocket",
  "rocket_db_pools",
  "rocket_dyn_templates",
  "serde",
+ "serde_json",
+ "tokio",
 ]
 
 [[package]]
@@ -1731,6 +1742,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "nanoid"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3ffa00dec017b5b1a8b7cf5e2c008bfda1aa7e0697ac1508b491fdf2622fb4d8"
+dependencies = [
+ "rand 0.8.5",
+]
+
+[[package]]
 name = "normpath"
 version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2244,6 +2264,7 @@ dependencies = [
  "rocket_codegen",
  "rocket_http",
  "serde",
+ "serde_json",
  "state",
  "tempfile",
  "time",
@@ -2251,6 +2272,7 @@ dependencies = [
  "tokio-stream",
  "tokio-util",
  "ubyte",
+ "uuid",
  "version_check",
  "yansi",
 ]
@@ -2332,6 +2354,7 @@ dependencies = [
  "time",
  "tokio",
  "uncased",
+ "uuid",
 ]
 
 [[package]]
