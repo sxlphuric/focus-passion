@@ -23,19 +23,7 @@
             <h2>Tasks</h2>
             <ul id="task-list">
             {% for task in tasks %}
-                <li class="task">
-                    <strong>{{ task.name }}</strong>
-                    <p>{{ task.description | default(value="Empty") }}</p>
-                    <em>{{ task.project }}</em>
-                    <em>{{ task.section | default(value="Not Sectioned") }}</em>
-                    {% if task.tags %}
-                    <ul>
-                        {% for tag in task.tags %}
-                            <li>{{ tag }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                </li>
+                {% include "task_item" %}
             {% else %}
                 <li>Whew! No tasks!</li>
             {% endfor %}
