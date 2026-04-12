@@ -1,7 +1,7 @@
-use crate::{AddTaskResponse, TaskOptions};
+use crate::{AddTaskResponse, TaskOptions, db};
 use mongodb::bson;
 use nanoid::nanoid;
-use rocket::{State, form::Form, http::CookieJar, serde::json::Json};
+use rocket::{Route, State, form::Form, http::CookieJar, serde::json::Json};
 use rocket_dyn_templates::{Template, context};
 
 #[get("/get")]
@@ -65,4 +65,21 @@ pub async fn add_task(
     });
 
     Template::render("task_item", context! { task })
+}
+
+#[post("/remove/<id>")]
+pub async fn remove_task(
+    id: &str,
+    db: &State<mongodb::Database>,
+    cookies: &CookieJar<'_>,
+) -> &'static str {
+    let user_id = cookies.get("uuid").map(|c| c.value()).unwrap_or("error");
+
+    let _ = db::delete_task(db, user_id, id).await;
+
+    ""
+}
+
+pub fn routes() -> Vec<Route> {
+    routes![get_tasks, add_task, remove_task]
 }

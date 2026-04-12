@@ -10,7 +10,7 @@
     <body>
         <h1>Task manager</h1>
         <div class="new-task">
-            <form hx-post="/add" hx-target="#task-list" hx-swap="beforeend">
+            <form hx-post="/tasks/add" hx-target="#task-list" hx-swap="beforeend">
                 <input type="text" name="name" placeholder="Task" required />
                 <br>
                 <textarea name="description" placeholder="Description"></textarea>

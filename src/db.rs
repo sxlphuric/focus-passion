@@ -1,4 +1,5 @@
-use mongodb::bson;
+use mongodb::bson::{self, doc};
+use mongodb::results::DeleteResult;
 use mongodb::results::InsertOneResult;
 use rocket::State;
 use rocket::futures::TryStreamExt;
@@ -24,4 +25,13 @@ pub async fn insert_task(
 ) -> Result<InsertOneResult, mongodb::error::Error> {
     let collection = db.collection::<Task>(user_id);
     collection.insert_one(task).await
+}
+
+pub async fn delete_task(
+    db: &State<mongodb::Database>,
+    user_id: &str,
+    task_id: &str,
+) -> Result<DeleteResult, mongodb::error::Error> {
+    let collection = db.collection::<Task>(user_id);
+    collection.delete_one(doc! { "id": task_id }).await
 }
