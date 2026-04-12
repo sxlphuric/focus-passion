@@ -153,9 +153,9 @@ Cargo.toml - Cargo dependencies
 - [x] UUID with cookies
 - [ ] Finish the Rocket API
   - [x] Adding habits
-  - [ ] Removing habits
+  - [x] Removing habits
   - [x] Querying habits
-  - [ ] Querying habits with filter
+  - [x] Querying habits with filter
   - [ ] Modifying habits that are queried via task ID
 - [x] Deploy online with Railway
 ### TODO
