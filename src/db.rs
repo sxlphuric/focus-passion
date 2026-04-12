@@ -1,13 +1,14 @@
-use mongodb::bson::{self, doc};
-use mongodb::results::DeleteResult;
-use mongodb::results::InsertOneResult;
-use rocket::State;
+use mongodb::{
+    Database,
+    bson::{self, doc},
+    results::{DeleteResult, InsertOneResult},
+};
 use rocket::futures::TryStreamExt;
 
 use crate::models::Task;
 
 pub async fn fetch_tasks(
-    db: &mongodb::Database,
+    db: &Database,
     user_id: &str,
     predicate: bson::Document,
 ) -> Vec<bson::Document> {
@@ -19,7 +20,7 @@ pub async fn fetch_tasks(
 }
 
 pub async fn insert_task(
-    db: &mongodb::Database,
+    db: &Database,
     user_id: &str,
     task: &Task,
 ) -> Result<InsertOneResult, mongodb::error::Error> {
@@ -28,7 +29,7 @@ pub async fn insert_task(
 }
 
 pub async fn delete_task(
-    db: &mongodb::Database,
+    db: &Database,
     user_id: &str,
     task_id: &str,
 ) -> Result<DeleteResult, mongodb::error::Error> {
