@@ -22,6 +22,16 @@ pub async fn fetch_tasks(
     cursor.try_collect().await.unwrap()
 }
 
+pub async fn fetch_task(
+    db: &Database,
+    user_id: &str,
+    predicate: bson::Document,
+) -> Result<Option<Task>, Error> {
+    let collection = db.collection::<Task>(user_id);
+
+    collection.find_one(predicate).await
+}
+
 pub async fn insert_task(
     db: &Database,
     user_id: &str,
