@@ -13,3 +13,7 @@ h1 {
     font-family: "patricstar";
     src: url(/PatrickHand-Regular.ttf);
 }
+
+#task-list:has(.task-item) #empty-message {
+    display: none;
+}
