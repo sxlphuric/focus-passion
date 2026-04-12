@@ -1,6 +1,9 @@
+use mongodb::options::FindOneAndUpdateOptions;
 use mongodb::{
     Database,
     bson::{self, doc},
+    error::Error,
+    options::ReturnDocument,
     results::{DeleteResult, InsertOneResult},
 };
 use rocket::futures::TryStreamExt;
