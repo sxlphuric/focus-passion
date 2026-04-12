@@ -120,12 +120,17 @@ Run the package with `cargo`:
 /
 .github/workflows
 |_ rust.yml - github workflow for Cargo
-examples
-|_ ... - rocket-rs examples
 mongodb
 |_ compose.yml - compose file to start mongodb
 src
-|_ app.rs - the rocket app
+|_ main.rs - orchestrator
+|_ db.rs - communicates with mongodb
+|_ models.rs - models for mongodb
+|_ tests.rs - tests from example (to change)
+|_ api
+  |_ mod.rs - module declaration
+  |_ private.rs - contains apis that return json
+  |_ public.rs - contains apis that return high level templates
 templates - html templates
 |_ index.html.tera - main index page
 static
@@ -135,11 +140,8 @@ static
 |_ uuid.ts - uuid generator
 |_ script.js - empty js script
 Plan.txt - Project plan
-Procfile - Railway settings
-Rocket.toml - Rocket config
 codespace_install_rust.sh - Script to quickly install rust in a codespace
 rust-toolchain.toml - File describing rust toolchain
-tsconfig.json - typescript config
 README.md - this file
 LICENSE - license (gplv3)
 Cargo.lock - idk
