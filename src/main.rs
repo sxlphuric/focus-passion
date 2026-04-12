@@ -1,12 +1,17 @@
 use mongodb::{Client, bson};
 use nanoid::nanoid;
 use rocket::{
-    State, form::Form, fs::FileServer, futures::TryStreamExt, http::CookieJar, response::Redirect,
+    State,
+    form::Form,
+    fs::FileServer,
+    futures::TryStreamExt,
+    http::{Cookie, CookieJar},
     serde::json::Json,
 };
 use rocket_dyn_templates::{Template, context};
 use serde::Serialize;
 use std::vec;
+use uuid::Uuid;
 
 #[macro_use]
 extern crate rocket;
@@ -172,10 +177,14 @@ async fn get_tasks(
 // render main tracker
 #[get("/")]
 async fn main_page(cookies: &CookieJar<'_>, db: &State<mongodb::Database>) -> Template {
-    let user_id = cookies
-        .get("uuid")
-        .map(|crumb| crumb.value().to_string())
-        .unwrap_or("error".to_string());
+    let user_id = match cookies.get("uuid") {
+        Some(c) => c.value().to_string(),
+        None => {
+            let uuid = Uuid::new_v4().to_string();
+            cookies.add(Cookie::build(("uuid", uuid.clone())).path("/").permanent());
+            uuid
+        }
+    };
 
     let tasks = fetch_user_tasks(db, &user_id).await;
 
