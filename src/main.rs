@@ -42,6 +42,7 @@ struct TaskOptions<'r> {
     project: Option<&'r str>,
     section: Option<&'r str>,
     tags: Option<&'r str>,
+    completed: Option<bool>,
 }
 
 // Try visiting:
@@ -115,7 +116,7 @@ async fn add_task(
     task.insert("due", opt.due);
     task.insert("section", opt.section);
     task.insert("project", opt.project);
-    task.insert("completed", false);
+    task.insert("completed", opt.completed.unwrap_or(false));
 
     if let Some(tags) = opt.tags {
         let tags_string = String::from(tags);
