@@ -2,5 +2,5 @@
         hx-post="/tasks/complete/{{task.id}}"
         hx-trigger="click"
         hx-swap="outerHTML"
-        hx-target="#completed-state-{{task.id}}"
+        hx-target="#task-{{task.id}}"
         {% if task.completed %}checked{%endif%}>
