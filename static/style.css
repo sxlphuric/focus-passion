@@ -1,3 +1,8 @@
+@font-face {
+    font-family: patricstar;
+    src: url(/PatrickHand-Regular.ttf) format("truetype");
+}
+
 body {
     background-color: #ccc;
 }
@@ -7,11 +12,6 @@ h1 {
     font-size: 100px;
     font-family: patricstar, sans-serif;
     color: #000;
-}
-
-@font-face {
-    font-family: "patricstar";
-    src: url(/PatrickHand-Regular.ttf);
 }
 
 #task-list:has(.task-item) #empty-message {
