@@ -1,0 +1,6 @@
+<input type=checkbox id="completed-state-{{task.id}}"
+        hx-post="/tasks/complete/{{task.id}}"
+        hx-trigger="click"
+        hx-swap="outerHTML"
+        hx-target="#completed-state-{{task.id}}"
+        {% if task.completed %}checked{%endif%}>

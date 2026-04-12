@@ -80,6 +80,15 @@ pub async fn remove_task(
     ""
 }
 
-pub fn routes() -> Vec<Route> {
-    routes![get_tasks, add_task, remove_task]
+#[post("/complete/<id>")]
+pub async fn complete_task(
+    id: &str,
+    db: &State<mongodb::Database>,
+    cookies: &CookieJar<'_>,
+) -> Template {
+    let user_id = cookies.get("uuid").map(|c| c.value()).unwrap_or("error");
+
+    let task = db::toggle_completed_state(db, user_id, id).await;
+
+    Template::render("task_checkbox", context! { task: task.unwrap() })
 }

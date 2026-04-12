@@ -36,3 +36,40 @@ pub async fn delete_task(
     let collection = db.collection::<Task>(user_id);
     collection.delete_one(doc! { "id": task_id }).await
 }
+
+pub async fn set_completed_task(
+    db: &Database,
+    user_id: &str,
+    task_id: &str,
+    new_state: bool,
+) -> Result<Option<Task>, Error> {
+    let collection = db.collection::<Task>(user_id);
+    collection
+        .find_one_and_update(
+            doc! {"id": task_id},
+            doc! { "$set": { "completed": new_state } },
+        )
+        .await
+}
+
+pub async fn toggle_completed_state(
+    db: &Database,
+    user_id: &str,
+    task_id: &str,
+) -> Result<Option<Task>, Error> {
+    let collection = db.collection::<Task>(user_id);
+    let options = FindOneAndUpdateOptions::builder()
+        .return_document(ReturnDocument::After)
+        .build();
+    collection
+        .find_one_and_update(
+            doc! {"id": task_id},
+            vec![doc! {
+                "$set": {
+                    "completed": { "$not": ["$completed"]}
+                }
+            }],
+        )
+        .with_options(options)
+        .await
+}
