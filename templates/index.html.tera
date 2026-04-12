@@ -6,6 +6,7 @@
         <title>Task manager</title>
         <link rel="stylesheet" href="/style.css">
         <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     </head>
     <body>
         <h1>Task manager</h1>
