@@ -7,7 +7,7 @@ use rocket::futures::TryStreamExt;
 use crate::models::Task;
 
 pub async fn fetch_tasks(
-    db: &State<mongodb::Database>,
+    db: &mongodb::Database,
     user_id: &str,
     predicate: bson::Document,
 ) -> Vec<bson::Document> {
@@ -19,7 +19,7 @@ pub async fn fetch_tasks(
 }
 
 pub async fn insert_task(
-    db: &State<mongodb::Database>,
+    db: &mongodb::Database,
     user_id: &str,
     task: &Task,
 ) -> Result<InsertOneResult, mongodb::error::Error> {
@@ -28,7 +28,7 @@ pub async fn insert_task(
 }
 
 pub async fn delete_task(
-    db: &State<mongodb::Database>,
+    db: &mongodb::Database,
     user_id: &str,
     task_id: &str,
 ) -> Result<DeleteResult, mongodb::error::Error> {
