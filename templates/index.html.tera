@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <style>@font-face {font-family: patricstar; src: url(/PatrickHand-Regular.ttf);}</style>
+        <style>@font-face {font-family: 'patricstar'; src: url(/PatrickHand-Regular.ttf);}</style>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Task manager</title>
@@ -24,7 +24,7 @@
             {% for task in tasks %}
                 {% include "task_item" %}
             {% else %}
-                <em>Whew! No tasks!</em>
+                <li id="empty-message" hx-swap-oob="delete">Whew! No tasks!</li>
             {% endfor %}
             </ul>
         </div>
