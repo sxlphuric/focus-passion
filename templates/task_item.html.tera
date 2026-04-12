@@ -1,4 +1,6 @@
 <li class="task-item" id="task-{{ task.id }}">
+    <form>
+    </form>
                     <strong>{{ task.name }}</strong>
                     <p>{{ task.description | default(value="Empty") }}</p>
                     <em>{{ task.project }}</em>

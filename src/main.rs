@@ -12,7 +12,12 @@ use rocket_dyn_templates::{Template, context};
 use serde::Serialize;
 use std::vec;
 use uuid::Uuid;
+
+mod api;
+mod db;
 mod models;
+
+use crate::api::{private, public};
 
 #[macro_use]
 extern crate rocket;
@@ -144,29 +149,6 @@ async fn add_task(
     Template::render("task_item", context! { task })
 }
 
-async fn fetch_user_tasks(db: &State<mongodb::Database>, user_id: &str) -> Vec<bson::Document> {
-    let collection = db.collection::<bson::Document>(user_id);
-
-    let cursor = collection.find(bson::Document::new()).await.unwrap();
-
-    cursor.try_collect().await.unwrap()
-}
-
-#[get("/get")]
-async fn get_tasks(
-    cookies: &CookieJar<'_>,
-    db: &State<mongodb::Database>,
-) -> Json<Vec<bson::Document>> {
-    let user_id = cookies
-        .get("uuid")
-        .map(|crumb| crumb.value().to_string())
-        .unwrap_or("error".to_string());
-
-    let tasks = fetch_user_tasks(db, &user_id).await;
-
-    Json(tasks)
-}
-
 // render main tracker
 #[get("/")]
 async fn main_page(cookies: &CookieJar<'_>, db: &State<mongodb::Database>) -> Template {
@@ -179,7 +161,7 @@ async fn main_page(cookies: &CookieJar<'_>, db: &State<mongodb::Database>) -> Te
         }
     };
 
-    let tasks = fetch_user_tasks(db, &user_id).await;
+    let tasks = db::fetch_tasks(db, &user_id, bson::Document::new()).await;
 
     Template::render("index", context! { tasks })
 }
@@ -210,7 +192,7 @@ async fn rocket() -> _ {
     rocket::build()
         // .attach(Mongo::init())
         .manage(db)
-        .mount("/", routes![main_page, add_task, get_tasks])
+        .mount("/", routes![main_page, add_task, public::get_tasks])
         .mount("/", FileServer::from("static"))
         .mount("/wave", routes![wave, hello])
         .attach(Template::fairing())
