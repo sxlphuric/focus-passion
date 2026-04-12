@@ -124,8 +124,8 @@ async fn rocket() -> _ {
     let mongo_user =
         env::var("MONGO_INITDB_ROOT_USERNAME").expect("Set MONGO_INITDB_ROOT_USERNAME env");
 
-    let mongo_url = if env::var("MONGO_URL").is_ok() {
-        env::var("MONGO_URL").unwrap()
+    let mongo_url = if let Ok(url) = env::var("MONGO_URL") {
+        url
     } else {
         format!("mongodb://{}:{}@127.0.0.1:27017", mongo_user, mongo_pw)
     };
