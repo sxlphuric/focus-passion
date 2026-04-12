@@ -12,4 +12,7 @@
                         {% endfor %}
                     </ul>
                     {% endif %}
+                    <button hx-post="/tasks/remove/{{ task.id }}"
+                            hx-target="#task-{{task.id}}"
+                            hx-swap="outerHTML">Delete</button>
                 </li>
