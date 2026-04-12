@@ -4,6 +4,10 @@ use nanoid::nanoid;
 use rocket::{Route, State, form::Form, http::CookieJar, serde::json::Json};
 use rocket_dyn_templates::{Template, context};
 
+pub fn routes() -> Vec<Route> {
+    routes![get_tasks, add_task, remove_task, complete_task]
+}
+
 #[get("/get")]
 pub async fn get_tasks(
     cookies: &CookieJar<'_>,
