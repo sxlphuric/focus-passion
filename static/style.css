@@ -1,6 +1,7 @@
 @font-face {
     font-family: patricstar;
     src: url(/PatrickHand-Regular.ttf) format("truetype");
+    font-display: swap;
 }
 
 body {
