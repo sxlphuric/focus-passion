@@ -12,6 +12,7 @@ use rocket_dyn_templates::{Template, context};
 use serde::Serialize;
 use std::vec;
 use uuid::Uuid;
+mod models;
 
 #[macro_use]
 extern crate rocket;
@@ -34,7 +35,7 @@ struct Options<'r> {
     name: Option<&'r str>,
 }
 
-#[derive(FromForm, rocket::serde::Deserialize)]
+#[derive(FromForm, rocket::serde::Deserialize, rocket::serde::Serialize)]
 struct TaskOptions<'r> {
     name: &'r str,
     description: Option<&'r str>,
@@ -104,31 +105,28 @@ async fn add_task(
         .get("uuid")
         .map(|crumb| crumb.value().to_string())
         .unwrap_or("error".to_string());
-    let collection = db.collection::<bson::Document>(&user_id);
+    let collection = db.collection::<models::Task>(&user_id);
 
-    let task_id: String = nanoid!();
+    let task_id = nanoid!();
 
-    let mut task = bson::Document::new();
+    let tags_vec: Vec<String> = opt
+        .tags
+        .unwrap_or("")
+        .split(',')
+        .map(|s| s.trim().to_string())
+        .filter(|s| !s.is_empty())
+        .collect();
 
-    task.insert("id", &task_id);
-    task.insert("name", opt.name);
-    task.insert("description", opt.description);
-    task.insert("due", opt.due);
-    task.insert("section", opt.section);
-    task.insert("project", opt.project);
-    task.insert("completed", opt.completed.unwrap_or(false));
-
-    if let Some(tags) = opt.tags {
-        let tags_string = String::from(tags);
-        let tags_vec: Vec<String> = tags_string
-            .split(',')
-            .map(|s| s.trim().to_string())
-            .filter(|s| !s.is_empty())
-            .collect();
-        task.insert("tags", tags_vec);
-    } else {
-        task.insert("tags", Vec::<String>::new());
-    }
+    let task = models::Task {
+        id: task_id.clone(),
+        name: opt.name.to_string(),
+        description: opt.description.map(|s| s.to_string()),
+        due: opt.due,
+        section: opt.section.map(|s| s.to_string()),
+        project: opt.project.map(|s| s.to_string()),
+        tags: tags_vec,
+        completed: opt.completed.unwrap_or(false),
+    };
 
     let result = collection.insert_one(&task).await;
 
@@ -140,7 +138,7 @@ async fn add_task(
     let _response = Json(AddTaskResponse {
         success,
         message,
-        task_id,
+        task_id: task_id.clone(),
     });
 
     Template::render("task_item", context! { task })
