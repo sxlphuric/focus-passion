@@ -107,7 +107,7 @@ async fn main_page(cookies: &CookieJar<'_>, db: &State<mongodb::Database>) -> Te
         }
     };
 
-    let tasks = db::fetch_tasks(db, &user_id, bson::Document::new()).await;
+    let tasks = db::fetch_tasks(db, &user_id, bson::doc! { "completed": false }).await;
 
     Template::render("index", context! { tasks })
 }
