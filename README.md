@@ -153,6 +153,7 @@ Cargo.toml - Cargo dependencies
 - [ ] Make a good looking frontend
 - [ ] Fully functional frontend
 - [x] UUID with cookies
+- [ ] Proper tests
 - [ ] Finish the Rocket API
   - [x] Adding habits
   - [x] Removing habits
