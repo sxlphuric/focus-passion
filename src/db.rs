@@ -36,7 +36,7 @@ pub async fn insert_task(
     db: &Database,
     user_id: &str,
     task: &Task,
-) -> Result<InsertOneResult, mongodb::error::Error> {
+) -> Result<InsertOneResult, Error> {
     let collection = db.collection::<Task>(user_id);
     collection.insert_one(task).await
 }
@@ -45,7 +45,7 @@ pub async fn delete_task(
     db: &Database,
     user_id: &str,
     task_id: &str,
-) -> Result<DeleteResult, mongodb::error::Error> {
+) -> Result<DeleteResult, Error> {
     let collection = db.collection::<Task>(user_id);
     collection.delete_one(doc! { "id": task_id }).await
 }
