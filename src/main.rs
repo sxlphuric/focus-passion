@@ -149,15 +149,9 @@ async fn add_task(
 async fn fetch_user_tasks(db: &State<mongodb::Database>, user_id: &str) -> Vec<bson::Document> {
     let collection = db.collection::<bson::Document>(user_id);
 
-    let mut cursor = collection.find(bson::Document::new()).await.unwrap();
+    let cursor = collection.find(bson::Document::new()).await.unwrap();
 
-    let mut documents: Vec<bson::Document> = Vec::new();
-
-    while let Some(doc) = cursor.try_next().await.unwrap() {
-        documents.push(doc);
-    }
-
-    documents
+    cursor.try_collect().await.unwrap()
 }
 
 #[get("/get")]
