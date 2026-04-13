@@ -66,6 +66,12 @@ pub async fn modify_task(
         .await
 }
 
+pub async fn get_unique_projects(db: &Database, user_id: &str) -> Result<Vec<bson::Bson>, Error> {
+    let collection = db.collection::<Task>(user_id);
+
+    collection.distinct("project", doc! {}).await
+}
+
 pub async fn toggle_completed_state(
     db: &Database,
     user_id: &str,
