@@ -5,7 +5,7 @@
 }
 
 body {
-    background-color: #ddd;
+    background-color: #eee;
     font-family: patricstar, sans-serif;
     margin: 0px;
     padding: 0px;
@@ -15,18 +15,17 @@ h1 {
     text-align: center;
     font-size: 100px;
     color: #000;
-    margin: 0;
-    margin-bottom: 65px;
+    margin: 10 0;
 }
 
 .new-task {
-    background-color: #ddd;
+    background-color: #eee;
     text-align: center;
 }
 
 .new-int {
     height: 35px;
-    margin: 0px;
+    margin: 0px 7.5px;
     padding: 0px;
     border-radius: 10px;
     border-width: 3px;
@@ -42,25 +41,38 @@ h1 {
 
 .new-int::placeholder {
     padding-top: 9px;
-    padding-left: 5px;
     font-family: patricstar, sans-serif;
 }
 
 input.new-int {
     width: 200px;
-    height: 35px;
 }
 
 textarea.new-int {
     width: 450px;
     vertical-align: bottom;
-    height: 35px;
-    margin: 0px 20px;
 }
 
 button.new-int {
     width: 75px;
-    height: 35px;
+}
+
+div.tasks-list {
+    background-color: #eee;
+    text-align: center;
+}
+
+ul.task-list {
+    display: inline-block;
+    background-color: #aaa;
+    text-align: center;
+    text-decoration: none;
+    width: 1000px;
+    padding: 10px;
+}
+
+li.task-items {
+    
 }
 
 #task-list:has(.task-item) #empty-message {
