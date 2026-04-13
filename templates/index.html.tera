@@ -25,7 +25,7 @@
             {% for task in tasks %}
                 {% include "task_item" %}
             {% else %}
-                <li id="empty-message" hx-swap-oob="delete">Whew! No tasks!</li>
+                <li id="empty-message">Whew! No tasks!</li>
             {% endfor %}
             </ul>
         </div>
