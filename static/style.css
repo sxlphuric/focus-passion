@@ -69,10 +69,17 @@ ul.task-list {
     text-decoration: none;
     width: 1000px;
     padding: 10px;
+    margin: 0px;
 }
 
-li.task-items {
-    
+li.task-item {
+    display: flex;
+    list-style-type:none;
+}
+
+#empty-message {
+    list-style-type:none;
+    display: block;
 }
 
 #task-list:has(.task-item) #empty-message {
