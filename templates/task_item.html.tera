@@ -14,6 +14,5 @@
     <button hx-post="/tasks/remove/{{ task.id }}"
     hx-target="#task-{{task.id}}"
     hx-swap="outerHTML">Delete</button>
-        </button>
     </button>
 </li>
