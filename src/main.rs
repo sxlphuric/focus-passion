@@ -41,7 +41,7 @@ struct TaskOptions<'r> {
     name: &'r str,
     description: Option<&'r str>,
     due: Option<u32>,
-    project: Option<&'r str>,
+    project: &'r str,
     section: Option<&'r str>,
     tags: Option<&'r str>,
     completed: Option<bool>,

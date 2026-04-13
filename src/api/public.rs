@@ -50,7 +50,7 @@ pub async fn add_task(
         description: opt.description.map(|s| s.to_string()),
         due: opt.due,
         section: opt.section.map(|s| s.to_string()),
-        project: opt.project.map(|s| s.to_string()),
+        project: opt.project.to_string(),
         tags: tags_vec,
         completed: opt.completed.unwrap_or(false),
     };
