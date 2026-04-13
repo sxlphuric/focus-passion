@@ -13,20 +13,19 @@
      x-data="{ {% for task in tasks %}
      '{{task.id}}': false,
      {% endfor %} }" x-on:keydown.escape="{% for task in tasks %} {{task.id}}=false; {% endfor %}"
-      
+
     >
     <!-- TODO htmx modal inserting -->
     {%include "modals" %}
     <h1>Task manager</h1>
-        {% include "new_task" %}    
+        {% include "new_task" %}
         <div class="tasks-list">
             <h2>Tasks</h2>
             <ul id="task-list" class="task-list">
             {% for task in tasks %}
                 {% include "task_item" %}
-            {% else %}
-                <li id="empty-message">Whew! No tasks!</li>
             {% endfor %}
+                <li id="empty-message">Whew! No tasks!</li>
             </ul>
         </div>
     </body>
