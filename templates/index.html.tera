@@ -14,6 +14,12 @@
             <form hx-post="/tasks/add" hx-target="#task-list" hx-swap="beforeend" hx-on::after-request="this.reset()" class="new-task">
                 <div class="new-int-">
                 <input type="text" name="name" class="new-int" placeholder="Task" required />
+                <input type="text" name="project" class="new-int" placeholder="Default" list="project-dropdown" reqiored />
+                <datalist class="new-int" id="project-dropdown">
+                    {% for project in projects %}
+                    <option value="{{project}}">
+                    {%endfor%}
+                </datalist>
                 <textarea name="description" placeholder="Description" class="new-int"></textarea>
                 <button type="submit" class="new-int">Add</button>
                 </div>
