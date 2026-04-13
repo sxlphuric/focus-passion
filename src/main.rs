@@ -108,8 +108,11 @@ async fn main_page(cookies: &CookieJar<'_>, db: &State<mongodb::Database>) -> Te
     };
 
     let tasks = db::fetch_tasks(db, &user_id, bson::doc! { "completed": false }).await;
+    let projects = db::get_unique_projects(db, &user_id)
+        .await
+        .unwrap_or_default();
 
-    Template::render("index", context! { tasks })
+    Template::render("index", context! { tasks, projects })
 }
 
 // fn new_habit(habit: Habit<'_>) ->
