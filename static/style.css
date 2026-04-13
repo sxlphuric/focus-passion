@@ -78,6 +78,10 @@ li.task-item {
     list-style-type:none;
 }
 
+button.show-more {
+    display: flex;
+}
+
 #empty-message {
     list-style-type:none;
     display: block;
