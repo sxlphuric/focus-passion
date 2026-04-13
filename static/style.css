@@ -99,7 +99,6 @@ button.show-more {
 
 .modal {
   display: flex;
-  visibility: hidden;
   align-items: center;
   justify-content: center;
   position: fixed;
