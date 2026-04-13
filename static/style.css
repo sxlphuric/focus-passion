@@ -15,7 +15,8 @@ h1 {
     text-align: center;
     font-size: 100px;
     color: #000;
-    margin: 10 0;
+    margin: 0px;
+    margin-bottom: 70px;
 }
 
 .new-task {
