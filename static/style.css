@@ -119,3 +119,7 @@ button.show-more {
   justify-content: space-between;
   border-bottom: 2px solid black;
 }
+
+.overlay {
+    margin: 0px;
+}
