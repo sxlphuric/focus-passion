@@ -40,7 +40,7 @@ h1 {
 }
 
 .new-int::placeholder {
-    padding-top: 9px;
+    padding: 9px;
     font-family: patricstar, sans-serif;
 }
 
@@ -67,9 +67,10 @@ ul.task-list {
     background-color: #aaa;
     text-align: center;
     text-decoration: none;
-    width: 1000px;
+    width: 1010px;
     padding: 10px;
     margin: 0px;
+    border-radius: 10px;
 }
 
 li.task-item {
@@ -84,4 +85,34 @@ li.task-item {
 
 #task-list:has(.task-item) #empty-message {
     display: none;
+}
+
+.show-more {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.modal {
+  display: flex;
+  visibility: hidden;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+}
+.model-inner {
+  background-color: white;
+  border-radius: 0.5em;
+  max-width: 600px;
+  padding: 2em;
+  margin: auto;
+}
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid black;
 }
