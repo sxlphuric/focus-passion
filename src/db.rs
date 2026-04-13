@@ -50,19 +50,26 @@ pub async fn delete_task(
     collection.delete_one(doc! { "id": task_id }).await
 }
 
-pub async fn set_completed_task(
+pub async fn modify_task(
     db: &Database,
     user_id: &str,
     task_id: &str,
-    new_state: bool,
+    parameter: &str,
+    new_state: impl Into<bson::Bson>,
 ) -> Result<Option<Task>, Error> {
     let collection = db.collection::<Task>(user_id);
     collection
         .find_one_and_update(
             doc! {"id": task_id},
-            doc! { "$set": { "completed": new_state } },
+            doc! { "$set": { parameter: new_state } },
         )
         .await
+}
+
+pub async fn get_unique_projects(db: &Database, user_id: &str) -> Result<Vec<bson::Bson>, Error> {
+    let collection = db.collection::<Task>(user_id);
+
+    collection.distinct("project", doc! {}).await
 }
 
 pub async fn toggle_completed_state(
