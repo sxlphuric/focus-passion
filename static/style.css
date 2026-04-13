@@ -6,7 +6,7 @@
 
 body {
     background-color: #ccc;
-    font-family: patricstar;
+    font-family: patricstar, sans-serif;
     margin: 0px;
     padding: 0px;
 }
@@ -21,7 +21,6 @@ h1 {
 .new-task {
     background-color: #ccc;
     text-align: center;
-
 }
 
 .new-int {
@@ -42,7 +41,7 @@ h1 {
 
 .new-int::placeholder {
     padding-top: 9px;
-    font-family: patricstar;
+    font-family: patricstar, sans-serif;
 }
 
 input.new-int {
