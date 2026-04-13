@@ -1,0 +1,22 @@
+{% for task in tasks %}
+        <div class="overlay" x-show="{{task.id}}" x-cloak></div>
+        <div
+            class="modal"
+            role="dialog"
+            tabindex="-1"
+            x-show="{{task.id}}"
+            x-on:click.away="{{task.id}} = false"
+            x-cloak
+            x-transition
+        >
+            <div class="model-inner">
+                <div class="modal-header">
+                    <h3>{{task.name}}</h3>
+                    <button aria-label="Close" x-on:click="{{task.id}}=false">✖</button>
+                </div>
+            <p>
+                {{task.description}}
+            </p>
+        </div>
+    </div>
+{% endfor %}
