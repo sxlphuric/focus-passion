@@ -1,5 +1,6 @@
 #[derive(FromForm, rocket::serde::Deserialize, rocket::serde::Serialize)]
 pub struct Task {
+    pub user_id: String,
     pub id: String,
     pub name: String,
     pub description: Option<String>,

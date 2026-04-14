@@ -12,13 +12,13 @@ pub fn routes() -> Vec<Route> {
 pub async fn get_tasks(
     cookies: &CookieJar<'_>,
     db: &State<mongodb::Database>,
-) -> Json<Vec<bson::Document>> {
+) -> Json<Vec<crate::models::Task>> {
     let user_id = cookies
         .get("uuid")
         .map(|crumb| crumb.value().to_string())
         .unwrap_or("error".to_string());
 
-    let tasks = crate::db::fetch_tasks(db, &user_id, bson::Document::new()).await;
+    let tasks = crate::db::fetch_tasks(db, bson::doc! { "user_id": user_id }).await;
 
     Json(tasks)
 }
@@ -45,6 +45,7 @@ pub async fn add_task(
         .collect();
 
     let task = crate::models::Task {
+        user_id: user_id.clone(),
         id: task_id.clone(),
         name: opt.name.to_string(),
         description: opt.description.map(|s| s.to_string()),
@@ -55,7 +56,7 @@ pub async fn add_task(
         completed: opt.completed.unwrap_or(false),
     };
 
-    let result = crate::db::insert_task(db, &user_id, &task);
+    let result = crate::db::insert_task(db, &task);
 
     let (success, message) = match result.await {
         Ok(_) => (true, String::from("Successfully added task")),

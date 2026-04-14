@@ -25,6 +25,7 @@ pub async fn add_task(
         .collect();
 
     let task = crate::models::Task {
+        user_id: user_id.clone(),
         id: task_id.clone(),
         name: opt.name.to_string(),
         description: opt.description.map(|s| s.to_string()),
@@ -35,7 +36,7 @@ pub async fn add_task(
         completed: opt.completed.unwrap_or(false),
     };
 
-    let result = crate::db::insert_task(db, &user_id, &task);
+    let result = crate::db::insert_task(db, &task);
 
     let (success, message) = match result.await {
         Ok(_) => (true, String::from("Successfully added task")),
