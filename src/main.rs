@@ -133,10 +133,18 @@ async fn rocket() -> _ {
         format!("mongodb://{}:{}@127.0.0.1:27017", mongo_user, mongo_pw)
     };
 
+    let app_name = "focus_passion";
+
+    let db_name = if env::var("FOCUS_PASSION_DEV").is_ok() {
+        app_name.to_string()
+    } else {
+        format!("{}_prod", app_name)
+    };
+
     let db = Client::with_uri_str(mongo_url)
         .await
         .expect("Error connecting to mongodb")
-        .database("tasks");
+        .database(&db_name);
 
     rocket::build()
         // .attach(Mongo::init())
