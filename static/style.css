@@ -124,3 +124,18 @@ button.show-more {
 .overlay {
     margin: 0px;
 }
+
+textarea.task-description {
+    border: none;
+    font-family: patricstar, sans-serif;
+    font-size: 15px;
+    resize: none;
+    width: 400px;
+    height: 100px;
+    box-sizing: border-box;
+}
+
+textarea.task-description:focus {
+    outline: none;
+    border: none;
+}
