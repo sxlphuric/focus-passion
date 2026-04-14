@@ -3,4 +3,5 @@
         hx-trigger="click"
         hx-swap="outerHTML"
         hx-target="#task-{{task.id}}"
+        autocomplete="off"
         {% if task.completed %}checked{%endif%}>
