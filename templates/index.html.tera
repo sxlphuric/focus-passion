@@ -9,15 +9,9 @@
         <script defer src="https://unpkg.com/alpinejs@3.15.11/dist/cdn.min.js"></script>
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     </head>
-    <body
-     x-data="{ {% for task in tasks %}
-     '{{task.id}}': false,
-     {% endfor %} }" x-on:keydown.escape="{% for task in tasks %} {{task.id}}=false; {% endfor %}"
-
-    >
-    <!-- TODO htmx modal inserting -->
-    {%include "modals" %}
-    <h1>Task manager</h1>
+    <body>
+        <div id="modal-portal"></div>
+        <h1>Task manager</h1>
         {% include "new_task" %}
         <div class="tasks-list">
             <h2>Tasks</h2>
