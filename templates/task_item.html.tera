@@ -17,5 +17,10 @@
     <button hx-post="/tasks/remove/{{ task.id }}"
     hx-target="#task-{{task.id}}"
     hx-swap="outerHTML">Delete</button>
-    </button>
+    <template x-teleport="#modal-portal">
+          {% include "overlay" %}
+        </template>
+    <template x-teleport="#modal-portal">
+      {% include "modal" %}
+    </template>
 </li>
