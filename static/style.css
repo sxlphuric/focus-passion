@@ -76,7 +76,8 @@ ul.task-list {
 
 li.task-item {
     display: flex;
-    list-style-type:none;
+    list-style-type: none;
+    cursor: pointer;
 }
 
 button.show-more {
