@@ -1,0 +1,7 @@
+{% include "task_item" %}
+
+<datalist id="project-dropdown" hx-swap-oob="true">
+    {% for project in projects %}
+        <option value="{{project}}">
+    {% endfor %}
+</datalist>

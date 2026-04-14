@@ -68,7 +68,11 @@ pub async fn add_task(
         task_id: task_id.clone(),
     });
 
-    Template::render("task_item", context! { task })
+    let projects = crate::db::get_unique_projects(db, &user_id)
+        .await
+        .unwrap_or_default();
+
+    Template::render("fragments/add_task_response", context! { task, projects })
 }
 
 #[post("/remove/<id>")]
