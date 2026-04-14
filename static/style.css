@@ -80,6 +80,10 @@ li.task-item {
     cursor: pointer;
 }
 
+li.task-item:hover {
+    background-color: #ccc;
+}
+
 button.show-more {
     display: flex;
 }
