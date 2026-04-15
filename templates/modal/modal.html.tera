@@ -21,6 +21,9 @@
                 >
                     <i class="fa-solid fa-xmark"></i>
                 </button>
+                <span style="color:red;" x-show="name.trim() === ''" x-transition>
+                                Name cannot be empty
+                            </span>
             </span>
             <div class="header-buttons-row">
             <button hx-post="/tasks/remove/{{ task.id }}"
