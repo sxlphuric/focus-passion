@@ -13,7 +13,7 @@
         <div class="modal-header">
             <span style="display: flex; align-items: center; gap: 0.5rem;">
                 {% include "modal/task_checkbox" %}
-                <input type="text" class="task-name" x-model="name" value="{{task.name}}"/>
+                <input type="text" class="task-name-modal" x-model="name" value="{{task.name}}" required/>
                 <button
                     x-show="name !== lastName"
                     x-transition

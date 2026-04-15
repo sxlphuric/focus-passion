@@ -145,13 +145,13 @@ button.show-more {
 }
 
 .task-description,
-.task-name {
+.task-name-modal {
     border: none;
     font-family: patricstar, sans-serif;
     box-sizing: border-box;
 }
 
-.task-name {
+.task-name-modal {
     font-size: 1.3em;
 }
 
@@ -164,13 +164,13 @@ button.show-more {
 }
 
 .task-description:focus,
-.task-name:focus {
+.task-name-modal:focus {
     outline: none;
     border: none;
 }
 
 .task-description:hover,
-.task-name:hover {
+.task-name-modal:hover {
     outline: 1px solid rgba(50, 50, 50, 0.3);
 }
 
