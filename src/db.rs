@@ -52,11 +52,15 @@ pub async fn modify_task(
     new_state: impl Into<bson::Bson>,
 ) -> Result<Option<Task>, Error> {
     let collection = db.collection::<Task>(coll());
+    let options = FindOneAndUpdateOptions::builder()
+        .return_document(ReturnDocument::After)
+        .build();
     collection
         .find_one_and_update(
             doc! {"id": task_id, "user_id": user_id },
             doc! { "$set": { parameter: new_state } },
         )
+        .with_options(options)
         .await
 }
 
