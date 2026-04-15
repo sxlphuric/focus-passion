@@ -1,0 +1,59 @@
+<div
+    class="modal"
+    role="dialog"
+    tabindex="-1"
+    x-show="open"
+    x-on:click.away="open = false"
+    x-cloak
+    x-transition
+    x-init="htmx.process($el)"
+    x-on:keydown.escape="open=false"
+>
+    <div class="model-inner">
+        <div class="modal-header">
+            <span style="display: flex; align-items: center; gap: 0.5rem;">
+                {% include "modal/task_checkbox" %}
+                <input type="text" class="task-name" x-model="name" value="{{task.name}}"/>
+            </span>
+            <div class="header-buttons-row">
+            <button hx-post="/tasks/remove/{{ task.id }}"
+                            hx-target="#task-{{task.id}}"
+                            hx-swap="outerHTML" aria-label="Delete">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+            <button aria-label="Close" x-on:click="open = false"
+                hx-post="/tasks/modify/{{task.id}}/name"
+                hx-swap="outerHTML"
+                hx-target="#task-{{task.id}}"
+                :hx-vals='JSON.stringify({ "data.description": desc })'
+                x-on:click="lastName = name">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            </div>
+        </div>
+
+        <textarea class="task-description" x-model="desc">{{ task.description }}</textarea>
+
+        <div class="buttons-row">
+            <button
+                x-show="desc !== lastDesc"
+                x-transition
+                x-on:click="desc = lastDesc"
+            >
+                <i class="fa-solid fa-circle-xmark"></i>
+            </button>
+            <button
+                hx-post="/tasks/modify/{{ task.id }}/description"
+                hx-swap="outerHTML"
+                hx-target="#task-{{task.id}}"
+                x-show="desc !== lastDesc"
+                x-transition
+                :hx-vals='JSON.stringify({ "data.description": desc })'
+                x-on:click="lastDesc = desc"
+                x-on:keydown.enter="open = false"
+            >
+                <i class="fa-solid fa-circle-check"></i>
+            </button>
+        </div>
+    </div>
+</div>

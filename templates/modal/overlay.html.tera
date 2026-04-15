@@ -1,0 +1,2 @@
+<div class="overlay" x-show="open" x-cloak x-transition.opacity
+x-on:keydown.escape="open=false"></div>

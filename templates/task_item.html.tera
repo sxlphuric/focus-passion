@@ -24,6 +24,6 @@
           {% include "modal/overlay" %}
         </template>
     <template x-teleport="#modal-portal">
-      {% include "modal" %}
+      {% include "modal/modal" %}
     </template>
 </li>
