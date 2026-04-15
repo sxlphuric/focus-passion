@@ -168,3 +168,12 @@ button.show-more {
     outline: none;
     border: none;
 }
+
+.task-description:hover,
+.task-name:hover {
+    outline: 1px solid rgba(50, 50, 50, 0.3);
+}
+
+[x-cloak] {
+    display: none !important;
+}
