@@ -27,8 +27,7 @@
                             hx-target="#task-{{task.id}}"
                             hx-swap="outerHTML" aria-label="Delete">
                                 <i class="fa-solid fa-trash-can"></i>
-                            </button>
-            <button aria-label="Close" x-on:click="open = false"
+                            </button><button aria-label="Close" x-on:click="open = false"
                 hx-post="/tasks/modify/{{task.id}}/name"
                 hx-swap="outerHTML"
                 hx-target="#task-{{task.id}}"
