@@ -10,3 +10,8 @@ pub struct Task {
     pub tags: Vec<String>,
     pub completed: bool,
 }
+
+#[derive(FromForm, rocket::serde::Serialize, rocket::serde::Deserialize)]
+pub struct ModifyTaskState {
+    pub data: std::collections::HashMap<String, String>,
+}
