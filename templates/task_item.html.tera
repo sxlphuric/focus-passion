@@ -3,22 +3,25 @@
     x-on:keydown.escape="open=false"
     x-on:click="open = true"
 >
-  {% include "task_checkbox" %}
-  <strong>{{ task.name }}</strong>
-  <em>{{ task.project }}</em>
-  <em>{{ task.section | default(value="Not Sectioned") }}</em>
-    {% if task.tags %}
-        <ul>
-            {% for tag in task.tags %}
-                <li>{{ tag }}</li>
-            {% endfor %}
-            </ul>
-        {% endif %}
-    <button hx-post="/tasks/remove/{{ task.id }}"
-    hx-target="#task-{{task.id}}"
-    hx-swap="outerHTML">Delete</button>
-    <template x-teleport="#modal-portal">
-          {% include "overlay" %}
+    <div class="task-row">
+        <div class="checkbox-container">
+            {% include "task_checkbox" %}
+        </div>
+        <div class="task-content" x-on:click="open = true">
+            <strong>{{ task.name }}</strong>
+              <em>{{ task.project }}</em>
+              <em>{{ task.section | default(value="Not Sectioned") }}</em>
+                {% if task.tags %}
+                    <ul>
+                        {% for tag in task.tags %}
+                            <li>{{ tag }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                        </div>
+    </div>
+      <template x-teleport="#modal-portal">
+          {% include "modal/overlay" %}
         </template>
     <template x-teleport="#modal-portal">
       {% include "modal" %}
