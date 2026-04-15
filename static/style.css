@@ -134,9 +134,18 @@ button.show-more {
     height: 100vh;
 }
 
-textarea.task-description {
+.task-description,
+.task-name {
     border: none;
     font-family: patricstar, sans-serif;
+    box-sizing: border-box;
+}
+
+.task-name {
+    font-size: 1.3em;
+}
+
+.task-description {
     font-size: 15px;
     resize: none;
     width: 400px;
@@ -144,7 +153,8 @@ textarea.task-description {
     box-sizing: border-box;
 }
 
-textarea.task-description:focus {
+.task-description:focus,
+.task-name:focus {
     outline: none;
     border: none;
 }
