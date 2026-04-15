@@ -77,6 +77,16 @@ ul.task-list {
 li.task-item {
     display: flex;
     list-style-type: none;
+}
+
+.task-row {
+    display: flex;
+    width: 100%;
+}
+
+.task-content {
+    display: flex;
+    width: 100%;
     cursor: pointer;
 }
 
