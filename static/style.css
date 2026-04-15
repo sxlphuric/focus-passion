@@ -175,6 +175,11 @@ button.show-more {
     outline: 1px solid rgba(50, 50, 50, 0.3);
 }
 
+.nope {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 [x-cloak] {
     display: none !important;
 }
