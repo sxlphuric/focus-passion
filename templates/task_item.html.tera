@@ -1,7 +1,7 @@
 <li class="task-item" id="task-{{ task.id }}"
-    x-data='{ open: false }'
+    x-data='{ open: false, desc: {{ task.description | default(value="") | json_encode | safe }},
+    lastDesc: {{ task.description | default(value="") | json_encode | safe }}, name: {{ task.name | json_encode | safe}}, lastName: {{task.name|json_encode|safe}} }'
     x-on:keydown.escape="open=false"
-    x-on:click="open = true"
 >
     <div class="task-row">
         <div class="checkbox-container">
