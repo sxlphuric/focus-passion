@@ -14,6 +14,13 @@
             <span style="display: flex; align-items: center; gap: 0.5rem;">
                 {% include "modal/task_checkbox" %}
                 <input type="text" class="task-name" x-model="name" value="{{task.name}}"/>
+                <button
+                    x-show="name !== lastName"
+                    x-transition
+                    x-on:click="name = lastName"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </span>
             <div class="header-buttons-row">
             <button hx-post="/tasks/remove/{{ task.id }}"
