@@ -25,7 +25,7 @@
                 hx-post="/tasks/modify/{{task.id}}/name"
                 hx-swap="outerHTML"
                 hx-target="#task-{{task.id}}"
-                :hx-vals='JSON.stringify({ "data.description": desc })'
+                :hx-vals='JSON.stringify({ "data.name": name })'
                 x-on:click="lastName = name">
                 <i class="fa-solid fa-xmark"></i>
             </button>
