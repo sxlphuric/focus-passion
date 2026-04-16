@@ -1,5 +1,5 @@
 <div class="new-task">
-    <form hx-post="/tasks/add" hx-target="#task-list" hx-swap="beforeend" hx-on::after-request="this.reset()" class="new-task">
+    <form hx-post="/tasks/add" hx-target="#task-list" :hx-swap="activeTab === 'pending' ? 'beforeend' : 'none'" @htmx:after-request="$el.reset(); if (activeTab !== 'pending') $dispatch('task-notification')" class="new-task">
         <div class="new-int-">
             <input type="text" name="name" class="new-int" placeholder="Task" required />
             <input type="text" name="project" class="new-int" placeholder="Project" list="project-dropdown" required />
