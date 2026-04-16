@@ -6,6 +6,7 @@ use rocket::{
 };
 use rocket_dyn_templates::{Template, context};
 use serde::Serialize;
+use std::fs;
 use std::vec;
 use uuid::Uuid;
 
@@ -113,7 +114,11 @@ async fn main_page(cookies: &CookieJar<'_>, db: &State<mongodb::Database>) -> Te
         .await
         .unwrap_or_default();
 
-    Template::render("index", context! { tasks, projects })
+    let css_file = fs::read_to_string("static/style.css").unwrap_or_default();
+
+    let css_hash = seahash::hash(css_file.as_bytes());
+
+    Template::render("index", context! { tasks, projects, css_hash })
 }
 
 // fn new_habit(habit: Habit<'_>) ->
