@@ -40,18 +40,24 @@ h1 {
     border-radius: 10px;
 }
 
-.new-int::placeholder {
-    padding: 9px;
+textarea.new-int::placeholder {
+    padding: 0px;
     font-family: patricstar, sans-serif;
 }
 
 input.new-int {
     width: 200px;
+    padding-left: 9px;
+    font-family: patricstar, sans-serif;
 }
 
 textarea.new-int {
     width: 450px;
+    height: 25.25px;
     vertical-align: bottom;
+    padding-top: 9px;
+    padding-left: 9px;
+    font-family: patricstar, sans-serif;
 }
 
 button.new-int {
