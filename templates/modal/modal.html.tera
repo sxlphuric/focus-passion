@@ -67,6 +67,51 @@
             >
                 <i class="fa-solid fa-circle-check"></i>
             </button>
+
+            <button class="i-button priority-button" x-on:click="priorityMenuOpen = !priorityMenuOpen">
+
+            {% if task.priority == "high" %}
+            <i class="fa-regular fa-flag" style="color: rgb(220,17,17);"></i>
+            {%elif task.priority == "medium" %}
+            <i class="fa-regular fa-flag" style="color: rgb(255,218,3);"></i>
+            {%elif task.priority == "low" %}
+            <i class="fa-regular fa-flag" style="color: rgb(3,182,255);"></i>
+            {%else%}
+            <i class="fa-regular fa-flag" style="color: rgb(68,68,68);"></i>
+            {%endif%}
+
+            </button>
+
+            <div class="priority" style="position: relative;">
+
+            <div class="priority-menu" x-show="priorityMenuOpen" @click.away="priorityMenuOpen=false" x-cloak x-transition hx-post="/tasks/modify/{{task.id}}/priority" hx-vals='{ "data.priority": "high" }' hx-target="#task-{{task.id}}" hx-swap="outerHTML" x-on:click="priorityMenuOpen = false">
+                <button class="i-label-button" x-on:click="priorityMenuOpen = false">
+                    <span>
+                        <i class="fa-regular fa-flag" style="color: rgb(220,17,17);"></i>
+                        High
+                    </span>
+                </button>
+                <button class="i-label-button" hx-post="/tasks/modify/{{task.id}}/priority" hx-vals='{ "data.priority": "medium" }' hx-target="#task-{{task.id}}" hx-swap="outerHTML" x-on:click="priorityMenuOpen = false">
+                                    <span>
+                                        <i class="fa-regular fa-flag" style="color: rgb(255,218,3);"></i>
+                                        Medium
+                                    </span>
+                                </button>
+                                <button class="i-label-button" x-on:click="priorityMenuOpen = false" hx-post="/tasks/modify/{{task.id}}/priority" hx-vals='{ "data.priority": "low" }' hx-target="#task-{{task.id}}" hx-swap="outerHTML" x-on:click="priorityMenuOpen = false">
+                                                    <span>
+                                                        <i class="fa-regular fa-flag" style="color: rgb(3,182,255);"></i>
+                                                        Low
+                                                    </span>
+                                                </button>
+                                                <button class="i-label-button" x-on:click="priorityMenuOpen = false" hx-post="/tasks/modify/{{task.id}}/priority" hx-vals='{ "data.priority": "none" }' hx-target="#task-{{task.id}}" hx-swap="outerHTML" x-on:click="priorityMenuOpen = false">
+                                                                    <span>
+                                                                        <i class="fa-regular fa-flag" style="color: rgb(68,68,68);"></i>
+                                                                        None
+                                                                    </span>
+                                                                </button>
+            </div>
+
+            </div>
         </div>
     </div>
 </div>
