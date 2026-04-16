@@ -10,7 +10,7 @@
             </datalist>
             <textarea name="description" placeholder="Description" class="new-int"></textarea>
             <select name="priority" placeholder="Choose one" class=new-int>
-                <option value="">None</option>
+                <option value="none">None</option>
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
