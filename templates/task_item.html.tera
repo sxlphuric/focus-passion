@@ -11,7 +11,17 @@
             <strong>{{ task.name }}</strong>
               <em>{{ task.project }}</em>
               <em>{{ task.section | default(value="Not Sectioned") }}</em>
-              <em>{{ task.priority | default(value="None") }}</em>
+              <div class="task-priority">
+              {% if task.priority == "high" %}
+                          <i class="fa-regular fa-flag" style="color: rgb(220,17,17);"></i>
+                          {%elif task.priority == "medium" %}
+                          <i class="fa-regular fa-flag" style="color: rgb(255,218,3);"></i>
+                          {%elif task.priority == "low" %}
+                          <i class="fa-regular fa-flag" style="color: rgb(3,182,255);"></i>
+                          {%else%}
+                          <i class="fa-regular fa-flag" style="color: rgb(68,68,68);"></i>
+                          {%endif%}
+              </div>
                 {% if task.tags %}
                     <ul>
                         {% for tag in task.tags %}
