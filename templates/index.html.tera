@@ -16,7 +16,11 @@
         {% include "new_task" %}
         <div class="task-list-container">
             <h2>Tasks</h2>
-            <ul id="task-list" class="task-list">
+            <div class="tabs-row">
+                <button x-on:click="activeTab = 'pending'; newTaskNotification=false;" :class="{ 'active': activeTab === 'pending', 'task-notification': newTaskNotification }" class="tab-button" hx-get="/tasks/list" hx-target="#task-list" hx-swap="outerHTML">Pending</button>
+                        <button x-on:click="activeTab = 'completed'" :class="{ 'active': activeTab === 'completed' }" class="tab-button" hx-get="/tasks/list?status=completed" hx-target="#task-list" hx-swap="outerHTML">Completed</button>
+            </div>
+                        <ul id="task-list" class="task-list">
             {% for task in tasks %}
                 {% include "task_item" %}
             {% endfor %}
