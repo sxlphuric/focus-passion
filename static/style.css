@@ -72,6 +72,7 @@ ul.task-list {
     padding: 10px;
     margin: 0px;
     border-radius: 10px;
+    border-top-left-radius: 0px;
 }
 
 li.task-item {
