@@ -1,5 +1,5 @@
 <li class="task-item" id="task-{{ task.id }}"
-    x-data='{ priorityMenuOpen: false, open: false, desc: {{ task.description | default(value="") | json_encode | safe }}, lastDesc: {{ task.description | default(value="") | json_encode | safe }}, name: {{ task.name | json_encode | safe}}, lastName: {{task.name|json_encode|safe}} }'
+    x-data='{ priorityMenuOpen: false, open: false, desc: {{ task.description | default(value="") | json_encode | escape | safe }}, lastDesc: {{ task.description | default(value="") | json_encode | escape | safe }}, name: {{ task.name | json_encode | escape | safe}}, lastName: {{task.name|json_encode| escape | safe}} }'
     x-on:keydown.escape="open=false"
 >
     <div class="task-row">
