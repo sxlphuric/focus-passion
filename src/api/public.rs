@@ -1,7 +1,12 @@
-use crate::{AddTaskResponse, TaskOptions, db};
+use crate::{TaskOptions, db};
 use mongodb::bson;
 use nanoid::nanoid;
-use rocket::{Route, State, form::Form, http::CookieJar, serde::json::Json};
+use rocket::{
+    Route, State,
+    form::Form,
+    http::{CookieJar, Status},
+    serde::json::Json,
+};
 use rocket_dyn_templates::{Template, context};
 
 pub fn routes() -> Vec<Route> {
@@ -36,7 +41,7 @@ pub async fn add_task(
     cookies: &CookieJar<'_>,
     opt: Form<TaskOptions<'_>>,
     db: &State<mongodb::Database>,
-) -> Template {
+) -> Result<Template, Status> {
     let user_id = cookies
         .get("uuid")
         .map(|crumb| crumb.value().to_string())
@@ -64,27 +69,23 @@ pub async fn add_task(
         priority: opt.priority,
     };
 
-    let result = crate::db::insert_task(db, &task);
+    let result = crate::db::insert_task(db, &task).await;
 
-    let (success, message) = match result.await {
-        Ok(_) => (true, String::from("Successfully added task")),
-        Err(e) => (false, format!("Error: {}", e)),
-    };
-
-    let _response = Json(AddTaskResponse {
-        success,
-        message: message.clone(),
-        task_id: task_id.clone(),
-    });
-
-    let projects = crate::db::get_unique_projects(db, &user_id)
-        .await
-        .unwrap_or_default();
-
-    Template::render(
-        "fragments/add_task_response",
-        context! { task, projects, success, message },
-    )
+    match result {
+        Ok(_) => {
+            let projects = crate::db::get_unique_projects(db, &user_id)
+                .await
+                .unwrap_or_default();
+            Ok(Template::render(
+                "fragments/add_task_response",
+                context! { task, projects },
+            ))
+        }
+        Err(e) => {
+            eprintln!("Db error: {:?}", e);
+            Err(Status::InternalServerError)
+        }
+    }
 }
 
 #[post("/remove/<id>")]
@@ -92,12 +93,18 @@ pub async fn remove_task(
     id: &str,
     db: &State<mongodb::Database>,
     cookies: &CookieJar<'_>,
-) -> &'static str {
+) -> Result<&'static str, Status> {
     let user_id = cookies.get("uuid").map(|c| c.value()).unwrap_or("error");
 
-    let _ = db::delete_task(db, user_id, id).await;
+    let result = db::delete_task(db, user_id, id).await;
 
-    ""
+    match result {
+        Ok(_) => Ok(""),
+        Err(e) => {
+            eprintln!("Db error: {:?}", e);
+            Err(Status::InternalServerError)
+        }
+    }
 }
 
 #[post("/complete/<id>")]
@@ -105,13 +112,20 @@ pub async fn complete_task(
     id: &str,
     db: &State<mongodb::Database>,
     cookies: &CookieJar<'_>,
-) -> &'static str {
+) -> Result<&'static str, Status> {
     let user_id = cookies.get("uuid").map(|c| c.value()).unwrap_or("error");
 
-    let _task = db::toggle_completed_state(db, user_id, id).await;
+    let result = db::toggle_completed_state(db, user_id, id).await;
 
     // Template::render("task_checkbox", context! { task: task.unwrap() })
-    ""
+
+    match result {
+        Ok(_) => Ok(""),
+        Err(e) => {
+            eprintln!("Db error: {:?}", e);
+            Err(Status::InternalServerError)
+        }
+    }
 }
 
 #[post("/modify/<id>/<param>", data = "<state>")]
@@ -121,7 +135,7 @@ pub async fn modify_task(
     cookies: &CookieJar<'_>,
     param: &str,
     state: Form<crate::models::ModifyTaskState>,
-) -> Template {
+) -> Result<Template, Status> {
     let user_id = cookies.get("uuid").map(|c| c.value()).unwrap_or("error");
 
     let val = state.data.get(param).cloned().unwrap_or_default();
@@ -132,12 +146,15 @@ pub async fn modify_task(
         bson::Bson::String(val)
     };
 
-    let task = db::modify_task(db, user_id, id, param, val_bson)
-        .await
-        .unwrap()
-        .unwrap();
+    let result = db::modify_task(db, user_id, id, param, val_bson).await;
 
-    Template::render("task_item", context! {task})
+    match result {
+        Ok(task) => Ok(Template::render("task_item", context! {task})),
+        Err(e) => {
+            eprintln!("Db error: {:?}", e);
+            Err(Status::InternalServerError)
+        }
+    }
 }
 
 #[get("/list?<status>")]
