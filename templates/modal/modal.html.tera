@@ -18,8 +18,9 @@
                     x-show="name !== lastName"
                     x-transition
                     x-on:click="name = lastName"
+                    class="i-button"
                 >
-                    <i class="fa-solid fa-xmark"></i>
+                    <i class="fa-solid fa-xmark" style="color: #fefefe;"></i>
                 </button>
                 <span style="color:red;" x-show="name.trim() === ''" x-transition>
                                 Name cannot be empty
@@ -28,9 +29,9 @@
             <div class="header-buttons-row">
             <button hx-post="/tasks/remove/{{ task.id }}"
                             hx-target="#task-{{task.id}}"
-                            hx-swap="outerHTML" aria-label="Delete">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button><button aria-label="Close" x-on:click="open = false"
+                            hx-swap="outerHTML" aria-label="Delete" class="i-button">
+                                <i class="fa-solid fa-trash-can" style="color: #fefefe;"></i>
+                            </button><button class="i-button" aria-label="Close" x-on:click="open = false"
                                 x-bind:disabled="name.trim() === ''"
                                 x-bind:class="name.trim() === '' ? nope"
                 hx-post="/tasks/modify/{{task.id}}/name"
@@ -38,7 +39,7 @@
                 hx-target="#task-{{task.id}}"
                 :hx-vals='JSON.stringify({ "data.name": name })'
                 x-on:click="lastName = name">
-                <i class="fa-solid fa-xmark"></i>
+                <i class="fa-solid fa-xmark" style="color:#fefefe;"></i>
             </button>
             </div>
         </div>
@@ -47,13 +48,15 @@
 
         <div class="buttons-row">
             <button
+                class="i-button"
                 x-show="desc !== lastDesc"
                 x-transition
                 x-on:click="desc = lastDesc"
             >
-                <i class="fa-solid fa-circle-xmark"></i>
+                <i class="fa-solid fa-circle-xmark" style="color: #fefefe;"></i>
             </button>
             <button
+                class="i-button"
                 hx-post="/tasks/modify/{{ task.id }}/description"
                 hx-swap="outerHTML"
                 hx-target="#task-{{task.id}}"
@@ -65,7 +68,7 @@
                 x-bind:disabled="name.trim() === ''"
                                                 x-bind:class="name.trim() === '' ? nope"
             >
-                <i class="fa-solid fa-circle-check"></i>
+                <i class="fa-solid fa-circle-check" style="color: #fefefe;"></i>
             </button>
 
             <button class="i-button priority-button" x-on:click="priorityMenuOpen = !priorityMenuOpen">
