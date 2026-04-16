@@ -14,7 +14,7 @@
         <div id="modal-portal"></div>
         <h1>Task manager</h1>
         {% include "new_task" %}
-        <div class="tasks-list">
+        <div class="task-list-container">
             <h2>Tasks</h2>
             <ul id="task-list" class="task-list">
             {% for task in tasks %}

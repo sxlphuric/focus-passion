@@ -58,7 +58,7 @@ button.new-int {
     width: 75px;
 }
 
-div.tasks-list {
+div.task-list-container {
     background-color: #eee;
     text-align: center;
 }
