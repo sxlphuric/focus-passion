@@ -1,8 +1,4 @@
-{% if success %}
 {% include "task_item" %}
-{% else %}
-<span style="color: red;"hx-swap="beforeend" hx-target="task-list">Error: {{message}}</span>
-{%endif%}
 
 <datalist id="project-dropdown" hx-swap-oob="true">
     {% for project in projects %}
