@@ -73,7 +73,7 @@ pub async fn add_task(
 
     let _response = Json(AddTaskResponse {
         success,
-        message,
+        message: message.clone(),
         task_id: task_id.clone(),
     });
 
@@ -81,7 +81,10 @@ pub async fn add_task(
         .await
         .unwrap_or_default();
 
-    Template::render("fragments/add_task_response", context! { task, projects })
+    Template::render(
+        "fragments/add_task_response",
+        context! { task, projects, success, message },
+    )
 }
 
 #[post("/remove/<id>")]
