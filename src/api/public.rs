@@ -5,7 +5,14 @@ use rocket::{Route, State, form::Form, http::CookieJar, serde::json::Json};
 use rocket_dyn_templates::{Template, context};
 
 pub fn routes() -> Vec<Route> {
-    routes![get_tasks, add_task, remove_task, complete_task, modify_task]
+    routes![
+        get_tasks,
+        add_task,
+        remove_task,
+        complete_task,
+        modify_task,
+        fetch_tasks_complete_filtering,
+    ]
 }
 
 #[get("/get")]
@@ -121,4 +128,22 @@ pub async fn modify_task(
         .unwrap();
 
     Template::render("task_item", context! {task})
+}
+
+#[get("/list?<status>")]
+pub async fn fetch_tasks_complete_filtering(
+    status: Option<&str>,
+    cookies: &CookieJar<'_>,
+    db: &State<mongodb::Database>,
+) -> Template {
+    let user_id = cookies.get("uuid").map(|c| c.value()).unwrap_or("error");
+
+    let predicate = match status {
+        Some("completed") => bson::doc! { "user_id" : user_id, "completed": true},
+        _ => bson::doc! { "user_id" : user_id, "completed": false },
+    };
+
+    let tasks = crate::db::fetch_tasks(db, predicate).await;
+
+    Template::render("fragments/tasks_view", context! {tasks})
 }

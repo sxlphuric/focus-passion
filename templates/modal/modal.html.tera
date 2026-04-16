@@ -62,6 +62,8 @@
                 :hx-vals='JSON.stringify({ "data.description": desc })'
                 x-on:click="lastDesc = desc"
                 x-on:keydown.enter="open = false"
+                x-bind:disabled="name.trim() === ''"
+                                                x-bind:class="name.trim() === '' ? nope"
             >
                 <i class="fa-solid fa-circle-check"></i>
             </button>
