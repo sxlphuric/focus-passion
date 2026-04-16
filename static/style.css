@@ -180,7 +180,7 @@ button.show-more {
 }
 
 .model-inner {
-    background-color: white;
+    background-color: #222;
     border-radius: 0.5em;
     max-width: 600px;
     padding: 2em;
@@ -191,7 +191,7 @@ button.show-more {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid #fefefe;
 }
 
 .overlay {
@@ -207,6 +207,8 @@ button.show-more {
     border: none;
     font-family: patricstar, sans-serif;
     box-sizing: border-box;
+    background-color: transparent;
+    color: #fefefe;
 }
 
 .task-name-modal {
