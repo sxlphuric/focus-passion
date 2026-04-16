@@ -34,6 +34,7 @@ pub async fn add_task(
         project: opt.project.to_string(),
         tags: tags_vec,
         completed: opt.completed.unwrap_or(false),
+        priority: opt.priority,
     };
 
     let result = crate::db::insert_task(db, &task);

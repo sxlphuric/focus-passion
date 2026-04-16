@@ -9,6 +9,17 @@ pub struct Task {
     pub section: Option<String>,
     pub tags: Vec<String>,
     pub completed: bool,
+    pub priority: Option<TaskPriority>,
+}
+
+#[derive(rocket::serde::Deserialize, rocket::serde::Serialize, FromFormField, Clone, Copy)]
+pub enum TaskPriority {
+    #[field(value = "low")]
+    Low,
+    #[field(value = "medium")]
+    Medium,
+    #[field(value = "high")]
+    High,
 }
 
 #[derive(FromForm, rocket::serde::Serialize, rocket::serde::Deserialize)]

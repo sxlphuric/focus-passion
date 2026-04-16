@@ -45,6 +45,7 @@ struct TaskOptions<'r> {
     section: Option<&'r str>,
     tags: Option<&'r str>,
     completed: Option<bool>,
+    priority: Option<models::TaskPriority>,
 }
 
 // Try visiting:
