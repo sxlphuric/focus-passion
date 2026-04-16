@@ -123,7 +123,13 @@ pub async fn modify_task(
 
     let val = state.data.get(param).cloned().unwrap_or_default();
 
-    let task = db::modify_task(db, user_id, id, param, val)
+    let val_bson = if val == "none" {
+        bson::Bson::Null
+    } else {
+        bson::Bson::String(val)
+    };
+
+    let task = db::modify_task(db, user_id, id, param, val_bson)
         .await
         .unwrap()
         .unwrap();
