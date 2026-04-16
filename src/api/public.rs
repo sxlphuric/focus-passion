@@ -72,13 +72,13 @@ pub async fn add_task(
     let result = crate::db::insert_task(db, &task).await;
 
     match result {
-        Ok(inserted_task) => {
+        Ok(_) => {
             let projects = crate::db::get_unique_projects(db, &user_id)
                 .await
                 .unwrap_or_default();
             Ok(Template::render(
                 "fragments/add_task_response",
-                context! { task: inserted_task, projects },
+                context! { task, projects },
             ))
         }
         Err(e) => {
