@@ -25,13 +25,11 @@ pub async fn add_task(
         .filter(|s| !s.is_empty())
         .collect();
 
-        let due_date_parsed = opt.due.filter(|s| !s.is_empty()).map(|due| {
-                NaiveDate::parse_from_str(&due, "%Y-%m-%d")
-                    .map(NaiveDateForm)
-                    .expect("Invalid date format ...")
-            });
-        None => None,
-    };
+    let due_date_parsed = opt.due.filter(|s| !s.is_empty()).map(|due| {
+        NaiveDate::parse_from_str(&due, "%Y-%m-%d")
+            .map(NaiveDateForm)
+            .expect("Invalid date format ...")
+    });
 
     let task = crate::models::Task {
         user_id: user_id.clone(),
