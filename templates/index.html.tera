@@ -1,24 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Task manager</title>
-        <link rel="stylesheet" href="/style.css?v={{css_hash}}">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+        <link rel="stylesheet" href="/style.css?v={{css_hash}}" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        />
         <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-        <script defer src="https://unpkg.com/alpinejs@3.15.11/dist/cdn.min.js"></script>
+        <script
+            defer
+            src="https://unpkg.com/alpinejs@3.15.11/dist/cdn.min.js"
+        ></script>
         <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
     </head>
-    <body x-data="{ activeTab: 'pending', newTaskNotification: false }" @task-notification.window="newTaskNotification = true">
+    <body
+        x-data="{ projectSort: '', activeTab: 'pending', newTaskNotification: false }"
+        @task-notification.window="newTaskNotification = true"
+    >
         <div id="modal-portal"></div>
         <h1>Task manager</h1>
         {% include "new_task" %}
         <div class="task-list-container">
             <h2>Tasks</h2>
             <div class="tabs-row">
-                <button x-on:click="activeTab = 'pending'; newTaskNotification=false;" :class="{ 'active': activeTab === 'pending', 'task-notification': newTaskNotification }" class="tab-button" hx-get="/tasks/list" hx-target="#task-list" hx-swap="outerHTML">Pending</button>
-                        <button x-on:click="activeTab = 'completed'" :class="{ 'active': activeTab === 'completed' }" class="tab-button" hx-get="/tasks/list?status=completed" hx-target="#task-list" hx-swap="outerHTML">Completed</button>
+                <button
+                    type="button"
+                    x-on:click="activeTab = 'pending'; newTaskNotification=false;"
+                    :class="{ 'active': activeTab === 'pending', 'task-notification': newTaskNotification }"
+                    class="tab-button"
+                    hx-get="/tasks/list"
+                    hx-target="#task-list"
+                    hx-swap="outerHTML"
+                >
+                    Pending
+                </button>
+                <button
+                    type="button"
+                    x-on:click="activeTab = 'completed'"
+                    :class="{ 'active': activeTab === 'completed' }"
+                    class="tab-button"
+                    hx-get="/tasks/list?status=completed"
+                    hx-target="#task-list"
+                    hx-swap="outerHTML"
+                >
+                    Completed
+                </button>
             </div>
             <div class="task-list-inner-container">
                         <ul id="task-list" class="task-list">
