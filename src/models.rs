@@ -2,6 +2,7 @@ use serde_with::chrono::NaiveDate;
 use rocket::form::{Errors, FromFormField};
 
 #[derive(rocket::serde::Serialize, rocket::serde::Deserialize)]
+#[serde(transparent)]
 pub struct NaiveDateForm(pub NaiveDate);
 
 impl<'v> FromFormField<'v> for NaiveDateForm {
