@@ -9,6 +9,7 @@
             {% include "task_checkbox" %}
         </div>
         <div class="task-content" x-on:click="open = true">
+            <div class="task-content-left">
             <strong>{{ task.name }}</strong>
               <em>{{ task.project }}</em>
               <em>{{ task.section | default(value="Not Sectioned") }}</em>
@@ -30,10 +31,13 @@
                         {% endfor %}
                         </ul>
                     {% endif %}
-                        </div>
+            </div>
+            <div class="task-content-right">
                 {%if task.due %}
-                <span>{{ task.due | date(format="%b %d")}}</span>
-                {%endif%}
+                                <span style="text-align: right; white-space: pre;">{{ task.due | date(format="%b %d")}}</span>
+                                {%endif%}
+            </div>
+                        </div>
     </div>
       <template x-teleport="#modal-portal">
           {% include "modal/overlay" %}
