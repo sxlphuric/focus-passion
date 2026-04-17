@@ -29,7 +29,9 @@
                         </ul>
                     {% endif %}
                         </div>
-                <span>{{ task.due_epoch | date(format="%b %d")}}</span>
+                {%if task.due %}
+                <span>{{ task.due | date(format="%b %d")}}</span>
+                {%endif%}
     </div>
       <template x-teleport="#modal-portal">
           {% include "modal/overlay" %}
