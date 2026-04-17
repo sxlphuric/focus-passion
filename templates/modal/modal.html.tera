@@ -112,8 +112,8 @@
 
             <div class="priority" style="position: relative;">
 
-            <div class="priority-menu" x-show="priorityMenuOpen" @click.away="priorityMenuOpen=false" x-cloak x-transition hx-post="/tasks/modify/{{task.id}}/priority" hx-vals='{ "data.priority": "high" }' hx-target="#task-{{task.id}}" hx-swap="outerHTML" x-on:click="priorityMenuOpen = false">
-                <button class="i-label-button" x-on:click="priorityMenuOpen = false">
+            <div class="priority-menu" x-show="priorityMenuOpen" @click.away="priorityMenuOpen=false" x-cloak x-transition x-on:click="priorityMenuOpen = false">
+                <button hx-post="/tasks/modify/{{task.id}}/priority" hx-vals='{ "data.priority": "high" }' hx-target="#task-{{task.id}}" hx-swap="outerHTML" class="i-label-button" x-on:click="priorityMenuOpen = false">
                     <span>
                         <i class="fa-regular fa-flag" style="color: rgb(220,17,17);"></i>
                         High
