@@ -57,20 +57,11 @@ pub async fn add_task(
         .filter(|s| !s.is_empty())
         .collect();
 
-    let due_date_parsed = match opt.due {
-        Some(due) => Some(NaiveDateForm(NaiveDate::parse_from_str(due, "%Y-%m-%d").unwrap())),
-        None => None,
-    };
-
-    let due_date_time_parsed = match due_date_parsed {
-        Some(ref naivedate) => Some(naivedate.and_hms_opt(0, 0, 0)),
-        None => None,
-    };
-
-    let due_date_epoch = match due_date_time_parsed {
-        Some(ref naivedatetime) => Some(naivedatetime.unwrap().and_utc().timestamp()),
-        None => None,
-    };
+    let due_date_parsed = opt.due.filter(|s| !s.is_empty()).map(|due| {
+        NaiveDate::parse_from_str(&due, "%Y-%m-%d")
+            .map(NaiveDateForm)
+            .expect("Invalid date format ...")
+    });
 
     let task = crate::models::Task {
         user_id: user_id.to_string(),
