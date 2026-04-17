@@ -1,3 +1,23 @@
+use serde_with::chrono::NaiveDate;
+use rocket::form::{Errors, FromFormField};
+
+#[derive(rocket::serde::Serialize, rocket::serde::Deserialize)]
+pub struct NaiveDateForm(pub NaiveDate);
+
+impl<'v> FromFormField<'v> for NaiveDateForm {
+    fn from_value(form_value: rocket::form::ValueField<'v>) -> Result<NaiveDateForm, Errors<'v>> {
+        Ok(NaiveDateForm(NaiveDate::parse_from_str(form_value.value, "%Y-%m-%d").unwrap()))
+    }
+}
+
+impl std::ops::Deref for NaiveDateForm{
+     type Target = NaiveDate;
+
+    fn deref(&self)->&NaiveDate{
+        &self.0
+    }
+}
+
 #[derive(FromForm, rocket::serde::Deserialize, rocket::serde::Serialize)]
 pub struct Task {
     pub user_id: String,
