@@ -115,7 +115,8 @@ button.tab-button.task-notification::after {
     background-color: red;
 }
 
-ul.task-list, ul.project-list {
+ul.task-list,
+ul.project-list {
     display: flex;
     flex-direction: column;
     text-decoration: none;
