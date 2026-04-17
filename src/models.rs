@@ -25,7 +25,6 @@ pub struct Task {
     pub name: String,
     pub description: Option<String>,
     pub due: Option<NaiveDateForm>,
-    pub due_epoch: Option<i64>,
     pub project: String,
     pub section: Option<String>,
     pub tags: Vec<String>,

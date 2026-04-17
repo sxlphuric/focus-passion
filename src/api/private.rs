@@ -39,7 +39,6 @@ pub async fn add_task(
         name: opt.name.to_string(),
         description: opt.description.map(|s| s.to_string()),
         due: due_date_parsed,
-        due_epoch: due_date_epoch,
         section: opt.section.map(|s| s.to_string()),
         project: opt.project.to_string(),
         tags: tags_vec,
