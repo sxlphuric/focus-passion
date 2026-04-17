@@ -158,9 +158,13 @@ li.task-item {
     border-radius: 10px;
     height: 35px;
     width: 100%;
-    padding: 3px;
-    padding-top: 15px;
-    padding-bottom: 0px;
+    padding: 8px 0px 8px 0px;
+}
+
+.projects {
+    display: flex;
+    border-right: 1px solid gray;
+    padding-right: 0.5rem;
 }
 
 .task-row {
@@ -172,7 +176,25 @@ li.task-item {
     display: flex;
     width: 100%;
     cursor: pointer;
+    justify-content: space-between;
+    height: 100%;
+    padding-left: 0px;
+    padding-right: 8px;
+}
+
+.checkbox-container {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+.task-content-left {
+    display: flex;
     gap: 0.5em;
+    text-align: left;
+    width: 100%;
+}
+
+.task-priority {
+    width: 3em;
 }
 
 li.task-item:hover {
