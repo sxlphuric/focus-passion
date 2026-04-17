@@ -41,7 +41,7 @@ struct Options<'r> {
 struct TaskOptions<'r> {
     name: &'r str,
     description: Option<&'r str>,
-    due: Option<u32>,
+    due: Option<&'r str>,
     project: &'r str,
     section: Option<&'r str>,
     tags: Option<&'r str>,
