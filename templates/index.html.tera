@@ -50,25 +50,37 @@
                 </button>
             </div>
             <div class="task-list-inner-container">
-                        <ul id="task-list" class="task-list">
-            {% for task in tasks %}
-                {% include "task_item" %}
-            {% endfor %}
-                <li id="empty-message">Whew! No tasks!</li>
-            </ul>
-                <div class="projects">
-                <ul class="project-list">
-                    {% for project in projects %}
-                        <li class="project-item">
-                            <button class="i-label-button">
-                                <i class="fa-solid fa-hashtag" style="color: #fefefe;"></i>
-                                {{project}}
-                            </button>
-                        </li>
-                    {%endfor%}
+            <div class="projects">
+                                <ul id="project-list" class="project-list">
+                                    <li class="project-item">
+                                        <button
+                                            type="button"
+                                            class="i-label-button"
+                                            x-on:click='projectSort=""'
+                                        >
+                                        <i class="fa-solid fa-hashtag" style="color: lightblue;"></i>
+                                        All
+                                        </button>
+                                    </li>
+                                    {% for project in projects %}
+                                    <li class="project-item">
+                                        <button type="button" class="i-label-button" x-on:click="projectSort='{{project|escape|safe}}'">
+                                            <i
+                                                class="fa-solid fa-hashtag"
+                                                style="color: #fefefe"
+                                            ></i>
+                                            {{project}}
+                                        </button>
+                                    </li>
+                                    {%endfor%}
+                                </ul>
+                            </div>
+                <ul id="task-list" class="task-list">
+                    {% for task in tasks %} {% include "task_item" %} {% endfor
+                    %}
+                    <li id="empty-message">Whew! No tasks!</li>
                 </ul>
-                </div>
-            </div>
+                            </div>
         </div>
     </body>
 </html>
