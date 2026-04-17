@@ -71,6 +71,31 @@
                 <i class="fa-solid fa-circle-check" style="color: #fefefe;"></i>
             </button>
 
+            <input type="date" x-model="date">
+            <button
+                                x-show="date !== lastDate"
+                                x-transition
+                                x-on:click="date = lastDate"
+                                class="i-button"
+                            >
+                                <i class="fa-solid fa-xmark" style="color: #fefefe;"></i>
+                            </button>
+                            <button
+                                            class="i-button"
+                                            hx-post="/tasks/modify/{{ task.id }}/due"
+                                            hx-swap="outerHTML"
+                                            hx-target="#task-{{task.id}}"
+                                            x-show="date !== lastDate"
+                                            x-transition
+                                            :hx-vals='JSON.stringify({ "data.due": date })'
+                                            x-on:click="lastDesc = date"
+                                            x-on:keydown.enter="open = false"
+                                            x-bind:disabled="name.trim() === ''"
+                                                                            x-bind:class="name.trim() === '' ? nope"
+                                        >
+                                            <i class="fa-solid fa-check" style="color: #fefefe;"></i>
+                                        </button>
+
             <button class="i-button priority-button" x-on:click="priorityMenuOpen = !priorityMenuOpen">
 
             {% if task.priority == "high" %}
