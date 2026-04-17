@@ -1,5 +1,5 @@
-use serde_with::chrono::NaiveDate;
 use rocket::form::{Errors, FromFormField};
+use serde_with::chrono::NaiveDate;
 
 #[derive(rocket::serde::Serialize, rocket::serde::Deserialize)]
 #[serde(transparent)]
@@ -7,14 +7,16 @@ pub struct NaiveDateForm(pub NaiveDate);
 
 impl<'v> FromFormField<'v> for NaiveDateForm {
     fn from_value(form_value: rocket::form::ValueField<'v>) -> Result<NaiveDateForm, Errors<'v>> {
-        Ok(NaiveDateForm(NaiveDate::parse_from_str(form_value.value, "%Y-%m-%d").unwrap()))
+        Ok(NaiveDateForm(
+            NaiveDate::parse_from_str(form_value.value, "%Y-%m-%d").unwrap(),
+        ))
     }
 }
 
-impl std::ops::Deref for NaiveDateForm{
-     type Target = NaiveDate;
+impl std::ops::Deref for NaiveDateForm {
+    type Target = NaiveDate;
 
-    fn deref(&self)->&NaiveDate{
+    fn deref(&self) -> &NaiveDate {
         &self.0
     }
 }
