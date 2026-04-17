@@ -1,7 +1,8 @@
 use nanoid::nanoid;
 use rocket::{State, form::Form, http::CookieJar, serde::json::Json};
+use serde_with::chrono::NaiveDate;
 
-use crate::{AddTaskResponse, TaskOptions};
+use crate::{AddTaskResponse, TaskOptions, models::NaiveDateForm};
 
 #[post("/add", data = "<opt>")]
 #[allow(unused_mut)]
@@ -24,12 +25,28 @@ pub async fn add_task(
         .filter(|s| !s.is_empty())
         .collect();
 
+    let due_date_parsed = match opt.due {
+        Some(due) => Some(NaiveDateForm(NaiveDate::parse_from_str(due, "%Y-%m-%d").unwrap())),
+        None => None,
+    };
+
+    let due_date_time_parsed = match due_date_parsed {
+        Some(ref naivedate) => Some(naivedate.and_hms_opt(0, 0, 0)),
+        None => None,
+    };
+
+    let due_date_epoch = match due_date_time_parsed {
+        Some(ref naivedatetime) => Some(naivedatetime.unwrap().and_utc().timestamp()),
+        None => None,
+    };
+
     let task = crate::models::Task {
         user_id: user_id.clone(),
         id: task_id.clone(),
         name: opt.name.to_string(),
         description: opt.description.map(|s| s.to_string()),
-        due: opt.due,
+        due: due_date_parsed,
+        due_epoch: due_date_epoch,
         section: opt.section.map(|s| s.to_string()),
         project: opt.project.to_string(),
         tags: tags_vec,

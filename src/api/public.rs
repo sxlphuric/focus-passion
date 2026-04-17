@@ -1,4 +1,4 @@
-use crate::{TaskOptions, db};
+use crate::{models::NaiveDateForm, TaskOptions, db};
 use mongodb::bson;
 use nanoid::nanoid;
 use rocket::{
@@ -8,6 +8,7 @@ use rocket::{
     serde::json::Json,
 };
 use rocket_dyn_templates::{Template, context};
+use serde_with::chrono::NaiveDate;
 
 pub fn routes() -> Vec<Route> {
     routes![
@@ -56,12 +57,28 @@ pub async fn add_task(
         .filter(|s| !s.is_empty())
         .collect();
 
+    let due_date_parsed = match opt.due {
+        Some(due) => Some(NaiveDateForm(NaiveDate::parse_from_str(due, "%Y-%m-%d").unwrap())),
+        None => None,
+    };
+
+    let due_date_time_parsed = match due_date_parsed {
+        Some(ref naivedate) => Some(naivedate.and_hms_opt(0, 0, 0)),
+        None => None,
+    };
+
+    let due_date_epoch = match due_date_time_parsed {
+        Some(ref naivedatetime) => Some(naivedatetime.unwrap().and_utc().timestamp()),
+        None => None,
+    };
+
     let task = crate::models::Task {
         user_id: user_id.to_string(),
         id: task_id.clone(),
         name: opt.name.to_string(),
         description: opt.description.map(|s| s.to_string()),
-        due: opt.due,
+        due: due_date_parsed,
+        due_epoch: due_date_epoch,
         section: opt.section.map(|s| s.to_string()),
         project: opt.project.to_string(),
         tags: tags_vec,
