@@ -305,6 +305,11 @@ button.show-more {
     transition: 0.1s;
 }
 
+.i-label-button.active,
+.i-button.active {
+    background-color: lightblue;
+}
+
 .priority-menu {
     position: absolute;
     bottom: 100%;
