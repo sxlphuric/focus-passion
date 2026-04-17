@@ -59,7 +59,7 @@
                                             class="i-label-button"
                                             x-on:click='projectSort=""'
                                         >
-                                        <i class="fa-solid fa-hashtag" style="color: lightblue;"></i>
+                                        <i class="fa-solid fa-hashtag"></i>
                                         All
                                         </button>
                                     </li>
