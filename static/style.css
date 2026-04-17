@@ -115,14 +115,34 @@ button.tab-button.task-notification::after {
     background-color: red;
 }
 
+ul.task-list, ul.project-list {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    margin: 0px;
+    padding: 0px;
+}
+
 ul.task-list {
-    display: inline-block;
+    flex: 2.5;
+    text-align: center;
+    gap: 10px;
+}
+
+ul.project-list {
+    flex: 1;
+    align-items: baseline;
+}
+
+.task-list-inner-container {
+    display: flex;
     background-color: #aaa;
     text-align: center;
     text-decoration: none;
     width: 1010px;
     padding: 10px;
     margin: 0px;
+    gap: 0.5rem;
     border-radius: 10px;
     border-top-left-radius: 0px;
 }
@@ -132,9 +152,8 @@ li.task-item {
     list-style-type: none;
     background-color: #777;
     border-radius: 10px;
-    margin: 10px;
     height: 35px;
-    width: 97%;
+    width: 100%;
     padding: 3px;
     padding-top: 15px;
     padding-bottom: 0px;
