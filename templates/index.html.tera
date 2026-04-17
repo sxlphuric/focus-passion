@@ -20,12 +20,26 @@
                 <button x-on:click="activeTab = 'pending'; newTaskNotification=false;" :class="{ 'active': activeTab === 'pending', 'task-notification': newTaskNotification }" class="tab-button" hx-get="/tasks/list" hx-target="#task-list" hx-swap="outerHTML">Pending</button>
                         <button x-on:click="activeTab = 'completed'" :class="{ 'active': activeTab === 'completed' }" class="tab-button" hx-get="/tasks/list?status=completed" hx-target="#task-list" hx-swap="outerHTML">Completed</button>
             </div>
+            <div class="task-list-inner-container">
                         <ul id="task-list" class="task-list">
             {% for task in tasks %}
                 {% include "task_item" %}
             {% endfor %}
                 <li id="empty-message">Whew! No tasks!</li>
             </ul>
+                <div class="projects">
+                <ul class="project-list">
+                    {% for project in projects %}
+                        <li class="project-item">
+                            <button class="i-label-button">
+                                <i class="fa-solid fa-hashtag" style="color: #fefefe;"></i>
+                                {{project}}
+                            </button>
+                        </li>
+                    {%endfor%}
+                </ul>
+                </div>
+            </div>
         </div>
     </body>
 </html>
