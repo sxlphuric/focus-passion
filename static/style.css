@@ -147,9 +147,12 @@ ul.project-list {
     border-top-left-radius: 0px;
 }
 
+li {
+    list-style-type: none;
+}
+
 li.task-item {
     display: inline-block;
-    list-style-type: none;
     background-color: #777;
     border-radius: 10px;
     height: 35px;
