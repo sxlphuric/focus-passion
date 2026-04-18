@@ -62,7 +62,7 @@
             mde.codemirror.on('change', () => { desc = mde.value(); });" class="easymde-description-container">
                 <textarea x-ref="editor" class="task-description"></textarea>
         </div>
-        <div class="task-description-preview" x-html="marked.parse(desc)" x-show="!editing"></div>
+        <div class="task-description-preview" x-html="desc.trim() ? marked.parse(desc) : '<span>Click to edit</span>'" x-show="!editing"></div>
         </div>
 
         <div class="buttons-row">
