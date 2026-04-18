@@ -3,6 +3,11 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta property="og:type" content="website">
+            <meta property="og:url" content="https://tasks.phuri.cc/">
+            <meta property="og:title" content="Task Manager">
+            <meta property="og:description" content="A fast and simple online task manager">
+            <meta property="og:image" content="https://tasks.phuri.cc/assets/favicon.svg">
         <title>Task manager</title>
         <link rel="stylesheet" href="/style.css?v={{css_hash}}" />
         <link
