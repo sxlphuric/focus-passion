@@ -333,7 +333,7 @@ button.show-more {
 .CodeMirror pre.CodeMirror-line,
 .task-description-preview * {
     color: #fefefe !important;
-    font-family: "Inter", Arial, Helvetica, sans-serif !important;
+    font-family: "Inter", "Segoe UI", Arial, Helvetica, sans-serif !important;
 }
 
 .cm-header-1,
@@ -387,6 +387,8 @@ button.show-more {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
+    align-items: start;
+    margin-top: 1rem;
 }
 
 .easymde-description-container,
