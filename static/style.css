@@ -335,6 +335,15 @@ button.show-more {
 .task-description-preview * {
     color: #fefefe !important;
     font-family: "Inter", "Segoe UI", Arial, Helvetica, sans-serif !important;
+    padding: 0px !important;
+}
+
+.CodeMirror-lines {
+    padding: 0px !important;
+}
+
+.task-description-preview p {
+    margin: 0px;
 }
 
 .cm-header-1,
@@ -376,6 +385,8 @@ button.show-more {
 .CodeMirror-scroll,
 .CodeMirror-gutters {
     background: transparent !important;
+    padding: 0px !important;
+    margin: 0px;
     border: none !important;
 }
 
