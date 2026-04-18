@@ -45,7 +45,7 @@
         </div>
 
         <div class="preview-stack">
-        <div x-on:click="editing=true"x-init="const mde = new EasyMDE({
+        <div x-on:click="editing=true" x-cloak x-init="const mde = new EasyMDE({
             element: $refs.editor,
             initialValue: desc,
             spellChecker: false,
