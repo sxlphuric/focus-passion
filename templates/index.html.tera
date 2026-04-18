@@ -32,7 +32,6 @@
         <h1>Task manager</h1>
         {% include "new_task" %}
         <div class="task-list-container">
-            <h2>Tasks</h2>
             <div class="tabs-row">
                 <button
                     type="button"
