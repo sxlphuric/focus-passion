@@ -44,7 +44,26 @@
             </div>
         </div>
 
-        <textarea class="task-description" x-model="desc">{{ task.description }}</textarea>
+        <div class="preview-stack">
+        <div x-on:click="editing=true"x-init="const mde = new EasyMDE({
+            element: $refs.editor,
+            initialValue: desc,
+            spellChecker: false,
+            status: false,
+            previewRender: (plainText) => marked.parse(plainText),
+            highlightFormatting: true,
+            toolbar: false,
+            autofocus: true,
+            });
+
+            $nextTick(() => {
+                    mde.codemirror.refresh();
+                }, 100);
+            mde.codemirror.on('change', () => { desc = mde.value(); });" class="easymde-description-container">
+                <textarea x-ref="editor" class="task-description"></textarea>
+        </div>
+        <div class="task-description-preview" x-html="marked.parse(desc)" x-show="!editing"></div>
+        </div>
 
         <div class="buttons-row">
             <button
