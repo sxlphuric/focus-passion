@@ -330,6 +330,74 @@ button.show-more {
     color: #fefefe;
 }
 
+.CodeMirror pre.CodeMirror-line,
+.task-description-preview * {
+    color: #fefefe !important;
+    font-family: "Inter", Arial, Helvetica, sans-serif !important;
+}
+
+.cm-header-1,
+.task-description-preview h1 {
+    font-size: 2.1em !important;
+    text-align: left;
+    color: #fff;
+}
+.cm-header-2,
+.task-description-preview h2 {
+    font-size: 1.8em !important;
+    margin-top: 10px;
+}
+.cm-header-3,
+.task-description-preview h3 {
+    font-size: 1.5em !important;
+}
+.cm-strong .task-description-preview strong {
+    font-weight: bold;
+    color: #fff;
+}
+.cm-em .task-description-preview em {
+    font-style: italic;
+}
+
+.cm-formatting {
+    opacity: 0.2;
+    font-family: monospace;
+}
+
+.cm-property {
+    color: lightskyblue;
+    opacity: 1;
+    font-family: monospace;
+}
+
+.EasyMDEContainer,
+.CodeMirror,
+.CodeMirror-scroll,
+.CodeMirror-gutters {
+    background: transparent !important;
+    border: none !important;
+}
+
+.CodeMirror-cursor {
+    border-left: 2px solid lightblue !important;
+    width: 2px !important;
+}
+
+.preview-stack {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+}
+
+.easymde-description-container,
+.task-description-preview {
+    grid-area: 1 / 1;
+}
+
+.task-description-preview {
+    pointer-events: none;
+}
+
 [x-cloak] {
     display: none !important;
 }
