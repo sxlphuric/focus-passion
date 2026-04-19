@@ -42,17 +42,15 @@ pub async fn get_tasks(
 
 #[derive(FromForm, rocket::serde::Serialize, rocket::serde::Deserialize)]
 pub struct TaskSearchOptions<'r> {
-    // 30m spent (ended 1pm)
-    // START 5:50
-    due: Option<NaiveDateForm>,
-    project: &'r str,
+    due: &'r str,
     priority: Option<TaskPriority>,
 }
 
-#[get("/search?<opt>")]
+#[get("/search?<project>&<opt..>")]
 pub async fn search_tasks(
     cookies: &CookieJar<'_>,
     db: &State<mongodb::Database>,
+    project: &str,
     opt: TaskSearchOptions<'_>,
 ) -> Result<Json<Vec<crate::models::Task>>, Status> {
     let user_id = match cookies.get("uuid") {
