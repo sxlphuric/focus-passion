@@ -52,7 +52,7 @@ pub async fn search_tasks(
     db: &State<mongodb::Database>,
     project: &str,
     opt: TaskSearchOptions<'_>,
-) -> Result<Json<Vec<crate::models::Task>>, Status> {
+) -> Result<Template, Status> {
     let user_id = match cookies.get("uuid") {
         Some(crumb) => crumb.value(),
         None => return Err(Status::Unauthorized),
@@ -78,7 +78,10 @@ pub async fn search_tasks(
 
     let tasks = crate::db::fetch_tasks(db, task_filter).await;
 
-    Ok(Json(tasks))
+    Ok(Template::render(
+        "fragments/search_response",
+        context! {tasks},
+    ))
 }
 
 #[post("/add", data = "<opt>")]
