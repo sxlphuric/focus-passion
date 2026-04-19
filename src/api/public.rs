@@ -107,7 +107,7 @@ pub async fn add_task(
         .collect();
 
     let due_date_parsed = opt.due.filter(|s| !s.is_empty()).map(|due| {
-        NaiveDate::parse_from_str(&due, "%Y-%m-%d")
+        NaiveDate::parse_from_str(due, "%Y-%m-%d")
             .map(NaiveDateForm)
             .expect("Invalid date format ...")
     });
@@ -129,7 +129,7 @@ pub async fn add_task(
 
     match result {
         Ok(_) => {
-            let projects = crate::db::get_unique_projects(db, &user_id)
+            let projects = crate::db::get_unique_projects(db, user_id)
                 .await
                 .unwrap_or_default();
             Ok(Template::render(
