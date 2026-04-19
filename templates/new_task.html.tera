@@ -1,4 +1,4 @@
-<div class="new-task">
+<div class="new-task" x-show="activeTab!== 'search'">
     <form hx-post="/tasks/add" hx-target="#task-list" :hx-swap="activeTab === 'pending' ? 'beforeend' : 'none'" @htmx:after-request="$el.reset(); if (activeTab !== 'pending') $dispatch('task-notification')" class="new-task">
         <div class="new-int-">
             <input type="text" name="name" class="new-int" placeholder="Task" required />

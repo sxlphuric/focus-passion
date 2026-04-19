@@ -31,6 +31,7 @@
         <div id="modal-portal"></div>
         <h1>Task manager</h1>
         {% include "new_task" %}
+        {% include "search" %}
         <div class="task-list-container">
             <div class="tabs-row">
                 <button
@@ -55,6 +56,17 @@
                 >
                     Completed
                 </button>
+                <button
+                                    type="button"
+                                    x-on:click="activeTab = 'search'"
+                                    :class="{ 'active': activeTab === 'search' }"
+                                    class="tab-button"
+                                    hx-get="/tasks/search"
+                                    hx-target="#task-list"
+                                    hx-swap="outerHTML"
+                                >
+                                    Search
+                                </button>
             </div>
             <div class="task-list-inner-container">
             <div class="projects">

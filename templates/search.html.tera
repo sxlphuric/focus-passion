@@ -1,0 +1,21 @@
+<div class="search" x-cloak x-show="activeTab==='search'">
+    <form autocomplete="off" hx-post="/tasks/search" hx-target="#task-list" :hx-swap="activeTab === 'pending' ? 'beforeend' : 'none'" @htmx:after-request="$el.reset(); if (activeTab !== 'pending') $dispatch('task-notification')" class="new-task">
+        <div class="new-int-">
+            <input type="date" name="due" />
+            <select class="new-int" id="project-search-dropdown" name="project">
+                <option value="">Any project</option>
+                {% for project in projects %}
+                    <option value="{{project|escape|safe}}">{{project|escape|safe}}</option>
+                {%endfor%}
+            </select>
+            <select name="priority" placeholder="Choose one" class=new-int>
+                <option value="">Any priority</option>
+                <option value="none">None</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <button type="submit" class="new-int" x-on:click="activeTab='search'">Search</button>
+        </div>
+    </form>
+</div>
