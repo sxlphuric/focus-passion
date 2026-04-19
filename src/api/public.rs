@@ -62,10 +62,8 @@ pub async fn search_tasks(
 
     task_filter.insert("user_id", user_id);
 
-    if let Some(due) = opt.due
-        && let Ok(bson_due) = bson::to_bson(&due)
-    {
-        task_filter.insert("due", bson_due);
+    if !opt.due.is_empty() {
+        task_filter.insert("due", opt.due);
     }
 
     if !opt.project.is_empty() {
