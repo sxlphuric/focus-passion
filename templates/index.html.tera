@@ -61,7 +61,7 @@
                                     x-on:click="activeTab = 'search'"
                                     :class="{ 'active': activeTab === 'search' }"
                                     class="tab-button"
-                                    hx-get="/tasks/search"
+                                    hx-get="/tasks/search?project=&due="
                                     hx-target="#task-list"
                                     hx-swap="outerHTML"
                                 >
