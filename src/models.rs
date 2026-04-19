@@ -38,6 +38,8 @@ pub struct Task {
 #[derive(rocket::serde::Deserialize, rocket::serde::Serialize, FromFormField, Clone, Copy)]
 #[serde(rename_all = "lowercase")]
 pub enum TaskPriority {
+    #[field(value = "none")]
+    None,
     #[field(value = "low")]
     Low,
     #[field(value = "medium")]
