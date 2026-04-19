@@ -1,4 +1,7 @@
-use crate::{TaskOptions, db, models::NaiveDateForm};
+use crate::{
+    TaskOptions, db,
+    models::{NaiveDateForm, TaskPriority},
+};
 use mongodb::bson;
 use nanoid::nanoid;
 use rocket::{
@@ -18,6 +21,7 @@ pub fn routes() -> Vec<Route> {
         complete_task,
         modify_task,
         fetch_tasks_complete_filtering,
+        search_tasks
     ]
 }
 
@@ -32,6 +36,51 @@ pub async fn get_tasks(
     };
 
     let tasks = crate::db::fetch_tasks(db, bson::doc! { "user_id": user_id }).await;
+
+    Ok(Json(tasks))
+}
+
+#[derive(FromForm, rocket::serde::Serialize, rocket::serde::Deserialize)]
+pub struct TaskSearchOptions<'r> {
+    // 30m spent (ended 1pm)
+    // START 5:50
+    due: Option<NaiveDateForm>,
+    project: &'r str,
+    priority: Option<TaskPriority>,
+}
+
+#[get("/search?<opt>")]
+pub async fn search_tasks(
+    cookies: &CookieJar<'_>,
+    db: &State<mongodb::Database>,
+    opt: TaskSearchOptions<'_>,
+) -> Result<Json<Vec<crate::models::Task>>, Status> {
+    let user_id = match cookies.get("uuid") {
+        Some(crumb) => crumb.value(),
+        None => return Err(Status::Unauthorized),
+    };
+
+    let mut task_filter = bson::Document::new();
+
+    task_filter.insert("user_id", user_id);
+
+    if let Some(due) = opt.due
+        && let Ok(bson_due) = bson::to_bson(&due)
+    {
+        task_filter.insert("due", bson_due);
+    }
+
+    if !opt.project.is_empty() {
+        task_filter.insert("project", opt.project);
+    }
+
+    if let Some(prio) = opt.priority
+        && let Ok(bson_prio) = bson::to_bson(&prio)
+    {
+        task_filter.insert("priority", bson_prio);
+    }
+
+    let tasks = crate::db::fetch_tasks(db, task_filter).await;
 
     Ok(Json(tasks))
 }
