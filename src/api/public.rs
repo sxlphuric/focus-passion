@@ -66,8 +66,8 @@ pub async fn search_tasks(
         task_filter.insert("due", opt.due);
     }
 
-    if !opt.project.is_empty() {
-        task_filter.insert("project", opt.project);
+    if !project.is_empty() {
+        task_filter.insert("project", project);
     }
 
     if let Some(prio) = opt.priority
