@@ -33,7 +33,7 @@
                                 <i class="fa-solid fa-trash-can" style="color: #fefefe;"></i>
                             </button><button class="i-button" aria-label="Close" x-on:click="open = false"
                                 x-bind:disabled="name.trim() === ''"
-                                x-bind:class="name.trim() === '' ? 'nope'"
+                                x-bind:class="name.trim() === '' ? 'nope' : ''"
                 hx-post="/tasks/modify/{{task.id}}/name"
                 hx-swap="outerHTML"
                 hx-target="#task-{{task.id}}"
@@ -85,7 +85,7 @@
                 x-on:click="lastDesc = desc"
                 x-on:keydown.enter="open = false"
                 x-bind:disabled="name.trim() === ''"
-                                                x-bind:class="name.trim() === '' ? 'nope'"
+                                                x-bind:class="name.trim() === '' ? 'nope' : ''"
             >
                 <i class="fa-solid fa-circle-check" style="color: #fefefe;"></i>
             </button>
@@ -110,7 +110,7 @@
                                             x-on:click="lastDesc = date"
                                             x-on:keydown.enter="open = false"
                                             x-bind:disabled="name.trim() === ''"
-                                                                            x-bind:class="name.trim() === '' ? 'nope'"
+                                                                            x-bind:class="name.trim() === '' ? 'nope' : ''"
                                         >
                                             <i class="fa-solid fa-check" style="color: #fefefe;"></i>
                                         </button>
