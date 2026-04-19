@@ -15,7 +15,7 @@
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
             </select>
-            <button type="submit" class="new-int" x-on:click="activeTab='search'">Search</button>
+            <button type="submit" class="new-int">Search</button>
         </div>
     </form>
 </div>
