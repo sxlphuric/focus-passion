@@ -69,7 +69,7 @@
                                 </button>
             </div>
             <div class="task-list-inner-container">
-            <div class="projects">
+            <div class="projects" x-show="activeTab !== 'search'">
                                 <ul id="project-list" class="project-list">
                                     <li class="project-item">
                                         <button
