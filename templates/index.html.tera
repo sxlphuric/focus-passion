@@ -98,7 +98,7 @@
                 <ul id="task-list" class="task-list">
                     {% for task in tasks %} {% include "task_item" %} {% endfor
                     %}
-                    <li id="empty-message">Whew! No tasks!</li>
+                    <li id="empty-message" x-text="activeTab === 'search' ? 'No search results!' : 'Whew! No tasks!'"></li>
                 </ul>
                             </div>
         </div>

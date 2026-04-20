@@ -1,5 +1,5 @@
 <ul id="task-list" class="task-list" hx-swap="outerHTML">
                     {% for task in tasks %} {% include "task_item" %} {% endfor
                     %}
-                    <li id="empty-message">Whew! No tasks!</li>
+                    <li id="empty-message">No search results!</li>
                 </ul>
