@@ -1,7 +1,7 @@
 <div class="search" x-cloak x-show="activeTab==='search'">
     <form autocomplete="off" hx-get="/tasks/search" hx-target="#task-list" hx-swap="outerHTML" hx-after-request="this.reset()" class="new-task">
         <div class="new-int-">
-            <input type="date" name="due" />
+            <input type="date" class="new-int-t" name="due" />
             <select class="new-int" id="project-search-dropdown" name="project">
                 <option value="">Any project</option>
                 {% for project in projects %}
