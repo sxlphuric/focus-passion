@@ -230,7 +230,7 @@ button.show-more {
     display: block;
 }
 
-#task-list:has(.task-item) #empty-message {
+#task-list:has(.task-item:not([hidden])) #empty-message {
     display: none;
 }
 
@@ -438,7 +438,8 @@ button.show-more {
     pointer-events: none;
 }
 
-[x-cloak] {
+[x-cloak],
+[hidden] {
     display: none !important;
 }
 
