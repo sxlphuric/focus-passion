@@ -1,7 +1,6 @@
 <li class="task-item" id="task-{{ task.id }}"
     x-data='{ editing: false,priorityMenuOpen: false, open: false, date: {{ task.due | default(value="") | json_encode | safe }}, lastDate: {{task.due|default(value="")|json_encode| safe}}, desc: {{ task.description | default(value="") | json_encode | escape | safe }}, lastDesc: {{ task.description | default(value="") | json_encode | escape | safe }}, name: {{ task.name | json_encode | escape | safe}}, lastName: {{task.name|json_encode| escape | safe}} }'
     x-transition
-    :hidden='projectSort && projectSort !== {{ task.project | json_encode | safe }}'
     x-show='!projectSort || projectSort == {{task.project | json_encode | escape | safe }}'
     x-on:keydown.escape="open=false"
 >
