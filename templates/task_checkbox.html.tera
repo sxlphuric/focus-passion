@@ -1,7 +1,7 @@
 <input type=checkbox id="completed-state-{{task.id}} checked"
         hx-post="/tasks/complete/{{task.id}}"
         hx-trigger="click"
-        hx-swap="outerHTML"
+        hx-swap="outerHTML swap:0.8s"
         hx-target="#task-{{task.id}}"
         autocomplete="off"
         {% if task.completed %}checked{%endif%}>
