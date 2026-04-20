@@ -438,8 +438,7 @@ button.show-more {
     pointer-events: none;
 }
 
-[x-cloak],
-[hidden] {
+[x-cloak] {
     display: none !important;
 }
 
