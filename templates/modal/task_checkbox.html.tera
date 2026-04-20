@@ -1,7 +1,7 @@
 <input type=checkbox id="modal-completed-state-{{task.id}}"
         hx-post="/tasks/complete/{{task.id}}"
         hx-trigger="click"
-        hx-swap="outerHTML"
+        :hx-swap="activeTab !== 'search' ? 'outerHTML swap:0.8s' : 'none'"
         hx-target="#task-{{task.id}}"
         autocomplete="off"
         {% if task.completed %}checked{%endif%}>
