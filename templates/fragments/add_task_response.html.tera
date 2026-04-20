@@ -20,7 +20,7 @@
                                     </li>
                                     {% for project in projects %}
                                     <li class="project-item">
-                                        <button type="button" class="i-label-button" x-on:click="projectSort='{{project|escape|safe}}'">
+                                        <button type="button" class="i-label-button" :class='{"active": projectSort === {{project|json_encode|escape|safe}} }' x-on:click="projectSort='{{project|escape|safe}}'">
                                             <i
                                                 class="fa-solid fa-hashtag"
                                                 style="color: #fefefe"
