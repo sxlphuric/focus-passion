@@ -5,6 +5,3 @@
         hx-target="#task-{{task.id}}"
         autocomplete="off"
         {% if task.completed %}checked{%endif%}>
-<svg>
-    <use xlink:href="#checkbox-30" class="checkbox"></use>
-</svg>
