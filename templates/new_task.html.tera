@@ -9,7 +9,7 @@
                 {%endfor%}
             </datalist>
             <textarea name="description" placeholder="Description" class="new-int"></textarea>
-            <input type="date" name="due" />
+            <input type="date" name="due" class="new-int-t" />
             <select name="priority" placeholder="Choose one" class=new-int>
                 <option value="none">None</option>
                 <option value="low">Low</option>

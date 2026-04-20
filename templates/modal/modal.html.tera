@@ -90,7 +90,7 @@
                 <i class="fa-solid fa-circle-check" style="color: #fefefe;"></i>
             </button>
 
-            <input type="date" x-model="date">
+            <input type="date" x-model="date" class="new-int-t">
             <button
                                 x-show="date !== lastDate"
                                 x-transition

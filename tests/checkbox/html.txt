@@ -1,17 +1,6 @@
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>testing_website</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/svg+xml" href="https://j33569.github.io/1/main/favicon.svg">
-</head>
-
-<body>
-    <div class="checkbox-wrapper-30">
+    <div class="checkbox-container">
         <span class="checkbox">
-            <input type="checkbox" id="02-11" name="r" value="2">
+            <input type="checkbox" id="checked" name="r" value="2">
             <svg>
                 <use xlink:href="#checkbox-30" class="checkbox"></use>
             </svg>
@@ -22,8 +11,5 @@
                     d="M5.5,11.3L9,14.8L20.2,3.3l0,0c-0.5-1-1.5-1.8-2.7-1.8h-13c-1.7,0-3,1.3-3,3v13c0,1.7,1.3,3,3,3h13 c1.7,0,3-1.3,3-3v-13c0-0.4-0.1-0.8-0.3-1.2">
                 </path>
             </symbol>
-        </svg><label for="02-11">To-do</label>
+        </svg><div for="checked" class="task-content">To-do</div>
     </div>
-</body>
-
-</html>

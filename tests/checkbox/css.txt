@@ -1,4 +1,4 @@
-.checkbox-wrapper-30 .checkbox {
+.checkbox-container .checkbox {
     --bg: #fff;
     --brdr: #d1d6ee;
     --brdr-actv: #1e2235;
@@ -9,18 +9,18 @@
     position: relative;
 }
 
-.checkbox-wrapper-30 .checkbox:after {
+.checkbox-container .checkbox:after {
     content: "";
     width: 100%;
     padding-top: 100%;
     display: block;
 }
 
-.checkbox-wrapper-30 .checkbox>* {
+.checkbox-container .checkbox>* {
     position: absolute;
 }
 
-.checkbox-wrapper-30 .checkbox input {
+.checkbox-container .checkbox input {
     -webkit-appearance: none;
     -moz-appearance: none;
     -webkit-tap-highlight-color: transparent;
@@ -35,26 +35,26 @@
     transition: all calc(var(--dur) / 3) linear;
 }
 
-.checkbox-wrapper-30 .checkbox input:hover,
-.checkbox-wrapper-30 .checkbox input:checked {
+.checkbox-container .checkbox input:hover,
+.checkbox-container .checkbox input:checked {
     --newBrdr: calc(var(--size, 1) * 2);
 }
 
-.checkbox-wrapper-30 .checkbox input:hover {
+.checkbox-container .checkbox input:hover {
     --newBrdrClr: var(--brdr-hovr);
 }
 
-.checkbox-wrapper-30 .checkbox input:checked {
+.checkbox-container .checkbox input:checked {
     --newBrdrClr: var(--brdr-actv);
     transition-delay: calc(var(--dur) /1.3);
 }
 
-.checkbox-wrapper-30 .checkbox input:checked+svg {
+.checkbox-container .checkbox input:checked+svg {
     --dashArray: 16 93;
     --dashOffset: 109;
 }
 
-.checkbox-wrapper-30 .checkbox svg {
+.checkbox-container .checkbox svg {
     fill: none;
     left: 0;
     pointer-events: none;
@@ -68,20 +68,20 @@
     transition: stroke-dasharray var(--dur), stroke-dashoffset var(--dur);
 }
 
-.checkbox-wrapper-30 .checkbox svg,
-.checkbox-wrapper-30 .checkbox input {
+.checkbox-container .checkbox svg,
+.checkbox-container .checkbox input {
     display: block;
     height: 100%;
     width: 100%;
 }
 
-.checkbox-wrapper-30:has(input:checked) label {
+.checkbox-container:has(input:checked) div.task-content {
   text-decoration: line-through;
   color: #888;
   opacity: 0.6;
 }
 
-label {
+div.task-content {
   transition: all 0.3s ease-in-out;
   cursor: pointer;
 }
