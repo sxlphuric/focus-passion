@@ -58,7 +58,7 @@
                 </button>
                 <button
                                     type="button"
-                                    x-on:click="activeTab = 'search'"
+                                    x-on:click="activeTab = 'search'; projectSort=''"
                                     :class="{ 'active': activeTab === 'search' }"
                                     class="tab-button"
                                     hx-get="/tasks/search?project=&due="
