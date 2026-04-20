@@ -173,7 +173,7 @@ li {
 }
 
 li.task-item {
-    display: inline-block;
+    display: block;
     background-color: #777;
     border-radius: 10px;
     width: 100%;
