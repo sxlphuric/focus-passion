@@ -149,18 +149,21 @@ Cargo.toml - Cargo dependencies
 ```
 
 ## Roadmap
+- [ ] Shared Lists
+- [ ] Better brand identity
+- [ ] Light/dark mode
 - [x] Set up a MongoDB database
-- [ ] Make a good looking frontend
-- [ ] Fully functional frontend
+- [x] Make a good looking frontend
+- [x] Fully functional frontend
 - [x] UUID with cookies
 - [ ] Proper tests
-- [ ] Finish the Rocket API
+- [x] Finish the Rocket API
   - [x] Adding habits
   - [x] Removing habits
   - [x] Querying habits
   - [x] Querying habits with filter
-  - [ ] Modifying habits that are queried via task ID
+  - [x] Modifying habits that are queried via task ID
 - [x] Deploy online with Railway
+- [ ] 
 ### TODO
-- Rocket API
-- HTML frontend
+- Nothing to see here....
