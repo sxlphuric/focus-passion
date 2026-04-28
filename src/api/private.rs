@@ -4,6 +4,28 @@ use serde_with::chrono::NaiveDate;
 
 use crate::{AddTaskResponse, TaskOptions, models::NaiveDateForm};
 
+pub routes() -> Vec<Route> {
+    routes![
+        get_tasks,
+        add_task,
+    ]
+}
+
+#[get("/get")]
+pub async fn get_tasks(
+    cookies: &CookieJar<'_>,
+    db: &State<mongodb::Database>,
+) -> Result<Json<Vec<crate::models::Task>>, Status> {
+    let user_id = match cookies.get("uuid") {
+        Some(crumb) => crumb.value(),
+        None => return Err(Status::Unauthorized),
+    };
+
+    let tasks = crate::db::fetch_tasks(db, bson::doc! { "user_id": user_id }).await;
+
+    Ok(Json(tasks))
+}
+
 #[post("/add", data = "<opt>")]
 #[allow(unused_mut)]
 pub async fn add_task(

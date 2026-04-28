@@ -15,7 +15,6 @@ use serde_with::chrono::NaiveDate;
 
 pub fn routes() -> Vec<Route> {
     routes![
-        get_tasks,
         add_task,
         remove_task,
         complete_task,
@@ -23,21 +22,6 @@ pub fn routes() -> Vec<Route> {
         fetch_tasks_complete_filtering,
         search_tasks
     ]
-}
-
-#[get("/get")]
-pub async fn get_tasks(
-    cookies: &CookieJar<'_>,
-    db: &State<mongodb::Database>,
-) -> Result<Json<Vec<crate::models::Task>>, Status> {
-    let user_id = match cookies.get("uuid") {
-        Some(crumb) => crumb.value(),
-        None => return Err(Status::Unauthorized),
-    };
-
-    let tasks = crate::db::fetch_tasks(db, bson::doc! { "user_id": user_id }).await;
-
-    Ok(Json(tasks))
 }
 
 #[derive(FromForm, rocket::serde::Serialize, rocket::serde::Deserialize)]
