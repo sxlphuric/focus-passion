@@ -40,10 +40,7 @@ Focus Passion is an online task manager that is open-source, easy to use and fas
 
 - [MongoDB](https://mongodb.com) 8.0
 - [Rust](https://rustup.rs/) 1.94.1 or later
-- [nanoid](https://crates.io/crates/nanoid) 0.4.0
-- [rocket-rs](https://rocket.rs) 0.5.1
-- [rocket_dyn_templates](https://crates.io/crates/rocket_dyn_templates) 0.2.0
-
+- 
 ## Deploying
 
 The only current ways I know of how to deploy is Railway. You can also self-host.
