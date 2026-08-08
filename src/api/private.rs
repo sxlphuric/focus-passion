@@ -4,7 +4,7 @@ use serde_with::chrono::NaiveDate;
 
 use crate::{AddTaskResponse, TaskOptions, models::NaiveDateForm};
 
-pub routes() -> Vec<Route> {
+pub fn routes() -> Vec<Route> {
     routes![
         get_tasks,
         add_task,
