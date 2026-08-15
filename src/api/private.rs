@@ -1,5 +1,6 @@
 use nanoid::nanoid;
 use rocket::{State, Route, form::Form, http::{CookieJar, Status}, serde::json::Json};
+use mongodb::bson;
 use serde_with::chrono::NaiveDate;
 
 use crate::{AddTaskResponse, TaskOptions, models::NaiveDateForm};
