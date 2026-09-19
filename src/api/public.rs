@@ -60,12 +60,11 @@ pub async fn search_tasks(
         task_filter.insert("priority", bson_prio);
     }
 
-    let tasks = crate::db::fetch_tasks(db, task_filter).await;
-
-    Ok(Template::render(
-        "fragments/search_response",
-        context! {tasks},
-    ))
+    if let Ok(tasks) = crate::db::fetch_tasks(db,task_filter).await {
+        Ok(Template::render("fragments/search_response",context! {tasks}))
+    } else {
+        Err(Status::InternalServerError)
+    }
 }
 
 #[post("/add", data = "<opt>")]
@@ -112,13 +111,15 @@ pub async fn add_task(
 
     match result {
         Ok(_) => {
-            let projects = crate::db::get_unique_projects(db, user_id)
-                .await
-                .unwrap_or_default();
-            Ok(Template::render(
-                "fragments/add_task_response",
-                context! { task, projects },
-            ))
+            if let Ok(projects) = crate::db::get_unique_projects(db, user_id).await {
+                Ok(Template::render(
+                    "fragments/add_task_response",
+                    context! { task, projects },
+                ))
+            } else {
+                eprintln!("Coiuld not fetch projects");
+                Err(Status::InternalServerError)
+            }
         }
         Err(e) => {
             eprintln!("Db error: {:?}", e);
@@ -214,7 +215,9 @@ pub async fn fetch_tasks_complete_filtering(
         _ => bson::doc! { "user_id" : user_id, "completed": false },
     };
 
-    let tasks = crate::db::fetch_tasks(db, predicate).await;
-
-    Ok(Template::render("fragments/tasks_view", context! {tasks}))
+    if let Ok(tasks) = crate::db::fetch_tasks(db,predicate).await {
+        Ok(Template::render("fragments/tasks_view",context! {tasks}))
+    } else {
+        Err(Status::InternalServerError)
+    }
 }

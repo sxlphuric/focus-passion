@@ -22,9 +22,11 @@ pub async fn get_tasks(
         None => return Err(Status::Unauthorized),
     };
 
-    let tasks = crate::db::fetch_tasks(db, bson::doc! { "user_id": user_id }).await;
-
-    Ok(Json(tasks))
+    if let Ok(tasks) = crate::db::fetch_tasks(db,bson::doc! { "user_id": user_id }).await {
+        Ok(Json(tasks))
+    } else {
+        Err(Status::InternalServerError)
+    }
 }
 
 #[post("/add", data = "<opt>")]

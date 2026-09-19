@@ -2,7 +2,7 @@ use mongodb::{Client, bson};
 use rocket::{
     State,
     fs::FileServer,
-    http::{Cookie, CookieJar},
+    http::{Cookie, CookieJar,Status},
 };
 use rocket_dyn_templates::{Template, context};
 use serde::Serialize;
@@ -99,7 +99,7 @@ struct AddTaskResponse {
 
 // render main tracker
 #[get("/")]
-async fn main_page(cookies: &CookieJar<'_>, db: &State<mongodb::Database>) -> Template {
+async fn main_page(cookies: &CookieJar<'_>, db: &State<mongodb::Database>) -> Result<Template,Status> {
     let user_id = match cookies.get("uuid") {
         Some(c) => c.value().to_string(),
         None => {
@@ -109,16 +109,18 @@ async fn main_page(cookies: &CookieJar<'_>, db: &State<mongodb::Database>) -> Te
         }
     };
 
-    let tasks = db::fetch_tasks(db, bson::doc! { "completed": false, "user_id": &user_id }).await;
-    let projects = db::get_unique_projects(db, &user_id)
-        .await
-        .unwrap_or_default();
-
     let css_file = fs::read_to_string("static/style.css").unwrap_or_default();
 
     let css_hash = seahash::hash(css_file.as_bytes());
 
-    Template::render("index", context! { tasks, projects, css_hash })
+    if let Ok(tasks) = db::fetch_tasks(db,bson::doc!{"completed": false, "user_id": &user_id }).await
+    && let Ok(projects) = db::get_unique_projects(db,&user_id).await {
+        Ok(Template::render("index", context! { tasks, projects, css_hash }))
+    } else {
+        eprintln!("Could not fetch tasks and/or projects");
+        Err(Status::InternalServerError)
+    }
+        
 }
 
 // fn new_habit(habit: Habit<'_>) ->

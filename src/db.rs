@@ -14,12 +14,18 @@ fn coll() -> &'static str {
     "user_tasks"
 }
 
-pub async fn fetch_tasks(db: &Database, predicate: bson::Document) -> Vec<Task> {
+pub async fn fetch_tasks(db: &Database, predicate: bson::Document) -> Result<Vec<Task>,Error> {
     let collection = db.collection::<Task>(coll());
 
-    let cursor = collection.find(predicate).await.unwrap();
+    let cursor: Result<mongodb::Cursor<Task>,Error> = collection.find(predicate).await;
 
-    cursor.try_collect().await.unwrap()
+    if let Ok(res) = cursor {
+        res.try_collect().await
+    } else {
+        let e = cursor.unwrap_err();
+        eprintln!("Error fetching tasks: {:?}",e);
+        Err(e)
+    }
 }
 
 pub async fn fetch_task(db: &Database, predicate: bson::Document) -> Result<Option<Task>, Error> {

@@ -1,4 +1,4 @@
-use rocket::form::{Errors, FromFormField};
+use rocket::form::{Errors, FromFormField,Error};
 use serde_with::chrono::NaiveDate;
 
 #[derive(rocket::serde::Serialize, rocket::serde::Deserialize)]
@@ -7,9 +7,14 @@ pub struct NaiveDateForm(pub NaiveDate);
 
 impl<'v> FromFormField<'v> for NaiveDateForm {
     fn from_value(form_value: rocket::form::ValueField<'v>) -> Result<NaiveDateForm, Errors<'v>> {
-        Ok(NaiveDateForm(
-            NaiveDate::parse_from_str(form_value.value, "%Y-%m-%d").unwrap(),
-        ))
+        let res = NaiveDate::parse_from_str(form_value.value,"%Y-%m-%d");
+        match res {
+            Ok(date) => Ok(NaiveDateForm(date)),
+            Err(e) => {
+                eprintln!("Could not deserialize NaiveDate: {:?}", e);
+                Err(vec![Error::validation("Invalid date format")].into())
+            }
+        }
     }
 }
 
