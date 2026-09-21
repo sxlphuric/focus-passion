@@ -1,106 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta property="og:type" content="website">
-            <meta property="og:url" content="https://tasks.phuri.cc/">
-            <meta property="og:title" content="Task Manager">
-            <meta property="og:description" content="A fast and simple online task manager">
-            <meta property="og:image" content="https://tasks.phuri.cc/assets/favicon.svg">
-        <title>Task manager</title>
-        <link rel="stylesheet" href="/style.css?v={{css_hash}}" />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-        />
-        <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
-        <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/16.3.0/lib/marked.umd.js"></script>
-        <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-        <script
-            defer
-            src="https://unpkg.com/alpinejs@3.15.11/dist/cdn.min.js"
-        ></script>
-        <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-    </head>
-    <body
-        x-data="{ projectSort: '', activeTab: 'pending', newTaskNotification: false }"
-        @task-notification.window="newTaskNotification = true"
-    >
-        <div id="modal-portal"></div>
-        <h1>Task manager</h1>
-        {% include "new_task" %}
-        {% include "search" %}
-        <div class="task-list-container">
-            <div class="tabs-row">
-                <button
-                    type="button"
-                    x-on:click="activeTab = 'pending'; newTaskNotification=false;"
-                    :class="{ 'active': activeTab === 'pending', 'task-notification': newTaskNotification }"
-                    class="tab-button"
-                    hx-get="/tasks/list"
-                    hx-target="#task-list"
-                    hx-swap="outerHTML"
-                >
-                    Pending
-                </button>
-                <button
-                    type="button"
-                    x-on:click="activeTab = 'completed'"
-                    :class="{ 'active': activeTab === 'completed' }"
-                    class="tab-button"
-                    hx-get="/tasks/list?status=completed"
-                    hx-target="#task-list"
-                    hx-swap="outerHTML"
-                >
-                    Completed
-                </button>
-                <button
-                                    type="button"
-                                    x-on:click="activeTab = 'search'; projectSort=''"
-                                    :class="{ 'active': activeTab === 'search' }"
-                                    class="tab-button"
-                                    hx-get="/tasks/search?project=&due="
-                                    hx-target="#task-list"
-                                    hx-swap="outerHTML"
-                                >
-                                    Search
-                                </button>
-            </div>
-            <div class="task-list-inner-container">
-            <div class="projects" x-show="activeTab !== 'search'">
-                                <ul id="project-list" class="project-list">
-                                    <li class="project-item">
-                                        <button
-                                            type="button"
-                                            :class='{"active": !projectSort}'
-                                            class="i-label-button"
-                                            x-on:click='projectSort=""'
-                                        >
-                                        <i class="fa-solid fa-inbox" style="color: #fefefe"></i>
-                                        All
-                                        </button>
-                                    </li>
-                                    {% for project in projects %}
-                                    <li class="project-item">
-                                        <button type="button" :class='{"active": projectSort === {{project|json_encode|escape|safe}} }' class="i-label-button" x-on:click="projectSort='{{project|escape|safe}}'">
-                                            <i
-                                                class="fa-solid fa-hashtag"
-                                                style="color: #fefefe"
-                                            ></i>
-                                            {{project}}
-                                        </button>
-                                    </li>
-                                    {%endfor%}
-                                </ul>
-                            </div>
-                <ul id="task-list" class="task-list">
-                    {% for task in tasks %} {% include "task_item" %} {% endfor
-                    %}
-                    <li id="empty-message" x-text="activeTab === 'search' ? 'No search results!' : 'Whew! No tasks!'"></li>
-                </ul>
-                            </div>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tasks.phuri.cc/">
+    <meta property="og:title" content="Task Manager">
+    <meta property="og:description" content="A fast and simple online task manager">
+    <meta property="og:image" content="https://tasks.phuri.cc/assets/favicon.svg">
+    <title>Task manager</title>
+    <link rel="stylesheet" href="/style.css?v={{css_hash}}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/16.3.0/lib/marked.umd.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.15.11/dist/cdn.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+</head>
+
+<body x-data="{ projectSort: '', activeTab: 'pending', newTaskNotification: false }"
+    @task-notification.window="newTaskNotification = true">
+    <div id="modal-portal"></div>
+    <h1>Task manager</h1>
+    {% include "new_task" %}
+    {% include "search" %}
+    <div class="task-list-container">
+        <div class="tabs-row">
+            <button type="button" x-on:click="activeTab = 'pending'; newTaskNotification=false;"
+                :class="{ 'active': activeTab === 'pending', 'task-notification': newTaskNotification }"
+                class="tab-button" hx-get="/tasks/list" hx-target="#task-list" hx-swap="outerHTML">
+                Pending
+            </button>
+            <button type="button" x-on:click="activeTab = 'completed'" :class="{ 'active': activeTab === 'completed' }"
+                class="tab-button" hx-get="/tasks/list?status=completed" hx-target="#task-list" hx-swap="outerHTML">
+                Completed
+            </button>
+            <button type="button" x-on:click="activeTab = 'search'; projectSort=''"
+                :class="{ 'active': activeTab === 'search' }" class="tab-button" hx-get="/tasks/search?project=&due="
+                hx-target="#task-list" hx-swap="outerHTML">
+                Search
+            </button>
         </div>
-    </body>
+        <div class="task-list-inner-container">
+            <div class="projects" x-show="activeTab !== 'search'">
+                <ul id="project-list" class="project-list">
+                    <li class="project-item">
+                        <button type="button" :class='{"active": !projectSort}' class="i-label-button"
+                            x-on:click='projectSort=""'>
+                            <i class="fa-solid fa-inbox" style="color: #fefefe"></i>
+                            All
+                        </button>
+                    </li>
+                    {% for project in projects %}
+                    <li class="project-item">
+                        <button type="button" :class='{"active": projectSort === {{project|json_encode|escape|safe}} }'
+                            class="i-label-button" x-on:click="projectSort='{{project|escape|safe}}'">
+                            <i class="fa-solid fa-hashtag" style="color: #fefefe"></i>
+                            {{project}}
+                        </button>
+                    </li>
+                    {%endfor%}
+                </ul>
+            </div>
+            <ul id="task-list" class="task-list">
+                {% for task in tasks %} {% include "task_item" %} {% endfor
+                %}
+                <li id="empty-message" x-text="activeTab === 'search' ? 'No search results!' : 'Whew! No tasks!'"></li>
+            </ul>
+        </div>
+    </div>
+</body>
+
 </html>
