@@ -15,27 +15,27 @@
             </svg>
         </div>
         <div for="checked" class="task-content" x-on:click="openTask = '{{task.id}}'">
-                <div class="task-content-left">
-                    <strong>{{ task.name }}</strong>
+            <div class="task-content-left">
+                <strong>{{ task.name }}</strong>
 
-                    </div>
+            </div>
             <div class="task-content-right">
-                    {% if task.tags %}
-                    <ul>
-                        {% for tag in task.tags %}
-                        <li>{{ tag }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
+                {% if task.tags %}
+                <ul>
+                    {% for tag in task.tags %}
+                    <li>{{ tag }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
                 <em>{{ task.project }}</em>
                 <!--em>{{ task.section | default(value="Not Sectioned") }}</em-->
 
 
-                    {%if task.due %}
-                    <span style="text-align: right; white-space: pre;">{{ task.due | date(format="%b %d")}}</span>
-                    {%endif%}
-                </div>
+                {%if task.due %}
+                <span style="text-align: right; white-space: pre;">{{ task.due | date(format="%b %d")}}</span>
+                {%endif%}
             </div>
+        </div>
     </div>
     <template x-teleport="#task-container">
         {% include "modal/modal" %}
