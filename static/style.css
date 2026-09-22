@@ -609,8 +609,7 @@ button.show-more {
 }
 
 .checkbox-container .checkbox input {
-    -webkit-appearance: none; /* IGNORE THIS ERROR, IT IS NOT ACCTUALLY AN ERROR AND WILL BREAK EVERYTHING IF "FIXED" */
-    -moz-appearance: none; /* IGNORE THIS ERROR, IT IS NOT ACCTUALLY AN ERROR AND WILL BREAK EVERYTHING IF "FIXED" */
+    appearance: none;
     -webkit-tap-highlight-color: transparent;
     cursor: pointer;
     background-color: var(--bg);
