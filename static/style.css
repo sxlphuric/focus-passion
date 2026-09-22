@@ -1,5 +1,5 @@
 :root {
-    --accent: #e06fce;
+    --accent: #29B6F6; /* matririal blue 400 */
     --border-color: color-mix(in srgb, var(--accent), white 20%);
     --sidebar-border-color: color-mix(in srgb, var(--border-color), rgba(0,0,0,0.3) 20%);
     --accent-diluted: color-mix(in srgb, var(--accent), white 80%);
