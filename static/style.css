@@ -568,14 +568,32 @@ button.show-more {
 }
 
 .checkbox-container .checkbox {
-    --bg: #fff;
-    --brdr: #d1d6ee;
+    --bg: transparent;
+    --brdr: rgba(0,0,0,0.3);
     --brdr-actv: #1e2235;
     --brdr-hovr: #bbc1e1;
     --dur: calc((var(--size, 2)/2) * 0.6s);
     display: inline-block;
     width: calc(var(--size, 1) * 22px);
     position: relative;
+}
+
+.checkbox-container .checkbox.high {
+    --brdr: rgb(220,17,17);
+        --brdr-actv: color-mix(in srgb, var(--brdr), white 20%);
+    --brdr-hovr: color-mix(in srgb, var(--brdr), white 70%);
+}
+
+.checkbox-container .checkbox.medium {
+    --brdr: rgb(255,218,3);
+        --brdr-actv: color-mix(in srgb, var(--brdr), white 20%);
+    --brdr-hovr: color-mix(in srgb, var(--brdr), white 70%);
+}
+
+.checkbox-container .checkbox.low {
+    --brdr: rgb(3,182,255);
+        --brdr-actv: color-mix(in srgb, var(--brdr), white 20%);
+    --brdr-hovr: color-mix(in srgb, var(--brdr), white 70%);
 }
 
 .checkbox-container .checkbox:after {
@@ -627,7 +645,7 @@ button.show-more {
     fill: none;
     left: 0;
     pointer-events: none;
-    stroke: var(--stroke, var(--border-active));
+    stroke: var(--brdr-actv);
     stroke-dasharray: var(--dashArray, 93);
     stroke-dashoffset: var(--dashOffset, 94);
     stroke-linecap: round;
