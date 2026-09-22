@@ -1,6 +1,5 @@
-<div class="modal" role="dialog" tabindex="-1" x-show="open" x-on:click.away="open = false" x-cloak x-transition
-    x-init="htmx.process($el)" x-on:keydown.escape="open=false">
-    <div class="model-inner">
+<div :class="{'modal-open': openTask === '{{task.id}}' } "class="modal" role="dialog" tabindex="-1" x-show="openTask === '{{task.id}}'" x-cloak x-transition
+    x-init="htmx.process($el)">
         <div class="modal-header">
             <span style="display: flex; align-items: center; gap: 0.5rem;">
                 {% include "modal/task_checkbox" %}
