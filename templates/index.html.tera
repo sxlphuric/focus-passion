@@ -20,12 +20,78 @@
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
 </head>
 
-<body x-data="{ projectSort: '', activeTab: 'pending', newTaskNotification: false }"
+<body x-data="{ projectSort: '', activeTab: 'pending', newTaskNotification: false, newTaskInputFocused: false, }"
     @task-notification.window="newTaskNotification = true">
     <div id="modal-portal"></div>
-    <h1>Task manager</h1>
-    {% include "new_task" %}
+
     {% include "search" %}
+
+    <div class="flex-horizontal">
+        <div id="screen">
+            <div id="sidebar">
+                <div id="tabs">
+                    <div></div>
+                    <div></div>
+                </div>
+                <div id="task-groups-list">
+                    <div id="list-groups-fixed"></div>
+                    <div id="time-groups"></div>
+                    <div id="list-groups">
+                        <div class="projects" x-show="activeTab !== 'search'">
+                            <ul id="project-list" class="project-list">
+                                <li class="project-item">
+                                    <button type="button" :class='{"active": !projectSort}' class="i-label-button"
+                                        x-on:click='projectSort=""'>
+                                        <i class="fa-solid fa-inbox" style="color: #fefefe"></i>
+                                        All
+                                    </button>
+                                </li>
+                                {% for project in projects %}
+                                <li class="project-item">
+                                    <button type="button"
+                                        :class='{"active": projectSort === {{project|json_encode|escape|safe}} }'
+                                        class="i-label-button" x-on:click="projectSort='{{project|escape|safe}}'">
+                                        <i class="fa-solid fa-hashtag" style="color: #fefefe"></i>
+                                        {{project}}
+                                    </button>
+                                </li>
+                                {%endfor%}
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="filter-groups"></div>
+                    <div id="tag-groups"></div>
+                    <div id="misc-groups"></div>
+                </div>
+            </div>
+            <div class="task-list-container">
+                <div id="task-list-header-container">
+                    <div id="task-list-header">
+                        <span>
+                            <h2 style="margin:0px;">All</h2>
+                        </span>
+                        <span>
+                            <button class="i-button">
+                                <i class="fa-solid fa-ellipsis"></i>
+                            </button></span>
+                    </div>
+                    <div id="task-input">
+                        {% include "new_task" %}
+                    </div>
+                </div>
+                <ul id="task-list" class="task-list">
+                    {% for task in tasks %} {% include "task_item" %} {% endfor %}
+                    <li id="empty-message" x-text="activeTab === 'search' ? 'No search results!' : 'Whew! No tasks!'">
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="task-container">
+            <p>Nothing to see here...</p>
+        </div>
+    </div>
+
+    <!--
     <div class="task-list-container">
         <div class="tabs-row">
             <button type="button" x-on:click="activeTab = 'pending'; newTaskNotification=false;"
@@ -43,34 +109,8 @@
                 Search
             </button>
         </div>
-        <div class="task-list-inner-container">
-            <div class="projects" x-show="activeTab !== 'search'">
-                <ul id="project-list" class="project-list">
-                    <li class="project-item">
-                        <button type="button" :class='{"active": !projectSort}' class="i-label-button"
-                            x-on:click='projectSort=""'>
-                            <i class="fa-solid fa-inbox" style="color: #fefefe"></i>
-                            All
-                        </button>
-                    </li>
-                    {% for project in projects %}
-                    <li class="project-item">
-                        <button type="button" :class='{"active": projectSort === {{project|json_encode|escape|safe}} }'
-                            class="i-label-button" x-on:click="projectSort='{{project|escape|safe}}'">
-                            <i class="fa-solid fa-hashtag" style="color: #fefefe"></i>
-                            {{project}}
-                        </button>
-                    </li>
-                    {%endfor%}
-                </ul>
-            </div>
-            <ul id="task-list" class="task-list">
-                {% for task in tasks %} {% include "task_item" %} {% endfor
-                %}
-                <li id="empty-message" x-text="activeTab === 'search' ? 'No search results!' : 'Whew! No tasks!'"></li>
-            </ul>
-        </div>
     </div>
+    -->
 </body>
 
 </html>

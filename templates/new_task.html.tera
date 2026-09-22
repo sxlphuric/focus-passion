@@ -1,22 +1,82 @@
-<div class="new-task" x-show="activeTab!== 'search'">
-    <form hx-post="/tasks/add" hx-target="#task-list" :hx-swap="activeTab === 'pending' ? 'beforeend' : 'none'" @htmx:after-request="$el.reset(); if (activeTab !== 'pending') $dispatch('task-notification')" class="new-task">
-        <div class="new-int-">
-            <input type="text" name="name" class="new-int" placeholder="Task" required />
-            <input type="text" name="project" class="new-int" placeholder="Project" list="project-dropdown" required />
-            <datalist class="new-int" id="project-dropdown">
+<div :class="{ 'focused': newTaskInputFocused }" class="new-task" x-show="activeTab!== 'search'"
+    @click.outside="newTaskInputFocused = false" x-data="{priorityMenuOpen: false, priority: 'none'}">
+    <form hx-post="/tasks/add" hx-target="#task-list" :hx-swap="activeTab === 'pending' ? 'beforeend' : 'none'"
+        @htmx:after-request="$el.reset(); if (activeTab !== 'pending') $dispatch('task-notification');priority = 'none'">
+        <div class="new-task-inner">
+            <input type="text" name="name" id="new-task-input" class="strip-default-style" placeholder="Add new task"
+                required x-on:click="newTaskInputFocused = true" />
+            <div class="task-info-row" x-show="newTaskInputFocused">
+                <div class="task-toggles">
+                    <input type="hidden" name="project" class="new-int" placeholder="Project" list="project-dropdown"
+                        value="Inbox" />
+
+                    <!-- 
+                        <datalist class="new-int" id="project-dropdown">
                 {% for project in projects %}
                     <option value="{{project}}">
                 {%endfor%}
-            </datalist>
-            <textarea name="description" placeholder="Description" class="new-int"></textarea>
-            <input type="date" name="due" class="new-int-t" />
-            <select name="priority" placeholder="Choose one" class=new-int>
+                    </datalist>
+                    -->
+                    <!-- textarea name="description" placeholder="Description" class="new-int"></textarea -->
+
+                    <input type="date" name="due" class="new-int-t" />
+                    <input type="hidden" name="priority" x-model="priority" />
+
+                    <div class="priority" style="position: relative;">
+
+                        <button type="button" class="i-button priority-button new-task-priority-button"
+                            x-on:click="priorityMenuOpen = !priorityMenuOpen">
+                            <i class="fa-regular fa-flag" style="color: rgb(220,17,17);"
+                                x-show="priority == 'high'"></i>
+                            <i class="fa-regular fa-flag" style="color: rgb(255,218,3);"
+                                x-show="priority == 'medium'"></i>
+                            <i class="fa-regular fa-flag" style="color: rgb(3,182,255);" x-show="priority == 'low'"></i>
+                            <i class="fa-regular fa-flag" style="color: rgb(68,68,68);" x-show="priority == 'none'"></i>
+                        </button>
+
+
+                        <div class="priority-menu new-task-version" x-show="priorityMenuOpen"
+                            @click.away="priorityMenuOpen=false" x-cloak x-transition
+                            x-on:click="priorityMenuOpen = false">
+                            <button type="button" class="i-label-button" x-on:click="priorityMenuOpen = false; priority = 'high'">
+                                <span>
+                                    <i class="fa-regular fa-flag" style="color: rgb(220,17,17);"></i>
+                                    High
+                                </span>
+                            </button>
+                            <button type="button" class="i-label-button" x-on:click="priorityMenuOpen = false; priority = 'medium'">
+                                <span>
+                                    <i class="fa-regular fa-flag" style="color: rgb(255,218,3);"></i>
+                                    Medium
+                                </span>
+                            </button>
+                            <button type="button" class="i-label-button" x-on:click="priorityMenuOpen = false; priority = 'low'">
+                                <span>
+                                    <i class="fa-regular fa-flag" style="color: rgb(3,182,255);"></i>
+                                    Low
+                                </span>
+                            </button>
+                            <button type="button" class="i-label-button" x-on:click="priorityMenuOpen = false; priority = 'none'">
+                                <span>
+                                    <i class="fa-regular fa-flag" style="color: rgb(68,68,68);"></i>
+                                    None
+                                </span>
+                            </button>
+                        </div>
+
+                    </div>
+                    <!-- <select name="priority" placeholder="Choose one" class=new-int>
                 <option value="none">None</option>
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
-            </select>
-            <button type="submit" class="new-int">Add</button>
+                    </select> -->
+
+                </div>
+                <button type="submit" class="new-int"><span>Add</span></button>
+
+            </div>
+
         </div>
     </form>
 </div>
