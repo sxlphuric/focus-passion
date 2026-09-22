@@ -22,7 +22,6 @@
 
 <body x-data="{ projectSort: '', activeTab: 'pending', newTaskNotification: false, newTaskInputFocused: false, openTask:null }"
     @task-notification.window="newTaskNotification = true">
-    <div id="modal-portal"></div>
 
     {% include "search" %}
 

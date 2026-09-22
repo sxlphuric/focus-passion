@@ -37,10 +37,7 @@
                 </div>
             </div>
     </div>
-    <template x-teleport="#modal-portal">
-        {% include "modal/overlay" %}
-    </template>
-    <template x-teleport="#modal-portal">
+    <template x-teleport="#task-container">
         {% include "modal/modal" %}
     </template>
 </li>
