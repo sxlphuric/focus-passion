@@ -1,51 +1,32 @@
-<div
-    class="modal"
-    role="dialog"
-    tabindex="-1"
-    x-show="open"
-    x-on:click.away="open = false"
-    x-cloak
-    x-transition
-    x-init="htmx.process($el)"
-    x-on:keydown.escape="open=false"
->
+<div class="modal" role="dialog" tabindex="-1" x-show="open" x-on:click.away="open = false" x-cloak x-transition
+    x-init="htmx.process($el)" x-on:keydown.escape="open=false">
     <div class="model-inner">
         <div class="modal-header">
             <span style="display: flex; align-items: center; gap: 0.5rem;">
                 {% include "modal/task_checkbox" %}
-                <input type="text" class="task-name-modal" x-model="name" value="{{task.name}}" required/>
-                <button
-                    x-show="name !== lastName"
-                    x-transition
-                    x-on:click="name = lastName"
-                    class="i-button"
-                >
+                <input type="text" class="task-name-modal" x-model="name" value="{{task.name}}" required />
+                <button x-show="name !== lastName" x-transition x-on:click="name = lastName" class="i-button">
                     <i class="fa-solid fa-xmark" style="color: #fefefe;"></i>
                 </button>
                 <span style="color:red;" x-show="name.trim() === ''" x-transition>
-                                Name cannot be empty
-                            </span>
+                    Name cannot be empty
+                </span>
             </span>
             <div class="header-buttons-row">
-            <button hx-post="/tasks/remove/{{ task.id }}"
-                            hx-target="#task-{{task.id}}"
-                            hx-swap="outerHTML" aria-label="Delete" class="i-button">
-                                <i class="fa-solid fa-trash-can" style="color: #fefefe;"></i>
-                            </button><button class="i-button" aria-label="Close" x-on:click="open = false"
-                                x-bind:disabled="name.trim() === ''"
-                                x-bind:class="name.trim() === '' ? 'nope' : ''"
-                hx-post="/tasks/modify/{{task.id}}/name"
-                hx-swap="outerHTML"
-                hx-target="#task-{{task.id}}"
-                :hx-vals='JSON.stringify({ "data.name": name })'
-                x-on:click="lastName = name">
-                <i class="fa-solid fa-xmark" style="color:#fefefe;"></i>
-            </button>
+                <button hx-post="/tasks/remove/{{ task.id }}" hx-target="#task-{{task.id}}" hx-swap="outerHTML"
+                    aria-label="Delete" class="i-button">
+                    <i class="fa-solid fa-trash-can" style="color: #fefefe;"></i>
+                </button><button class="i-button" aria-label="Close" x-on:click="open = false"
+                    x-bind:disabled="name.trim() === ''" x-bind:class="name.trim() === '' ? 'nope' : ''"
+                    hx-post="/tasks/modify/{{task.id}}/name" hx-swap="outerHTML" hx-target="#task-{{task.id}}"
+                    :hx-vals='JSON.stringify({ "data.name": name })' x-on:click="lastName = name">
+                    <i class="fa-solid fa-xmark" style="color:#fefefe;"></i>
+                </button>
             </div>
         </div>
 
         <div class="preview-stack">
-        <div x-on:click="editing=true" x-cloak x-init="const mde = new EasyMDE({
+            <div x-on:click="editing=true" x-cloak x-init="const mde = new EasyMDE({
             element: $refs.editor,
             initialValue: desc,
             spellChecker: false,
@@ -61,102 +42,86 @@
                 }, 100);
             mde.codemirror.on('change', () => { desc = mde.value(); });" class="easymde-description-container">
                 <textarea x-ref="editor" class="task-description"></textarea>
-        </div>
-        <div class="task-description-preview" x-html="desc.trim() ? marked.parse(desc) : '<span>Click to edit</span>'" x-show="!editing"></div>
+            </div>
+            <div class="task-description-preview"
+                x-html="desc.trim() ? marked.parse(desc) : '<span>Click to edit</span>'" x-show="!editing"></div>
         </div>
 
         <div class="buttons-row">
-            <button
-                class="i-button"
-                x-show="desc !== lastDesc"
-                x-transition
-                x-on:click="desc = lastDesc"
-            >
+            <button class="i-button" x-show="desc !== lastDesc" x-transition x-on:click="desc = lastDesc">
                 <i class="fa-solid fa-circle-xmark" style="color: #fefefe;"></i>
             </button>
-            <button
-                class="i-button"
-                hx-post="/tasks/modify/{{ task.id }}/description"
-                hx-swap="outerHTML"
-                hx-target="#task-{{task.id}}"
-                x-show="desc !== lastDesc"
-                x-transition
-                :hx-vals='JSON.stringify({ "data.description": desc })'
-                x-on:click="lastDesc = desc"
-                x-on:keydown.enter="open = false"
-                x-bind:disabled="name.trim() === ''"
-                                                x-bind:class="name.trim() === '' ? 'nope' : ''"
-            >
+            <button class="i-button" hx-post="/tasks/modify/{{ task.id }}/description" hx-swap="outerHTML"
+                hx-target="#task-{{task.id}}" x-show="desc !== lastDesc" x-transition
+                :hx-vals='JSON.stringify({ "data.description": desc })' x-on:click="lastDesc = desc"
+                x-on:keydown.enter="open = false" x-bind:disabled="name.trim() === ''"
+                x-bind:class="name.trim() === '' ? 'nope' : ''">
                 <i class="fa-solid fa-circle-check" style="color: #fefefe;"></i>
             </button>
 
             <input type="date" x-model="date" class="new-int-t">
-            <button
-                                x-show="date !== lastDate"
-                                x-transition
-                                x-on:click="date = lastDate"
-                                class="i-button"
-                            >
-                                <i class="fa-solid fa-xmark" style="color: #fefefe;"></i>
-                            </button>
-                            <button
-                                            class="i-button"
-                                            hx-post="/tasks/modify/{{ task.id }}/due"
-                                            hx-swap="outerHTML"
-                                            hx-target="#task-{{task.id}}"
-                                            x-show="date !== lastDate"
-                                            x-transition
-                                            :hx-vals='JSON.stringify({ "data.due": date })'
-                                            x-on:click="lastDesc = date"
-                                            x-on:keydown.enter="open = false"
-                                            x-bind:disabled="name.trim() === ''"
-                                                                            x-bind:class="name.trim() === '' ? 'nope' : ''"
-                                        >
-                                            <i class="fa-solid fa-check" style="color: #fefefe;"></i>
-                                        </button>
+            <button x-show="date !== lastDate" x-transition x-on:click="date = lastDate" class="i-button">
+                <i class="fa-solid fa-xmark" style="color: #fefefe;"></i>
+            </button>
+            <button class="i-button" hx-post="/tasks/modify/{{ task.id }}/due" hx-swap="outerHTML"
+                hx-target="#task-{{task.id}}" x-show="date !== lastDate" x-transition
+                :hx-vals='JSON.stringify({ "data.due": date })' x-on:click="lastDesc = date"
+                x-on:keydown.enter="open = false" x-bind:disabled="name.trim() === ''"
+                x-bind:class="name.trim() === '' ? 'nope' : ''">
+                <i class="fa-solid fa-check" style="color: #fefefe;"></i>
+            </button>
 
             <button class="i-button priority-button" x-on:click="priorityMenuOpen = !priorityMenuOpen">
 
-            {% if task.priority == "high" %}
-            <i class="fa-regular fa-flag" style="color: rgb(220,17,17);"></i>
-            {%elif task.priority == "medium" %}
-            <i class="fa-regular fa-flag" style="color: rgb(255,218,3);"></i>
-            {%elif task.priority == "low" %}
-            <i class="fa-regular fa-flag" style="color: rgb(3,182,255);"></i>
-            {%else%}
-            <i class="fa-regular fa-flag" style="color: rgb(68,68,68);"></i>
-            {%endif%}
+                {% if task.priority == "high" %}
+                <i class="fa-regular fa-flag" style="color: rgb(220,17,17);"></i>
+                {%elif task.priority == "medium" %}
+                <i class="fa-regular fa-flag" style="color: rgb(255,218,3);"></i>
+                {%elif task.priority == "low" %}
+                <i class="fa-regular fa-flag" style="color: rgb(3,182,255);"></i>
+                {%else%}
+                <i class="fa-regular fa-flag" style="color: rgb(68,68,68);"></i>
+                {%endif%}
 
             </button>
 
             <div class="priority" style="position: relative;">
 
-            <div class="priority-menu" x-show="priorityMenuOpen" @click.away="priorityMenuOpen=false" x-cloak x-transition x-on:click="priorityMenuOpen = false">
-                <button hx-post="/tasks/modify/{{task.id}}/priority" hx-vals='{ "data.priority": "high" }' hx-target="#task-{{task.id}}" hx-swap="outerHTML" class="i-label-button" x-on:click="priorityMenuOpen = false">
-                    <span>
-                        <i class="fa-regular fa-flag" style="color: rgb(220,17,17);"></i>
-                        High
-                    </span>
-                </button>
-                <button class="i-label-button" hx-post="/tasks/modify/{{task.id}}/priority" hx-vals='{ "data.priority": "medium" }' hx-target="#task-{{task.id}}" hx-swap="outerHTML" x-on:click="priorityMenuOpen = false">
-                                    <span>
-                                        <i class="fa-regular fa-flag" style="color: rgb(255,218,3);"></i>
-                                        Medium
-                                    </span>
-                                </button>
-                                <button class="i-label-button" x-on:click="priorityMenuOpen = false" hx-post="/tasks/modify/{{task.id}}/priority" hx-vals='{ "data.priority": "low" }' hx-target="#task-{{task.id}}" hx-swap="outerHTML" x-on:click="priorityMenuOpen = false">
-                                                    <span>
-                                                        <i class="fa-regular fa-flag" style="color: rgb(3,182,255);"></i>
-                                                        Low
-                                                    </span>
-                                                </button>
-                                                <button class="i-label-button" x-on:click="priorityMenuOpen = false" hx-post="/tasks/modify/{{task.id}}/priority" hx-vals='{ "data.priority": "none" }' hx-target="#task-{{task.id}}" hx-swap="outerHTML" x-on:click="priorityMenuOpen = false">
-                                                                    <span>
-                                                                        <i class="fa-regular fa-flag" style="color: rgb(68,68,68);"></i>
-                                                                        None
-                                                                    </span>
-                                                                </button>
-            </div>
+                <div class="priority-menu" x-show="priorityMenuOpen" @click.away="priorityMenuOpen=false" x-cloak
+                    x-transition x-on:click="priorityMenuOpen = false">
+                    <button hx-post="/tasks/modify/{{task.id}}/priority" hx-vals='{ "data.priority": "high" }'
+                        hx-target="#task-{{task.id}}" hx-swap="outerHTML" class="i-label-button"
+                        x-on:click="priorityMenuOpen = false">
+                        <span>
+                            <i class="fa-regular fa-flag" style="color: rgb(220,17,17);"></i>
+                            High
+                        </span>
+                    </button>
+                    <button class="i-label-button" hx-post="/tasks/modify/{{task.id}}/priority"
+                        hx-vals='{ "data.priority": "medium" }' hx-target="#task-{{task.id}}" hx-swap="outerHTML"
+                        x-on:click="priorityMenuOpen = false">
+                        <span>
+                            <i class="fa-regular fa-flag" style="color: rgb(255,218,3);"></i>
+                            Medium
+                        </span>
+                    </button>
+                    <button class="i-label-button" x-on:click="priorityMenuOpen = false"
+                        hx-post="/tasks/modify/{{task.id}}/priority" hx-vals='{ "data.priority": "low" }'
+                        hx-target="#task-{{task.id}}" hx-swap="outerHTML" x-on:click="priorityMenuOpen = false">
+                        <span>
+                            <i class="fa-regular fa-flag" style="color: rgb(3,182,255);"></i>
+                            Low
+                        </span>
+                    </button>
+                    <button class="i-label-button" x-on:click="priorityMenuOpen = false"
+                        hx-post="/tasks/modify/{{task.id}}/priority" hx-vals='{ "data.priority": "none" }'
+                        hx-target="#task-{{task.id}}" hx-swap="outerHTML" x-on:click="priorityMenuOpen = false">
+                        <span>
+                            <i class="fa-regular fa-flag" style="color: rgb(68,68,68);"></i>
+                            None
+                        </span>
+                    </button>
+                </div>
 
             </div>
         </div>
