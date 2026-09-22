@@ -308,11 +308,13 @@ li.task-item {
     display: flex;
     gap: 0.5em;
     text-align: left;
-    width: 100%;
+    width:max-content;
 }
 
-.task-priority {
-    width: 3em;
+.task-content-right {
+    display:flex;
+    gap:0.5em;
+    text-align:right;
 }
 
 li.task-item:hover {

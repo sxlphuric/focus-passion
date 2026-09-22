@@ -17,19 +17,9 @@
         <div for="checked" class="task-content" x-on:click="openTask = '{{task.id}}'">
                 <div class="task-content-left">
                     <strong>{{ task.name }}</strong>
-                    <em>{{ task.project }}</em>
-                    <em>{{ task.section | default(value="Not Sectioned") }}</em>
-                    <div class="task-priority">
-                        {% if task.priority == "high" %}
-                        <i class="fa-regular fa-flag" style="color: rgb(220,17,17);"></i>
-                        {%elif task.priority == "medium" %}
-                        <i class="fa-regular fa-flag" style="color: rgb(255,218,3);"></i>
-                        {%elif task.priority == "low" %}
-                        <i class="fa-regular fa-flag" style="color: rgb(3,182,255);"></i>
-                        {%else%}
-                        <i class="fa-regular fa-flag" style="color: rgb(68,68,68);"></i>
-                        {%endif%}
+
                     </div>
+            <div class="task-content-right">
                     {% if task.tags %}
                     <ul>
                         {% for tag in task.tags %}
@@ -37,8 +27,10 @@
                         {% endfor %}
                     </ul>
                     {% endif %}
-                </div>
-                <div class="task-content-right">
+                <em>{{ task.project }}</em>
+                <!--em>{{ task.section | default(value="Not Sectioned") }}</em-->
+
+
                     {%if task.due %}
                     <span style="text-align: right; white-space: pre;">{{ task.due | date(format="%b %d")}}</span>
                     {%endif%}
