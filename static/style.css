@@ -328,7 +328,7 @@ button.show-more {
     display: block;
 }
 
-#task-list:has(.task-item) #empty-message {
+#task-list:has(.task-item) .empty-message, #task-container:has(.modal-open) .empty-message {
     display: none;
 }
 

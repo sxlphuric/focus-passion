@@ -81,13 +81,13 @@
                 </div>
                 <ul id="task-list" class="task-list">
                     {% for task in tasks %} {% include "task_item" %} {% endfor %}
-                    <li id="empty-message" x-text="activeTab === 'search' ? 'No search results!' : 'Whew! No tasks!'">
+                    <li class="empty-message" x-text="activeTab === 'search' ? 'No search results!' : 'Whew! No tasks!'">
                     </li>
                 </ul>
             </div>
         </div>
         <div id="task-container">
-            <p>Nothing to see here...</p>
+            <p style="margin:4px;" class="empty-message">Nothing to see here...</p>
         </div>
     </div>
 
