@@ -15,10 +15,10 @@
                 <button hx-post="/tasks/remove/{{ task.id }}" hx-target="#task-{{task.id}}" hx-swap="outerHTML"
                     aria-label="Delete" class="i-button">
                 <i class="fa-solid fa-trash-can"></i>
-                </button><button class="i-button" aria-label="Close" x-on:click="open = false"
-                    x-bind:disabled="name.trim() === ''" x-bind:class="name.trim() === '' ? 'nope' : ''"
-                    hx-post="/tasks/modify/{{task.id}}/name" hx-swap="outerHTML" hx-target="#task-{{task.id}}"
-                    :hx-vals='JSON.stringify({ "data.name": name })' x-on:click="lastName = name">
+            </button><button class="i-button" aria-label="Close"
+                x-bind:disabled="name.trim() === ''" x-bind:class="name.trim() === '' ? 'nope' : ''"
+                hx-post="/tasks/modify/{{task.id}}/name" hx-swap="outerHTML" hx-target="#task-{{task.id}}"
+                :hx-vals='JSON.stringify({ "data.name": name })' x-on:click="lastName = name">
                 <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -53,7 +53,7 @@
             <button class="i-button" hx-post="/tasks/modify/{{ task.id }}/description" hx-swap="outerHTML"
                 hx-target="#task-{{task.id}}" x-show="desc !== lastDesc" x-transition
                 :hx-vals='JSON.stringify({ "data.description": desc })' x-on:click="lastDesc = desc"
-                x-on:keydown.enter="open = false" x-bind:disabled="name.trim() === ''"
+            x-bind:disabled="name.trim() === ''"
                 x-bind:class="name.trim() === '' ? 'nope' : ''">
             <i class="fa-solid fa-circle-check"></i>
             </button>
@@ -65,7 +65,7 @@
             <button class="i-button" hx-post="/tasks/modify/{{ task.id }}/due" hx-swap="outerHTML"
                 hx-target="#task-{{task.id}}" x-show="date !== lastDate" x-transition
                 :hx-vals='JSON.stringify({ "data.due": date })' x-on:click="lastDesc = date"
-                x-on:keydown.enter="open = false" x-bind:disabled="name.trim() === ''"
+            x-bind:disabled="name.trim() === ''"
                 x-bind:class="name.trim() === '' ? 'nope' : ''">
             <i class="fa-solid fa-check"></i>
             </button>
