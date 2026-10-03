@@ -1,14 +1,14 @@
 <div :class="{ 'focused': newTaskInputFocused }" class="new-task" x-show="activeTab!== 'search'"
-    @click.outside="newTaskInputFocused = false" x-data="{priorityMenuOpen: false, priority: 'none'}">
+    @click.outside="newTaskInputFocused = false"
+    x-data="{priorityMenuOpen: false, priority: 'none', projectMenuOpen: false, project: 'Inbox'}">
     <form hx-post="/tasks/add" hx-target="#task-list" :hx-swap="activeTab === 'pending' ? 'beforeend' : 'none'"
         @htmx:after-request="$el.reset(); if (activeTab !== 'pending') $dispatch('task-notification');priority = 'none'">
         <div class="new-task-inner">
-            <input type="text" name="name" id="new-task-input" class="strip-default-style" placeholder="Add new task"
-                required x-on:click="newTaskInputFocused = true" />
+            <input type="text" name="name" id="new-task-input" class="strip-default-style"
+                placeholder="What's on your mind?" required x-on:click="newTaskInputFocused = true" />
             <div class="task-info-row" x-show="newTaskInputFocused">
                 <div class="task-toggles">
-                    <input type="hidden" name="project" class="new-int" placeholder="Project" list="project-dropdown"
-                        value="Inbox" />
+
 
                     <!-- 
                         <datalist class="new-int" id="project-dropdown">
@@ -38,25 +38,29 @@
                         <div class="priority-menu new-task-version" x-show="priorityMenuOpen"
                             @click.away="priorityMenuOpen=false" x-cloak x-transition
                             x-on:click="priorityMenuOpen = false">
-                            <button type="button" class="i-label-button" x-on:click="priorityMenuOpen = false; priority = 'high'">
+                            <button type="button" class="i-label-button"
+                                x-on:click="priorityMenuOpen = false; priority = 'high'">
                                 <span>
                                     <i class="fa-regular fa-flag" style="color: rgb(220,17,17);"></i>
                                     High
                                 </span>
                             </button>
-                            <button type="button" class="i-label-button" x-on:click="priorityMenuOpen = false; priority = 'medium'">
+                            <button type="button" class="i-label-button"
+                                x-on:click="priorityMenuOpen = false; priority = 'medium'">
                                 <span>
                                     <i class="fa-regular fa-flag" style="color: rgb(255,218,3);"></i>
                                     Medium
                                 </span>
                             </button>
-                            <button type="button" class="i-label-button" x-on:click="priorityMenuOpen = false; priority = 'low'">
+                            <button type="button" class="i-label-button"
+                                x-on:click="priorityMenuOpen = false; priority = 'low'">
                                 <span>
                                     <i class="fa-regular fa-flag" style="color: rgb(3,182,255);"></i>
                                     Low
                                 </span>
                             </button>
-                            <button type="button" class="i-label-button" x-on:click="priorityMenuOpen = false; priority = 'none'">
+                            <button type="button" class="i-label-button"
+                                x-on:click="priorityMenuOpen = false; priority = 'none'">
                                 <span>
                                     <i class="fa-regular fa-flag" style="color: rgb(68,68,68);"></i>
                                     None
@@ -65,12 +69,30 @@
                         </div>
 
                     </div>
-                    <!-- <select name="priority" placeholder="Choose one" class=new-int>
-                <option value="none">None</option>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-                    </select> -->
+
+                    <div class="priority" style="position: relative;">
+
+                        <button type="button" class="i-button priority-button new-task-priority-button"
+                            x-on:click="projectMenuOpen = !projectMenuOpen">
+                            <span x-text="project"></span>
+                        </button>
+
+
+                        <div class="priority-menu new-task-version" x-show="projectMenuOpen"
+                            @click.away="projectMenuOpen=false" x-cloak x-transition
+                            x-on:click="projectMenuOpen = false">
+                            <input type="text" name="project" class="invisible-input" placeholder="Select project" list="project-dropdown" value="Inbox" x-model="project"/>
+                            {%for project in projects%}
+                            <button type="button" class="i-label-button" x-on:click="project = '{{project}}'">
+                                <span>
+                                    <i class="fa-solid fa-hashtag"></i>
+                                    <span style="margin: 0px; padding: 0px;">{{project}}</span>
+                                </span>
+                            </button>
+                            {%endfor%}
+                        </div>
+
+                    </div>
 
                 </div>
                 <button type="submit" class="new-int"><span>Add</span></button>
