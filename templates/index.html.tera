@@ -20,7 +20,8 @@
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
 </head>
 
-<body x-data="{ projectSort: '', activeTab: 'pending', newTaskNotification: false, newTaskInputFocused: false, openTask:null }"
+<body
+    x-data="{ projectSort: '', activeTab: 'pending', newTaskNotification: false, newTaskInputFocused: false, openTask:null, signedIn: false,userProfileOpen: false}"
     @task-notification.window="newTaskNotification = true">
 
     {% include "search" %}
@@ -29,8 +30,8 @@
         <div id="screen">
             <div id="sidebar">
                 <div id="tabs">
-                    <div></div>
-                    <div></div>
+                        <button id="user-avatar" @click="userProfileOpen = ! userProfileOpen">
+                        </button>
                 </div>
                 <div id="task-groups-list">
                         <div id="time-groups" class="group-item"></div>
@@ -87,6 +88,66 @@
         </div>
     </div>
     -->
+    <script defer crossorigin="anonymous" src="https://
+trusty-tahr-2944.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js" type="text/javascript"></script>
+
+    <script defer crossorigin="anonymous" data-clerk-publishable-key="
+pk_test_dHJ1c3R5LXRhaHItMjk0NC5jbGVyay5hY2NvdW50cy5kZXYk" src="https://
+trusty-tahr-2944.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js" type="text/javascript"></script>
+    <script>
+        window.addEventListener('load', async function () {
+            await Clerk.load({
+                ui: { ClerkUI: window.__internal_ClerkUICtor },
+            })
+
+            console.log("Clerk is loaded.")
+
+            /*if (Clerk.isSignedIn) {
+              document.getElementById('app').innerHTML = `
+                <div id="user-button"></div>
+              `
+        
+              const userButtonDiv = document.getElementById('user-button')
+              const userAvatarDiv = document.getElementById('user-avatar')
+        
+              Clerk.mountUserButton(userButtonDiv)
+              Clerk.mountUserAvatar(userAvatarDiv)
+            } else {
+              document.getElementById('app').innerHTML = `
+                <div id="sign-in"></div>
+              `
+        
+        
+            }*/
+
+            const body = document.querySelector('body');
+
+            body._x_dataStack[0].signedIn = Clerk.isSignedIn;
+
+            Clerk.addListener(({ session }) => {
+                body._x_dataStack[0].signedIn = !!session;
+            });
+
+            if (!Clerk.isSignedIn) {
+                const signInDiv = document.getElementById('sign-in')
+                Clerk.mountSignIn(signInDiv)
+                console.log("awaiting sign in...")
+            } else {
+                console.log("Signed in.")
+                const userAvatar = document.getElementById('user-avatar')
+                const userProfile = document.getElementById('user-profile')
+                Clerk.mountUserButton(userAvatar)
+                Clerk.mountUserProfile(userProfile)
+            }
+
+
+
+
+
+
+        })
+    </script>
+
 </body>
 
 </html>
