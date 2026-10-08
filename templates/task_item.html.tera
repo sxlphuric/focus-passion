@@ -32,7 +32,7 @@
 
 
                 {%if task.due %}
-                <span style="text-align: right; white-space: pre;">{{ task.due | date(format="%b %d")}}</span>
+                <span style="text-align: right; white-space: pre; color: var(--accent-black)">{{ task.due | date(format="%b %d")}}</span>
                 {%endif%}
             </div>
         </div>

@@ -3,6 +3,8 @@
     --border-color: color-mix(in srgb, var(--accent), white 20%);
     --sidebar-border-color: color-mix(in srgb, var(--border-color), rgba(0,0,0,0.3) 20%);
     --accent-diluted: color-mix(in srgb, var(--accent), white 80%);
+    --accent-white: color-mix(in srgb, var(--accent), white 88%);
+    --accent-black: color-mix(in srgb, var(--accent), black 20%);
     --accent-less-diluted: color-mix(in srgb, var(--accent), white 55%);
     --task-item-border: #ddd;
 }
