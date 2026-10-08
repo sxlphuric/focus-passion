@@ -430,6 +430,26 @@ button.show-more {
 .i-button.active {
     background-color: lightblue;
 }
+#groups-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+#groups-container div.group-item {
+    border-top: 1px solid rgba(0,0,0,0.1);
+    padding-top: 1rem;
+}
+
+.group-item-header {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(0,0,0,0.6);
+}
+
 
 .priority-menu {
     position: absolute;

@@ -33,34 +33,11 @@
                     <div></div>
                 </div>
                 <div id="task-groups-list">
-                    <div id="list-groups-fixed"></div>
-                    <div id="time-groups"></div>
-                    <div id="list-groups">
-                        <div class="projects" x-show="activeTab !== 'search'">
-                            <ul id="project-list" class="project-list">
-                                <li class="project-item">
-                                    <button type="button" :class='{"active": !projectSort}' class="i-label-button"
-                                        x-on:click='projectSort=""'>
-                                        <i class="fa-solid fa-inbox" style="color: #fefefe"></i>
-                                        All
-                                    </button>
-                                </li>
-                                {% for project in projects %}
-                                <li class="project-item">
-                                    <button type="button"
-                                        :class='{"active": projectSort === {{project|json_encode|escape|safe}} }'
-                                        class="i-label-button" x-on:click="projectSort='{{project|escape|safe}}'">
-                                        <i class="fa-solid fa-hashtag" style="color: #fefefe"></i>
-                                        {{project}}
-                                    </button>
-                                </li>
-                                {%endfor%}
-                            </ul>
-                        </div>
-                    </div>
-                    <div id="filter-groups"></div>
-                    <div id="tag-groups"></div>
-                    <div id="misc-groups"></div>
+                        <div id="time-groups" class="group-item"></div>
+                        <div id="list-groups" class="group-item">
+                        <div id="filter-groups" class="group-item"></div>
+                        <div id="tag-groups" class="group-item"></div>
+                        <div id="misc-groups" class="group-item"></div>
                 </div>
             </div>
             <div class="task-list-container">
