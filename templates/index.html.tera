@@ -25,7 +25,9 @@
     @task-notification.window="newTaskNotification = true">
 
     {% include "search" %}
-
+    <div id="modals"></div>
+    <div id="sign-in"></div>
+    <div id="app">
     <div class="flex-horizontal">
         <div id="screen">
             <div id="sidebar">
@@ -126,6 +128,7 @@
             <p style="margin:4px;" class="empty-message">Nothing to see here...</p>
         </div>
     </div>
+</div>
 
     <!--
     <div class="task-list-container">
