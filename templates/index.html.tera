@@ -30,8 +30,23 @@
         <div id="screen">
             <div id="sidebar">
                 <div id="tabs">
+                    <div>
                         <button id="user-avatar" @click="userProfileOpen = ! userProfileOpen">
                         </button>
+                        <button :class="{'active': activeTab === 'pending'}" class="i-button"
+                            x-on:click="activeTab = 'pending'; newTaskNotification=false;">
+                            <i class="fa-solid fa-check-square"></i>
+                        </button>
+                        <button class="i-button">
+                            <i class="fa-solid fa-search"></i></button>
+
+                    </div>
+                    <div>
+                        <button class="i-button">
+                            <i class="fa-solid fa-bell"></i></button>
+                        <button class="i-button">
+                            <i class="fa-solid fa-gear"></i></button>
+                    </div>
                 </div>
                 <div id="task-groups-list">
                         <div id="time-groups" class="group-item"></div>
@@ -39,6 +54,7 @@
                         <div id="filter-groups" class="group-item"></div>
                         <div id="tag-groups" class="group-item"></div>
                         <div id="misc-groups" class="group-item"></div>
+                    </div>
                 </div>
             </div>
             <div class="task-list-container">
