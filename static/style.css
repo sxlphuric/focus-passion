@@ -485,9 +485,12 @@ button.show-more {
     border: none;
 }
 
-.task-description:hover,
-.task-name-modal:hover {
+.task-description:hover{
     outline: 1px solid rgba(50, 50, 50, 0.3);
+}
+
+.task-description-preview.placeholder span {
+    color: rgba(0,0,0,0.3) !important;
 }
 
 .nope {
