@@ -61,7 +61,7 @@
                 <div id="task-list-header-container">
                     <div id="task-list-header">
                         <span>
-                            <h2 style="margin:0px;">All</h2>
+                            <h2 style="margin:0px;" x-text="projectSort || 'All'"></h2>
                         </span>
                         <span>
                             <button class="i-button">
