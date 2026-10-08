@@ -26,8 +26,8 @@
 
     {% include "search" %}
     <div id="modals"></div>
-    <div id="sign-in"></div>
-    <div id="app">
+    <div id="sign-in" x-show="!signedIn"></div>
+    <div id="app" x-show="signedIn">
     <div class="flex-horizontal">
         <div id="screen">
             <div id="sidebar">
