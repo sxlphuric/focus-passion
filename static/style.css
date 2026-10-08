@@ -134,6 +134,26 @@ input.new-int {
 #tabs {
     background-color: var(--accent-less-diluted);
     min-width: 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+#tabs div {
+    display:flex;
+    flex-direction:column;
+    gap: 0.75rem;
+}
+
+#tabs button i {
+    font-size: 3rem;
+    color: var(--accent-white);
+}
+
+#tabs button.active i {
+    color: var(--accent-black);
 }
 
 #task-list-header-container {
@@ -285,7 +305,6 @@ li.task-item {
 
 .projects {
     display: flex;
-    padding-right: 0.5rem;
 }
 
 .task-row {
@@ -370,6 +389,10 @@ button.show-more {
 
 .buttons-row {
     height: 32px;
+    display:flex;
+    justify-content:space-between;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 }
 
 .overlay {
@@ -392,6 +415,17 @@ button.show-more {
 
 .task-name-modal {
     font-size: 1.3em;
+    flex-grow: 1;
+}
+
+.task-name-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#groups-container div:empty {
+    display: none;
 }
 
 .task-description {
@@ -424,20 +458,84 @@ button.show-more {
     background-color: transparent;
     border-radius: 3px;
     padding: 2px;
-    transition: 0.1s;
+    transition: 0.2s;
     cursor: pointer;
 }
 
 .i-button:hover,
 .i-label-button:hover {
     background-color: rgba(0, 0, 0, 0.2);
-    transition: 0.1s;
+    transition: 0.2s;
 }
 
 .i-label-button.active,
 .i-button.active {
     background-color: lightblue;
 }
+
+#tabs div .i-button.active {
+    background-color: transparent;
+}
+
+#tabs div .i-button:hover {
+    background-color: transparent;
+}
+
+#tabs div .i-button :hover {
+    transition: .2s;
+    color: var(--accent-diluted);
+}
+#tabs div .i-button.active :hover {
+    transition: .2s;
+    color: color-mix(in srgb, var(--accent-black), white 20%);
+}
+
+#task-groups-list {
+    width: 100%;
+}
+
+#project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr));
+    gap:0.3rem;
+    min-height: 2rem;
+    width: 100%;
+    background-color: color-mix(in srgb, var(--accent-diluted), black 5%);
+    padding-top: 0.25rem;
+}
+
+.project-grid-item {
+    display: flex;
+    background-color: transparent;
+    border: none;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.25rem;
+    align-items: center;
+    
+}
+
+.project-grid-item .project-icon-container:hover {
+    transition: .2s;
+    background-color: rgba(0,0,0,0.125);
+}
+
+.project-icon-container {
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 6px;
+        padding: 0.2rem;
+}
+
+.project-icon-container i {
+    font-size: 1.25rem;
+
+}
+
+.project-grid-item span {
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
 #groups-container {
     display: flex;
     flex-direction: column;
@@ -458,6 +556,44 @@ button.show-more {
     color: rgba(0,0,0,0.6);
 }
 
+#project-list {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.project-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 6px;
+    width: 100%;
+}
+
+.project-item button {
+    width: 100%;
+    padding: 0.4rem 0.25rem;
+    background-color: transparent;
+    border-radius: 6px;
+    gap: 0.3rem;
+    display:flex;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.project-item button i {
+    font-size: 1.25rem;
+}
+
+.project-item button:hover {
+    background-color:rgba(0,0,0,0.02);
+}
+
+.project-item:has(button.active) {
+    background-color:rgba(0,0,0,0.1);
+}
 
 .priority-menu {
     position: absolute;
